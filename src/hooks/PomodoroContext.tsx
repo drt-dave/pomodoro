@@ -46,7 +46,7 @@ interface PomodoroContextType extends PomodoroState {
   // Setter functions - allow components to update state
   setTag: (tag: string) => void;
   setMode: (mode: PomodoroMode) => void;
-  setTimeLeft: (time: number) => void;
+  setTimeLeft: (time: number | ((prev: number) => number)) => void;
   setIsRunning: (running: boolean) => void;
   
   // Action functions - higher-level operations
