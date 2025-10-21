@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
 import './App.css';
 
+import { Timer } from './components/Timer';
+
 type ViewType = 'timer' | 'stats';
 
 function App() {
@@ -24,7 +26,8 @@ function App() {
           className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
           onClick={() => setActiveView('timer')}
         >
-          ⏱<span>Timer</span>
+          ⏱
+		  <Timer/>
         </div>
         <div
           className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
