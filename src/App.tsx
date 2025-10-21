@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
-import './App.css';
-
 import { Timer } from './components/Timer';
+import { TagSelector } from './components/TagSelector';
+import './App.css';
 
 type ViewType = 'timer' | 'stats';
 
 function App() {
-  const { tag } = usePomodoro();
+  const { tag, setTag, mode } = usePomodoro();
   const [activeView, setActiveView] = useState<ViewType>('timer');
 
   return (
@@ -17,8 +17,22 @@ function App() {
       </header>
 
       <main className="main-content">
-        <p>Vista activa: {activeView}</p>
-        <p>Tag actual: {tag}</p>
+        {activeView === 'timer' && (
+          <>
+            <div className="card timer-card">
+              <Timer />
+            </div>
+            <div className="card tagselector-card">
+              <TagSelector tag={tag} setTag={setTag} mode={mode} />
+            </div>
+          </>
+        )}
+
+        {activeView === 'stats' && (
+          <div className="card stats-card">
+            <p>📊 Stats - Coming soon</p>
+          </div>
+        )}
       </main>
 
       <footer className="bottom-nav">
@@ -26,8 +40,7 @@ function App() {
           className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
           onClick={() => setActiveView('timer')}
         >
-          ⏱
-		  <Timer/>
+          ⏱️<span>Timer</span>
         </div>
         <div
           className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
@@ -41,6 +54,3 @@ function App() {
 }
 
 export default App;
-
-
-
