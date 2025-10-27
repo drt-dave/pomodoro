@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
 import { Timer } from './components/Timer';
 import { TagSelector } from './components/TagSelector';
+import { TagStats } from './components/TagStats';
 import './App.css';
 
 type ViewType = 'timer' | 'stats';
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="logo-title">🍅 Pomodoro</h1>
+        <h1 className="logo-title">🍅 PomoDoroto</h1>
       </header>
 
       <main className="main-content">
@@ -30,7 +31,7 @@ function App() {
 
         {activeView === 'stats' && (
           <div className="card stats-card">
-            <p>📊 Stats - Coming soon</p>
+            <TagStats />
           </div>
         )}
       </main>
