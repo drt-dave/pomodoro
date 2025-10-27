@@ -16,3 +16,4 @@ export interface PomodoroSession {
   timestamp: number;
   completed: boolean;
 }
+
