@@ -19,7 +19,7 @@ import { createContext, useContext, useState } from 'react';
 // Type-only imports - only exist at compile time, not in final JavaScript
 // The "type" keyword tells TypeScript these are types, not values
 import type { ReactNode } from 'react';
-import type { PomodoroState, PomodoroMode } from '../types/pomodoro.types';
+import type { PomodoroState, PomodoroMode, PomodoroSession } from '../types/pomodoro.types';
 
 /**
  * LEARNING NOTE: Import vs Import Type
@@ -48,11 +48,16 @@ interface PomodoroContextType extends PomodoroState {
   setMode: (mode: PomodoroMode) => void;
   setTimeLeft: (time: number | ((prev: number) => number)) => void;
   setIsRunning: (running: boolean) => void;
-  
+
+  // Session management
+  sessions: PomodoroSession[];
+  setSessions: (sessions: PomodoroSession[]) => void;
+
   // Action functions - higher-level operations
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
+  saveSession: (session: PomodoroSession) => void;
 }
 
 /**
@@ -159,6 +164,8 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   
   // Whether the timer is currently running
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  //
+  const [ sessions, setSessions ] = useState<PomodoroSession[]>([]);
   
   // CONSTANTS
   // ---------------------------------------------------------------------------
@@ -199,7 +206,11 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
     setIsRunning(false);
     setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
   };
-  
+
+  const saveSession = (session: PomodoroSession) => {
+    setSessions((prev) => [...prev, session]);
+  };
+
   // PROVIDER RETURN
   // ---------------------------------------------------------------------------
   
@@ -214,7 +225,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
    * - All setter functions (setTag, setMode, etc.)
    * - All action functions (startTimer, pauseTimer, resetTimer)
    * - All constants (defaultWorkTime, defaultBreakTime)
-   */
+ tat */
   return (
     <PomodoroContext.Provider
       value={{
@@ -223,21 +234,26 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
         mode,
         timeLeft,
         isRunning,
-        
+
         // Constants
         defaultWorkTime,
         defaultBreakTime,
-        
+
         // Setters
         setTag,
         setMode,
         setTimeLeft,
         setIsRunning,
-        
+
+        // Session management
+        sessions,
+        setSessions,
+
         // Actions
         startTimer,
         pauseTimer,
         resetTimer,
+        saveSession,
       }}
     >
       {children}
