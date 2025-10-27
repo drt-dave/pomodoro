@@ -14,80 +14,104 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 
   // Load tags from localStorage when component mounts
   useEffect(() => {
-	const savedTags = localStorage.getItem('pomodoroTags');
-	if (savedTags) {
-	  setTags(JSON.parse(savedTags));
-	}
+    const savedTags = localStorage.getItem('pomodoroTags');
+    if (savedTags) {
+      try {
+        const parsed = JSON.parse(savedTags) as string[];
+        setTags(parsed);
+      } catch {
+        // ignore parse error
+      }
+    }
   }, []);
 
   // Save tags to localStorage whenever they change
   useEffect(() => {
-	localStorage.setItem('pomodoroTags', JSON.stringify(tags));
+    localStorage.setItem('pomodoroTags', JSON.stringify(tags));
   }, [tags]);
 
-  const handleAddTag = () => {
-	const trimmedTag = newTagName.trim();
+  // Ensure the UI has a selected tag on mount.
+  // If context provides a tag not present in tags list, add it so it can be shown as selected.
+  // Also, if tag is empty, default to 'General'.
+  useEffect(() => {
+    if (!tag || tag.trim() === '') {
+      setTag('General');
+      return;
+    }
+    // If the current tag from context is not in the tags list, add it (so it can be shown active).
+    if (!tags.includes(tag)) {
+      setTags((prev) => [tag, ...prev]);
+    }
+    // We intentionally do not include `setTags` in deps to avoid duplicate additions;
+    // `tags` is included above so this runs when tags change as well.
+  }, [tag]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Validation: check if tag name is not empty and doesn't already exist
-	if (trimmedTag && !tags.includes(trimmedTag)) {
-	  setTags([...tags, trimmedTag]);
-	  setTag(trimmedTag);  // Automatically select the new tag
-	  setNewTagName('');   // Clear the input
-	  setShowAddTag(false); // Hide the input field
-	}
+  const handleAddTag = () => {
+    const trimmedTag = newTagName.trim();
+    if (trimmedTag && !tags.includes(trimmedTag)) {
+      setTags([...tags, trimmedTag]);
+      setTag(trimmedTag); // Automatically select the new tag
+      setNewTagName('');
+      setShowAddTag(false);
+    }
   };
 
   const handleSelectTag = (selectedTag: string) => {
-	setTag(selectedTag);
+    setTag(selectedTag);
   };
 
   return (
-	<div className="tag-selector">
-	  <h3>Select Category</h3>
+    <div className="tag-selector">
+      <h3>Select Category</h3>
 
-	  <div className="tags-list">
-		{tags.map((t) => (
-		  <button
-			key={t}
-			className={`tag-btn ${t === tag ? 'active' : ''}`}
-			onClick={() => handleSelectTag(t)}
-			disabled={mode === 'break'}
-		  >
-			{t}
-		  </button>
-		))}
-	  </div>
+      <div className="tags-list">
+        {tags.map((t) => (
+          <button
+            key={t}
+            type="button"
+            className={`tag-btn ${t === tag ? 'active' : ''}`}
+            onClick={() => handleSelectTag(t)}
+            disabled={mode === 'break'}
+            aria-pressed={t === tag}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
 
-	  <div className="add-tag-section">
-		{!showAddTag ? (
-		  <button
-			className="add-tag-btn"
-			onClick={() => setShowAddTag(true)}
-			disabled={mode === 'break'}
-		  >
-			➕ Add Tag
-		  </button>
-		) : (
-		  <div className="add-tag-form">
-			<input
-			  type="text"
-			  value={newTagName}
-			  onChange={(e) => setNewTagName(e.target.value)}
-			  onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-			  placeholder="Tag name..."
-			  autoFocus
-			/>
-			<button onClick={handleAddTag}>Add</button>
-			<button onClick={() => {
-			  setShowAddTag(false);
-			  setNewTagName('');
-			}}>
-			  Cancel
-			</button>
-		  </div>
-		)}
-	  </div>
-	</div>
+      <div className="add-tag-section">
+        {!showAddTag ? (
+          <button
+            type="button"
+            className="add-tag-btn"
+            onClick={() => setShowAddTag(true)}
+            disabled={mode === 'break'}
+          >
+            ➕ Add Tag
+          </button>
+        ) : (
+          <div className="add-tag-form">
+            <input
+              type="text"
+              value={newTagName}
+              onChange={(e) => setNewTagName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+              placeholder="Tag name..."
+              autoFocus
+            />
+            <button type="button" onClick={handleAddTag}>Add</button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowAddTag(false);
+                setNewTagName('');
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
-
