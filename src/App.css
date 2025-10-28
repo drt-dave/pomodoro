@@ -1,141 +1,930 @@
+/**
+ * ===========================================================================
+ * APP.CSS - Main Stylesheet for Pomodoro Application
+ * ===========================================================================
+ *
+ * This file contains all the visual styles for our Pomodoro app.
+ *
+ * KEY CSS CONCEPTS COVERED:
+ * -------------------------
+ *
+ * 1. SELECTORS (ID, Class, Element, Pseudo-classes, Pseudo-elements)
+ * 2. BOX MODEL (margin, padding, border, content)
+ * 3. FLEXBOX LAYOUT (display: flex, justify-content, align-items)
+ * 4. COLOR SYSTEMS (hex, rgba, named colors)
+ * 5. TRANSITIONS & ANIMATIONS (smooth state changes)
+ * 6. GRADIENTS (linear-gradient, color stops)
+ * 7. SHADOWS (box-shadow, text-shadow, drop-shadow)
+ * 8. TRANSFORMS (translate, scale, rotate)
+ * 9. PSEUDO-CLASSES (:hover, :focus, :active, :not())
+ * 10. MEDIA QUERIES (responsive design)
+ * 11. KEYFRAME ANIMATIONS (@keyframes)
+ * 12. CSS VARIABLES (custom properties)
+ */
+
+/* ===========================================================================
+   ROOT CONTAINER STYLES
+   =========================================================================== */
+
+/**
+ * #root - ID Selector
+ * -------------------
+ * Targets the element with id="root" (the main React mount point).
+ *
+ * CSS SELECTOR TYPES:
+ * - #id:      Selects element with specific ID (highest specificity)
+ * - .class:   Selects all elements with specific class
+ * - element:  Selects all elements of a type (e.g., div, p, button)
+ * - *:        Universal selector (selects everything)
+ *
+ * WHY USE ID SELECTOR HERE?
+ * There's only one root element in the entire app, so ID is appropriate.
+ * Generally, prefer classes for styling (IDs are too specific and hard to override).
+ */
 #root {
+  /**
+   * max-width: 1280px
+   * -----------------
+   * Limits the maximum width of the container.
+   * On larger screens, content won't stretch beyond 1280px.
+   * This prevents very wide layouts that are hard to read.
+   *
+   * Units in CSS:
+   * - px (pixels): Absolute unit, 1px = 1 device pixel
+   * - rem (root em): Relative to root font size (usually 16px, so 1rem = 16px)
+   * - em: Relative to parent font size
+   * - % (percentage): Relative to parent element's dimension
+   * - vw/vh: Viewport width/height (100vw = full screen width)
+   */
   max-width: 1280px;
+
+  /**
+   * margin: 0 auto
+   * --------------
+   * SHORTHAND PROPERTY for margin-top/right/bottom/left.
+   *
+   * Syntax patterns:
+   * - margin: 10px;                  → All sides: 10px
+   * - margin: 10px 20px;             → Top/Bottom: 10px, Left/Right: 20px
+   * - margin: 10px 20px 30px;        → Top: 10px, Left/Right: 20px, Bottom: 30px
+   * - margin: 10px 20px 30px 40px;   → Top, Right, Bottom, Left (clockwise)
+   *
+   * "0 auto" means:
+   * - Top/Bottom: 0
+   * - Left/Right: auto (automatically distributes space equally)
+   *
+   * CENTERING TRICK:
+   * When you have a fixed/max width and set left/right margins to "auto",
+   * the browser centers the element horizontally.
+   */
   margin: 0 auto;
+
+  /**
+   * padding: 2rem
+   * -------------
+   * Adds inner spacing (space between content and border).
+   *
+   * BOX MODEL:
+   * Every element is a box with layers:
+   * 1. Content: The actual content (text, images)
+   * 2. Padding: Space around content, inside border
+   * 3. Border: Edge around padding
+   * 4. Margin: Space outside border, between this and other elements
+   *
+   * Visual:
+   * ┌─────────────── margin ───────────────┐
+   * │ ┌────────── border ──────────────┐   │
+   * │ │ ┌────── padding ─────────┐     │   │
+   * │ │ │                        │     │   │
+   * │ │ │      CONTENT           │     │   │
+   * │ │ │                        │     │   │
+   * │ │ └────────────────────────┘     │   │
+   * │ └────────────────────────────────┘   │
+   * └──────────────────────────────────────┘
+   */
   padding: 2rem;
+
+  /**
+   * text-align: center
+   * ------------------
+   * Horizontally centers inline content (text, images, inline-block elements).
+   *
+   * Values:
+   * - left: Default, align to left
+   * - center: Align to center
+   * - right: Align to right
+   * - justify: Stretch lines to fill width (like newspaper columns)
+   *
+   * NOTE: This only works on inline/inline-block content.
+   * Block elements need margin: auto for centering.
+   */
   text-align: center;
 }
 
+/* ===========================================================================
+   LOGO STYLES (Example/Demo styles from Vite template)
+   =========================================================================== */
+
+/**
+ * .logo - Class Selector
+ * ----------------------
+ * Styles for logo images (if used).
+ */
 .logo {
-  height: 6em;
+  height: 6em; /* 6 times the font size */
   padding: 1.5em;
+
+  /**
+   * will-change: filter
+   * -------------------
+   * PERFORMANCE OPTIMIZATION hint for the browser.
+   *
+   * Tells the browser: "This element's 'filter' property will change soon."
+   * The browser can optimize rendering by preparing for this change.
+   *
+   * USE SPARINGLY!
+   * Overuse can hurt performance by consuming memory.
+   * Only use when you know an animation/transition will happen frequently.
+   */
   will-change: filter;
+
+  /**
+   * transition: filter 300ms
+   * ------------------------
+   * Smoothly animates changes to the 'filter' property over 300 milliseconds.
+   *
+   * SYNTAX: transition: property duration timing-function delay;
+   * - property: What to animate (filter, all, background-color, etc.)
+   * - duration: How long the transition takes (300ms = 0.3 seconds)
+   * - timing-function: Animation curve (ease, linear, ease-in, ease-out, etc.)
+   * - delay: Wait before starting (optional)
+   *
+   * Without transition, property changes happen instantly (jarring).
+   * With transition, changes happen smoothly (pleasant).
+   */
   transition: filter 300ms;
 }
+
+/**
+ * PSEUDO-CLASS - :hover
+ * ---------------------
+ * Applies styles when user hovers mouse over the element.
+ *
+ * Common pseudo-classes:
+ * - :hover - Mouse over element
+ * - :active - Element is being clicked
+ * - :focus - Element has keyboard focus
+ * - :visited - Link has been visited
+ * - :first-child - First child of parent
+ * - :last-child - Last child of parent
+ * - :nth-child(n) - Nth child of parent
+ */
 .logo:hover {
+  /**
+   * filter: drop-shadow(...)
+   * ------------------------
+   * Applies a shadow effect to the element.
+   *
+   * FILTER FUNCTIONS:
+   * CSS filters modify how an element is rendered:
+   * - blur(5px): Blur the element
+   * - brightness(150%): Make brighter/darker
+   * - contrast(200%): Adjust contrast
+   * - grayscale(100%): Convert to grayscale
+   * - drop-shadow(x y blur color): Add a shadow
+   *
+   * DROP-SHADOW vs BOX-SHADOW:
+   * - box-shadow: Rectangle shadow (doesn't follow transparent areas)
+   * - drop-shadow: Follows the actual shape (respects transparency)
+   *
+   * SYNTAX: drop-shadow(offset-x offset-y blur-radius color)
+   * - 0: Horizontal offset (0 = directly under)
+   * - 0: Vertical offset (0 = directly under)
+   * - 2em: Blur radius (larger = softer shadow)
+   * - #646cffaa: Color with alpha (aa = transparency)
+   */
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
+/**
+ * CHAINING SELECTORS
+ * ------------------
+ * .logo.react:hover
+ * Selects elements that have BOTH "logo" AND "react" classes, on hover.
+ *
+ * NO SPACE between .logo.react means both classes on same element:
+ * <div class="logo react">...</div>  ✅ Matches
+ * <div class="logo">...</div>        ❌ Doesn't match
+ *
+ * WITH SPACE .logo .react means react inside logo:
+ * <div class="logo"><div class="react">...</div></div>  ✅ Matches
+ */
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* ===========================================================================
+   KEYFRAME ANIMATIONS
+   =========================================================================== */
+
+/**
+ * @keyframes - Animation Definition
+ * ---------------------------------
+ * Defines a named animation that can be reused on multiple elements.
+ *
+ * SYNTAX:
+ * @keyframes animation-name {
+ *   0% { ... }      // Starting state
+ *   50% { ... }     // Halfway point
+ *   100% { ... }    // Ending state
+ * }
+ *
+ * Can also use "from" and "to" instead of percentages:
+ * @keyframes slide {
+ *   from { left: 0; }
+ *   to { left: 100px; }
+ * }
+ *
+ * USAGE:
+ * .element {
+ *   animation: animation-name duration timing-function iteration-count;
+ * }
+ */
 @keyframes logo-spin {
+  /**
+   * from - Starting state (same as 0%)
+   */
   from {
+    /**
+     * transform: rotate(0deg)
+     * -----------------------
+     * Rotates the element 0 degrees (starting position).
+     *
+     * TRANSFORM FUNCTIONS:
+     * - rotate(angle): Rotate element
+     * - scale(x, y): Resize element
+     * - translate(x, y): Move element
+     * - skew(x, y): Slant element
+     *
+     * Transforms don't affect document flow (other elements don't move).
+     */
     transform: rotate(0deg);
   }
+
+  /**
+   * to - Ending state (same as 100%)
+   */
   to {
+    /**
+     * transform: rotate(360deg)
+     * -------------------------
+     * Rotates the element 360 degrees (full circle).
+     *
+     * The browser automatically animates from 0deg to 360deg smoothly.
+     */
     transform: rotate(360deg);
   }
 }
 
+/* ===========================================================================
+   MEDIA QUERIES - Responsive Design
+   =========================================================================== */
+
+/**
+ * @media - Conditional Styles
+ * ---------------------------
+ * Applies styles only when certain conditions are met.
+ *
+ * MEDIA QUERY TYPES:
+ * - @media (max-width: 768px) { ... }  → Screens up to 768px wide (mobile)
+ * - @media (min-width: 769px) { ... }  → Screens 769px and wider (tablet/desktop)
+ * - @media (prefers-color-scheme: dark) { ... }  → User prefers dark mode
+ * - @media (prefers-reduced-motion: reduce) { ... }  → User wants less animation
+ * - @media print { ... }  → When printing the page
+ *
+ * ACCESSIBILITY FEATURE:
+ * prefers-reduced-motion detects if the user has motion sensitivity.
+ * Some users get dizzy/nauseous from animations (vestibular disorders).
+ * Respecting this preference makes your site more accessible.
+ */
 @media (prefers-reduced-motion: no-preference) {
+  /**
+   * This applies only if the user HASN'T requested reduced motion.
+   * If they have motion sensitivity, this animation won't run.
+   */
+
+  /**
+   * COMPLEX SELECTOR:
+   * a:nth-of-type(2) .logo
+   * ----------------------
+   * Breaks down:
+   * - a:nth-of-type(2): The 2nd <a> element among its siblings
+   * - (space): Descendant combinator
+   * - .logo: Any element with class "logo" inside that <a>
+   *
+   * Result: Targets .logo inside the second link on the page.
+   */
   a:nth-of-type(2) .logo {
+    /**
+     * animation: logo-spin infinite 20s linear
+     * ----------------------------------------
+     * SHORTHAND for animation properties:
+     *
+     * Full syntax:
+     * animation: name duration timing-function delay iteration-count direction;
+     *
+     * Here:
+     * - logo-spin: Animation name (defined above with @keyframes)
+     * - infinite: Never stop (other values: 1, 2, 3, etc.)
+     * - 20s: Duration (takes 20 seconds for one full rotation)
+     * - linear: Constant speed (no easing in/out)
+     *
+     * TIMING FUNCTIONS:
+     * - linear: Constant speed throughout
+     * - ease: Slow start, fast middle, slow end (default)
+     * - ease-in: Slow start, fast end
+     * - ease-out: Fast start, slow end
+     * - ease-in-out: Slow start and end, fast middle
+     * - cubic-bezier(n,n,n,n): Custom curve
+     */
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* ===========================================================================
+   CARD COMPONENT
+   =========================================================================== */
+
+/**
+ * .card - Reusable Card Container
+ * --------------------------------
+ * Generic container class for content sections.
+ */
 .card {
+  /**
+   * padding: 2em
+   * ------------
+   * Adds internal spacing so content doesn't touch the edges.
+   */
   padding: 2em;
 }
 
+/* ===========================================================================
+   UTILITY CLASSES
+   =========================================================================== */
+
 .read-the-docs {
+  /**
+   * color: #888
+   * -----------
+   * HEXADECIMAL COLOR notation.
+   *
+   * Color formats in CSS:
+   * - Named: red, blue, green (140 named colors)
+   * - Hex: #RRGGBB or #RGB
+   *   #888 = #888888 (shorthand when R=R, G=G, B=B)
+   *   Each digit is hexadecimal (0-9, A-F)
+   * - RGB: rgb(255, 0, 0) - Red, Green, Blue (0-255)
+   * - RGBA: rgba(255, 0, 0, 0.5) - RGB + Alpha (transparency 0-1)
+   * - HSL: hsl(120, 100%, 50%) - Hue, Saturation, Lightness
+   *
+   * #888 = medium gray (equal parts red, green, blue)
+   */
   color: #888;
 }
-/* Add to App.css (or your tags stylesheet) */
-/* === 1. Fade out effect for button focus === */
+
+/* ===========================================================================
+   BUTTON STYLES - Interactive Elements
+   =========================================================================== */
+
+/**
+ * button - Element Selector
+ * --------------------------
+ * Applies to ALL <button> elements in the app.
+ */
+button {
+  /**
+   * transition: all 0.3s ease
+   * -------------------------
+   * Smoothly animates ALL property changes over 0.3 seconds.
+   *
+   * "all" means any property that changes (color, size, position, etc.)
+   * will transition smoothly.
+   *
+   * PERFORMANCE NOTE:
+   * Transitioning "all" can be slow for complex elements.
+   * Better to specify exact properties: "transition: background-color 0.3s, transform 0.3s"
+   * But "all" is convenient for prototyping.
+   */
+  transition: all 0.3s ease;
+}
+
+/**
+ * button:active - Click State
+ * ----------------------------
+ * Styles applied while the button is being clicked.
+ * Creates a "press down" effect for better user feedback.
+ */
+button:active {
+  /**
+   * transform: scale(0.97)
+   * ----------------------
+   * Shrinks the button to 97% of its original size.
+   *
+   * scale() accepts:
+   * - One value: scale(0.5) - Scales both width and height
+   * - Two values: scale(0.5, 1) - Different X and Y scaling
+   *
+   * Values:
+   * - 1 = Original size (100%)
+   * - 0.5 = Half size (50%)
+   * - 2 = Double size (200%)
+   * - 0.97 = Slightly smaller (97%)
+   */
+  transform: scale(0.97);
+
+  /**
+   * transition: transform 0.1s ease
+   * -------------------------------
+   * Quick animation for the scale effect (100ms).
+   * Faster than the general button transition for snappy feedback.
+   */
+  transition: transform 0.1s ease;
+}
+
+/**
+ * button:focus - Keyboard Focus State
+ * ------------------------------------
+ * Styles when button has keyboard focus (user pressed Tab to select it).
+ *
+ * ACCESSIBILITY:
+ * Keyboard users need to see which element is focused.
+ * Focus styles are critical for accessibility.
+ */
 button:focus {
-  /* outline: 2px solid #ffffff80; */ 
+  /**
+   * COMMENTED OUT:
+   * outline: 2px solid #ffffff80;
+   *
+   * This was the original focus outline. Commenting it out disables it.
+   * We replace it with an animation below.
+   *
+   * OUTLINE vs BORDER:
+   * - Outline: Doesn't affect layout, drawn outside border
+   * - Border: Part of box model, affects element size
+   * - Outline is better for focus indicators (doesn't shift content)
+   */
+  /* outline: 2px solid #ffffff80; */
+
   outline: none;
   box-shadow: none;
+
+  /**
+   * outline-offset: 4px
+   * -------------------
+   * Spaces the outline 4px away from the element border.
+   * Creates a gap between the element and its focus indicator.
+   *
+   * Positive values: Outline moves outward
+   * Negative values: Outline moves inward
+   */
   outline-offset: 4px;
+
+  /**
+   * transition: outline-color 0.3s ease-out
+   * ----------------------------------------
+   * Smoothly transitions outline color changes.
+   * ease-out: Fast start, slow end (feels natural for fading effects)
+   */
   transition: outline-color 0.3s ease-out;
+
+  /**
+   * animation: fadeOutline 0.8s forwards
+   * -------------------------------------
+   * Runs the "fadeOutline" animation defined below.
+   *
+   * PARAMETERS:
+   * - fadeOutline: Animation name
+   * - 0.8s: Duration (800ms)
+   * - forwards: Keep final state after animation (don't reset)
+   *
+   * Without "forwards", the animation would reset to the starting state.
+   * With "forwards", it stays at the end state (transparent outline).
+   */
   animation: fadeOutline 0.8s forwards;
 }
 
+/**
+ * Fade Outline Animation
+ * -----------------------
+ * Gradually fades the focus outline from visible to transparent.
+ */
 @keyframes fadeOutline {
+  /**
+   * 0% - Starting State
+   */
   0% {
-	outline-color: #ffffff80;
-  } 
+    /**
+     * outline-color: #ffffff80
+     * -------------------------
+     * Semi-transparent white outline.
+     *
+     * RGBA IN HEX:
+     * #ffffff = white (rgb(255, 255, 255))
+     * 80 = alpha channel (128 in decimal = ~50% transparent)
+     *
+     * HEX with alpha: #RRGGBBAA
+     * AA values:
+     * - 00: Fully transparent (0%)
+     * - 80: Half transparent (50%)
+     * - FF: Fully opaque (100%)
+     */
+    outline-color: #ffffff80;
+  }
+
+  /**
+   * 100% - Ending State
+   */
   100% {
-	outline-color: transparent;
+    /**
+     * outline-color: transparent
+     * ---------------------------
+     * Completely invisible outline.
+     *
+     * "transparent" is a CSS keyword = rgba(0, 0, 0, 0)
+     */
+    outline-color: transparent;
   }
 }
 
+/**
+ * COMPLEX PSEUDO-CLASS SELECTOR
+ * ------------------------------
+ * button:focus:not(:focus-visible)
+ *
+ * Breaks down:
+ * - button: All buttons
+ * - :focus: That have focus
+ * - :not(:focus-visible): But NOT "visibly" focused
+ *
+ * WHAT IS :focus-visible?
+ * Modern CSS pseudo-class that detects keyboard focus vs mouse focus.
+ * - Keyboard focus (Tab key): :focus-visible is true
+ * - Mouse click focus: :focus-visible is false
+ *
+ * WHY SEPARATE THESE?
+ * Mouse users don't need visible focus indicators (they can see where they clicked).
+ * Keyboard users NEED focus indicators (can't see where focus is otherwise).
+ *
+ * This rule removes focus styles for mouse users while keeping them for keyboard users.
+ * This is a modern best practice for better UX without sacrificing accessibility.
+ */
 button:focus:not(:focus-visible) {
   box-shadow: none;
   outline: none;
 }
 
-/* Add a subtle fade-out animation after click */
-button:active {
-  transform: scale(0.97);
-  transition: transform 0.1s ease;
-}
+/* ===========================================================================
+   TAG BUTTON STYLES
+   =========================================================================== */
 
-/* Optional: return to normal state smoothly */
-button {
-  transition: all 0.3s ease;
-}
-
-/* === 2. Improve active tag visibility === */
-.tag-btn.active {
-  background-color: #ff6347; /* tomate más intenso */
-  color: #fff;
-  font-weight: bold;
-  border: 2px solid #ffb199;
-  box-shadow: 0 0 10px rgba(255, 99, 71, 0.6);
-  transition: all 0.3s ease;
-}
-
-/* Non-active tags */
+/**
+ * .tag-btn - Base Tag Button Styles
+ * ----------------------------------
+ * Applies to all tag category buttons (non-active state).
+ */
 .tag-btn {
+  /**
+   * background-color: #2b2b2b
+   * -------------------------
+   * Dark gray background for non-active tags.
+   * Dark colors work well on dark theme interfaces.
+   */
   background-color: #2b2b2b;
+
+  /**
+   * color: #ccc
+   * -----------
+   * Light gray text color.
+   * #ccc = #cccccc (light gray, good contrast on dark background)
+   */
   color: #ccc;
+
+  /**
+   * border: 1px solid #444
+   * ----------------------
+   * SHORTHAND for border properties:
+   * border: width style color;
+   *
+   * - 1px: Border width
+   * - solid: Border style (solid, dashed, dotted, double, none, etc.)
+   * - #444: Border color (darker gray)
+   *
+   * FULL SYNTAX:
+   * border-width: 1px;
+   * border-style: solid;
+   * border-color: #444;
+   */
   border: 1px solid #444;
+
+  /**
+   * margin: 4px
+   * -----------
+   * Spacing around each button.
+   * Creates gaps between adjacent tag buttons.
+   */
   margin: 4px;
+
+  /**
+   * padding: 8px 14px
+   * -----------------
+   * Internal spacing (space between text and button edge).
+   * - 8px: Top and bottom padding
+   * - 14px: Left and right padding
+   *
+   * More horizontal padding makes buttons wider and easier to click.
+   */
   padding: 8px 14px;
+
+  /**
+   * border-radius: 8px
+   * ------------------
+   * Rounds the button corners.
+   *
+   * Values:
+   * - 0: Square corners (default)
+   * - 4px: Slightly rounded
+   * - 8px: Moderately rounded
+   * - 50%: Circular (if width = height)
+   *
+   * Can specify different radii for each corner:
+   * border-radius: top-left top-right bottom-right bottom-left;
+   * Example: border-radius: 10px 0 10px 0; (alternating corners)
+   */
   border-radius: 8px;
+
+  /**
+   * cursor: pointer
+   * ---------------
+   * Changes mouse cursor to a hand/pointer when hovering over button.
+   *
+   * Cursor values:
+   * - default: Normal arrow
+   * - pointer: Hand (indicates clickable)
+   * - text: I-beam (indicates text selection)
+   * - move: Four-directional arrow
+   * - not-allowed: Circle with slash (indicates disabled)
+   * - grab: Open hand (indicates draggable)
+   * - grabbing: Closed hand (while dragging)
+   */
   cursor: pointer;
+
   transition: all 0.3s ease;
 }
 
+/**
+ * .tag-btn:hover - Tag Button Hover State
+ * ----------------------------------------
+ * Styles when user hovers over a non-active tag button.
+ */
 .tag-btn:hover {
+  /**
+   * Lighter background on hover (visual feedback).
+   * #444 is lighter than #2b2b2b (base color).
+   */
   background-color: #444;
+
+  /**
+   * Brighter text on hover.
+   * #fff = white (maximum brightness)
+   */
   color: #fff;
 }
 
-/* === 3. TagStats Component Styles === */
+/**
+ * MULTIPLE CLASS SELECTOR
+ * ------------------------
+ * .tag-btn.active
+ * Selects elements that have BOTH "tag-btn" AND "active" classes.
+ *
+ * In HTML: <button class="tag-btn active">Work</button>
+ *
+ * This is applied via JavaScript when a tag is selected:
+ * className={`tag-btn ${t === tag ? 'active' : ''}`}
+ */
+.tag-btn.active {
+  /**
+   * background-color: #ff6347
+   * -------------------------
+   * Bright tomato red for active tag (stands out).
+   * #ff6347 = rgb(255, 99, 71) = tomato red
+   */
+  background-color: #ff6347;
+
+  color: #fff;
+
+  /**
+   * font-weight: bold
+   * -----------------
+   * Makes text thicker/heavier.
+   *
+   * Values:
+   * - normal: Default weight (usually 400)
+   * - bold: Bold text (usually 700)
+   * - 100-900: Numeric weight (if font supports it)
+   * - lighter/bolder: Relative to parent
+   */
+  font-weight: bold;
+
+  /**
+   * border: 2px solid #ffb199
+   * -------------------------
+   * Thicker border (2px vs 1px) with lighter color.
+   * Makes the active tag more prominent.
+   */
+  border: 2px solid #ffb199;
+
+  /**
+   * box-shadow: 0 0 10px rgba(255, 99, 71, 0.6)
+   * --------------------------------------------
+   * Adds a glowing shadow effect.
+   *
+   * SYNTAX: box-shadow: offset-x offset-y blur spread color;
+   * - 0: Horizontal offset (0 = centered)
+   * - 0: Vertical offset (0 = centered)
+   * - 10px: Blur radius (larger = softer, more diffuse)
+   * - (spread omitted, defaults to 0)
+   * - rgba(255, 99, 71, 0.6): Red-orange with 60% opacity
+   *
+   * RGBA COLOR:
+   * rgba(red, green, blue, alpha)
+   * - red: 0-255
+   * - green: 0-255
+   * - blue: 0-255
+   * - alpha: 0-1 (0 = transparent, 1 = opaque)
+   *
+   * With 0, 0 offsets and a blur, this creates a "glow" effect.
+   */
+  box-shadow: 0 0 10px rgba(255, 99, 71, 0.6);
+
+  transition: all 0.3s ease;
+}
+
+/* ===========================================================================
+   STATS CONTAINER STYLES
+   =========================================================================== */
+
+/**
+ * .stats-container - Main Statistics Section
+ * -------------------------------------------
+ * Container for all statistics displays.
+ */
 .stats-container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 2rem auto; /* Center horizontally, add vertical spacing */
   padding: 2rem;
+
+  /**
+   * background: linear-gradient(...)
+   * --------------------------------
+   * Creates a gradient background (smooth color transition).
+   *
+   * SYNTAX: linear-gradient(direction, color-stop1, color-stop2, ...)
+   *
+   * - 135deg: Angle of gradient
+   *   0deg = bottom to top
+   *   90deg = left to right
+   *   135deg = bottom-left to top-right (diagonal)
+   *   180deg = top to bottom
+   *
+   * - #1a1a1a 0%: Starting color at 0% position (very dark gray)
+   * - #2d2d2d 100%: Ending color at 100% position (slightly lighter gray)
+   *
+   * COLOR STOPS:
+   * You can add more stops for complex gradients:
+   * linear-gradient(90deg, red 0%, yellow 50%, green 100%)
+   * This creates: red → yellow (halfway) → green
+   *
+   * GRADIENT TYPES:
+   * - linear-gradient: Straight line gradient
+   * - radial-gradient: Circular/elliptical gradient from center
+   * - conic-gradient: Gradient that rotates around a center point
+   */
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+
+  /**
+   * border-radius: 16px
+   * -------------------
+   * Highly rounded corners for a modern, card-like appearance.
+   */
   border-radius: 16px;
+
+  /**
+   * box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3)
+   * ------------------------------------------
+   * Elevation shadow (makes container appear raised).
+   *
+   * BREAKDOWN:
+   * - 0: No horizontal offset
+   * - 8px: Vertical offset (shadow below element)
+   * - 32px: Large blur radius (soft, diffuse shadow)
+   * - rgba(0, 0, 0, 0.3): Black with 30% opacity
+   *
+   * MATERIAL DESIGN:
+   * This shadow style mimics Material Design's elevation system.
+   * Larger vertical offset + larger blur = appears higher/floating.
+   */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
+/**
+ * DESCENDANT SELECTOR
+ * -------------------
+ * .stats-container h2
+ * Selects all <h2> elements inside .stats-container
+ *
+ * Space between selectors = descendant relationship.
+ * Doesn't have to be direct child, can be nested deeper.
+ */
 .stats-container h2 {
-  color: #ff6347;
+  color: #ff6347; /* Tomato red, matching active tags */
   margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: 2rem; /* Large heading */
+
+  /**
+   * text-shadow: 0 2px 8px rgba(255, 99, 71, 0.3)
+   * ----------------------------------------------
+   * Adds a shadow to the text (similar to box-shadow but for text).
+   *
+   * SYNTAX: text-shadow: offset-x offset-y blur color;
+   * - 0: No horizontal offset
+   * - 2px: Shadow slightly below text
+   * - 8px: Blur radius (soft shadow)
+   * - rgba(255, 99, 71, 0.3): Red-orange glow with 30% opacity
+   *
+   * MULTIPLE SHADOWS:
+   * text-shadow: 0 0 10px red, 0 0 20px blue;
+   * Creates multiple layered shadows.
+   */
   text-shadow: 0 2px 8px rgba(255, 99, 71, 0.3);
 }
 
 .stats-container h3 {
-  color: #ffb199;
+  color: #ffb199; /* Lighter peach color */
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 
+/**
+ * .overall-stats - Summary Statistics Card
+ * -----------------------------------------
+ * Highlighted section showing total sessions and time.
+ */
 .overall-stats {
+  /**
+   * background: rgba(255, 99, 71, 0.1)
+   * ----------------------------------
+   * Very transparent red background (10% opacity).
+   * Creates a subtle color tint without blocking the gradient behind it.
+   */
   background: rgba(255, 99, 71, 0.1);
+
+  /**
+   * border: 2px solid rgba(255, 99, 71, 0.3)
+   * ----------------------------------------
+   * Semi-transparent red border (30% opacity).
+   * Coordinates with the background for a cohesive look.
+   */
   border: 2px solid rgba(255, 99, 71, 0.3);
+
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
+/**
+ * DESCENDANT COMBINATOR (nested selectors)
+ * ----------------------------------------
+ * .overall-stats h3
+ * More specific than just "h3" - only affects h3 inside .overall-stats
+ *
+ * CSS SPECIFICITY:
+ * Browsers use specificity to determine which styles win conflicts:
+ * - Element selector (h3): Specificity = 1
+ * - Class selector (.stats): Specificity = 10
+ * - ID selector (#main): Specificity = 100
+ * - Inline style (style="..."): Specificity = 1000
+ *
+ * .overall-stats h3 (10 + 1 = 11) beats h3 (1) if there's a conflict.
+ */
 .overall-stats h3 {
+  /**
+   * margin-top: 0
+   * -------------
+   * Removes default top margin from h3.
+   * Browsers add default margins to headings; we often need to override them.
+   */
   margin-top: 0;
   color: #ff6347;
 }
@@ -151,31 +940,186 @@ button {
   font-size: 1.2rem;
 }
 
+/* ===========================================================================
+   TAG STATISTICS LIST
+   =========================================================================== */
+
+/**
+ * .tag-stats-list - Container for Individual Tag Cards
+ * -----------------------------------------------------
+ * Uses FLEXBOX for layout.
+ */
 .tag-stats-list {
+  /**
+   * display: flex
+   * -------------
+   * Enables Flexbox layout mode for this container.
+   *
+   * LAYOUT MODES IN CSS:
+   * - block: Normal flow, elements stack vertically (default for divs)
+   * - inline: Elements sit side-by-side (default for spans)
+   * - inline-block: Hybrid (side-by-side but can have width/height)
+   * - flex: Flexible box layout (powerful 1D layouts)
+   * - grid: Grid layout (powerful 2D layouts)
+   *
+   * FLEXBOX:
+   * Parent (flex container) controls child (flex item) positioning.
+   * Great for: navigation bars, card layouts, centering, equal heights.
+   */
   display: flex;
+
+  /**
+   * flex-direction: column
+   * ----------------------
+   * Stacks flex items vertically (default is row = horizontal).
+   *
+   * Values:
+   * - row: Left to right (default)
+   * - row-reverse: Right to left
+   * - column: Top to bottom
+   * - column-reverse: Bottom to top
+   *
+   * Main axis changes with direction:
+   * - row: Main axis = horizontal
+   * - column: Main axis = vertical
+   */
   flex-direction: column;
+
+  /**
+   * gap: 1rem
+   * ---------
+   * Spacing between flex items.
+   *
+   * MODERN CSS:
+   * gap replaces margin-based spacing. Much cleaner!
+   *
+   * Old way:
+   * .tag-stat-card { margin-bottom: 1rem; }
+   * .tag-stat-card:last-child { margin-bottom: 0; }
+   *
+   * New way:
+   * .tag-stats-list { gap: 1rem; }
+   *
+   * Gap automatically spaces items without affecting outer edges.
+   */
   gap: 1rem;
 }
 
+/**
+ * .tag-stat-card - Individual Tag Statistics Card
+ * ------------------------------------------------
+ * Each card shows stats for one category.
+ */
 .tag-stat-card {
+  /**
+   * Semi-transparent white background (glassmorphism effect).
+   * 0.05 = 5% opacity (very subtle).
+   */
   background: rgba(255, 255, 255, 0.05);
+
+  /**
+   * Semi-transparent white border.
+   * 0.1 = 10% opacity (slightly more visible than background).
+   */
   border: 1px solid rgba(255, 255, 255, 0.1);
+
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
 }
 
+/**
+ * .tag-stat-card:hover - Interactive Card Effect
+ * -----------------------------------------------
+ * Cards respond to hover with multiple visual changes.
+ */
 .tag-stat-card:hover {
+  /**
+   * Slightly more opaque background on hover (8% vs 5%).
+   * Subtle visual feedback.
+   */
   background: rgba(255, 255, 255, 0.08);
+
+  /**
+   * Border color intensifies and changes to red-orange.
+   */
   border-color: rgba(255, 99, 71, 0.4);
+
+  /**
+   * transform: translateY(-2px)
+   * ---------------------------
+   * Moves the card up by 2 pixels.
+   *
+   * TRANSLATE:
+   * - translateX(x): Move horizontally
+   * - translateY(y): Move vertically
+   * - translate(x, y): Move both directions
+   *
+   * Negative Y values move upward (unusual in normal positioning).
+   * This creates a "lift" effect on hover.
+   */
   transform: translateY(-2px);
+
+  /**
+   * Stronger shadow when hovering (appears more elevated).
+   */
   box-shadow: 0 4px 16px rgba(255, 99, 71, 0.2);
 }
 
+/* ===========================================================================
+   TAG STAT CARD INTERNAL STRUCTURE
+   =========================================================================== */
+
+/**
+ * .tag-stat-header - Card Header with Title and Badge
+ * ----------------------------------------------------
+ * Uses Flexbox for layout.
+ */
 .tag-stat-header {
   display: flex;
+
+  /**
+   * justify-content: space-between
+   * ------------------------------
+   * Distributes flex items with maximum space between them.
+   *
+   * JUSTIFY-CONTENT (main axis alignment):
+   * - flex-start: Pack items at start (default)
+   * - flex-end: Pack items at end
+   * - center: Pack items in center
+   * - space-between: Items evenly distributed, first at start, last at end
+   * - space-around: Items evenly distributed with equal space around each
+   * - space-evenly: Items evenly distributed with equal space between
+   *
+   * Visual for space-between:
+   * [Item1]              [Item2]              [Item3]
+   * ↑                                          ↑
+   * At start                                   At end
+   *
+   * Perfect for: headers with title on left and action on right.
+   */
   justify-content: space-between;
+
+  /**
+   * align-items: center
+   * -------------------
+   * Centers flex items on the cross axis (perpendicular to main axis).
+   *
+   * ALIGN-ITEMS (cross axis alignment):
+   * - stretch: Items stretch to fill container (default)
+   * - flex-start: Items align at cross-axis start
+   * - flex-end: Items align at cross-axis end
+   * - center: Items centered on cross axis
+   * - baseline: Items align to text baseline
+   *
+   * In a row layout (flex-direction: row):
+   * - Main axis = horizontal (justify-content)
+   * - Cross axis = vertical (align-items)
+   *
+   * This vertically centers the tag name and session badge.
+   */
   align-items: center;
+
   margin-bottom: 0.8rem;
 }
 
@@ -185,11 +1129,24 @@ button {
   font-size: 1.3rem;
 }
 
+/**
+ * .session-badge - Pill-Shaped Badge
+ * -----------------------------------
+ * Displays session count in a highlighted badge.
+ */
 .session-badge {
   background: #ff6347;
   color: #fff;
   padding: 0.4rem 0.8rem;
+
+  /**
+   * border-radius: 20px
+   * -------------------
+   * Large border radius creates a pill/capsule shape.
+   * When border-radius > half the element's height, it becomes pill-shaped.
+   */
   border-radius: 20px;
+
   font-size: 0.9rem;
   font-weight: bold;
 }
@@ -200,31 +1157,163 @@ button {
   margin-bottom: 1rem;
 }
 
+/* ===========================================================================
+   PROGRESS BAR COMPONENT
+   =========================================================================== */
+
+/**
+ * .progress-bar - Progress Bar Container
+ * ---------------------------------------
+ * Background track for the progress fill.
+ */
 .progress-bar {
-  width: 100%;
+  width: 100%; /* Full width of parent */
   height: 8px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
+
+  /**
+   * overflow: hidden
+   * ----------------
+   * Hides any content that extends outside the element's box.
+   *
+   * OVERFLOW VALUES:
+   * - visible: Content overflows and is visible (default)
+   * - hidden: Content is clipped (not visible)
+   * - scroll: Always show scrollbars
+   * - auto: Show scrollbars only when needed
+   *
+   * WHY HERE?
+   * The progress fill inside has border-radius. Without overflow: hidden,
+   * the fill could extend beyond the track's rounded corners.
+   */
   overflow: hidden;
+
   margin-bottom: 0.5rem;
 }
 
+/**
+ * .progress-fill - Animated Progress Bar Fill
+ * --------------------------------------------
+ * The colored fill that grows based on percentage.
+ */
 .progress-fill {
+  /**
+   * height: 100%
+   * ------------
+   * Fills the entire height of the parent (.progress-bar).
+   *
+   * PERCENTAGE DIMENSIONS:
+   * When using %, the value is relative to parent:
+   * - width: 50% → half of parent's width
+   * - height: 100% → full parent height
+   * - Parent must have defined dimensions for % to work
+   */
   height: 100%;
+
+  /**
+   * background: linear-gradient(90deg, #ff6347 0%, #ffb199 100%)
+   * ------------------------------------------------------------
+   * Horizontal gradient (90deg = left to right).
+   * - Starts at tomato red (#ff6347)
+   * - Ends at peachy pink (#ffb199)
+   *
+   * Creates a vibrant, eye-catching progress bar.
+   */
   background: linear-gradient(90deg, #ff6347 0%, #ffb199 100%);
+
   border-radius: 4px;
+
+  /**
+   * transition: width 0.5s ease
+   * ---------------------------
+   * Smoothly animates width changes.
+   *
+   * WIDTH IS SET BY INLINE STYLES IN REACT:
+   * <div style={{ width: `${percentage}%` }} />
+   *
+   * When percentage changes, the width animates smoothly over 0.5 seconds.
+   * This creates a satisfying progress bar animation.
+   */
   transition: width 0.5s ease;
 }
 
 .percentage-text {
   color: #999;
   font-size: 0.9rem;
+
+  /**
+   * text-align: right
+   * -----------------
+   * Aligns text to the right side of its container.
+   * Percentage values look good right-aligned.
+   */
   text-align: right;
 }
 
+/* ===========================================================================
+   EMPTY STATE
+   =========================================================================== */
+
+/**
+ * .empty-state - Placeholder When No Data Exists
+ * -----------------------------------------------
+ * Shown when user hasn't completed any Pomodoro sessions yet.
+ */
 .empty-state {
-  color: #999;
+  color: #999; /* Subdued gray */
+
+  /**
+   * font-style: italic
+   * ------------------
+   * Slants text to the right.
+   *
+   * VALUES:
+   * - normal: Regular text (default)
+   * - italic: Slanted text (if font has italic variant)
+   * - oblique: Artificially slanted (if no italic variant)
+   *
+   * Italic often conveys: placeholder, quotation, emphasis, or secondary info.
+   */
   font-style: italic;
+
   padding: 2rem;
   text-align: center;
 }
+
+/**
+ * ===========================================================================
+ * END OF STYLESHEET
+ * ===========================================================================
+ *
+ * SUMMARY OF CSS CONCEPTS COVERED:
+ * ---------------------------------
+ * ✅ Selectors (element, class, ID, pseudo-classes, combinators)
+ * ✅ Box Model (margin, padding, border, content)
+ * ✅ Colors (hex, rgb, rgba, named, transparency)
+ * ✅ Sizing (px, rem, em, %, vw/vh)
+ * ✅ Typography (font-size, font-weight, font-style, text-align, text-shadow)
+ * ✅ Backgrounds (solid colors, gradients, transparency)
+ * ✅ Borders (solid, width, color, radius)
+ * ✅ Shadows (box-shadow, text-shadow, drop-shadow)
+ * ✅ Transforms (translate, scale, rotate)
+ * ✅ Transitions (smooth property changes)
+ * ✅ Animations (keyframes, timing, iteration)
+ * ✅ Flexbox (display, flex-direction, justify-content, align-items, gap)
+ * ✅ Positioning (relative, absolute, static)
+ * ✅ Overflow (hidden, visible, scroll, auto)
+ * ✅ Pseudo-classes (:hover, :focus, :active, :focus-visible, :not())
+ * ✅ Media Queries (responsive design, accessibility preferences)
+ * ✅ Specificity (how CSS determines winning styles)
+ * ✅ Cascading (order matters, later rules can override earlier ones)
+ *
+ * NEXT STEPS FOR LEARNING:
+ * -------------------------
+ * 1. CSS Grid (2D layouts, more powerful than Flexbox)
+ * 2. CSS Custom Properties (variables: --color-primary)
+ * 3. Advanced Selectors (attribute selectors, sibling combinators)
+ * 4. Responsive Design (mobile-first design, breakpoints)
+ * 5. CSS Architecture (BEM methodology, CSS-in-JS, CSS modules)
+ * 6. Performance (will-change, contain, content-visibility)
+ * 7. Modern Features (container queries, :has(), @layer, @scope)
+ */
