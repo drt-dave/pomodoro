@@ -62,8 +62,8 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 	saveSessionsToStorage(sessions);
   }, [sessions]);
 
-  const defaultWorkTime = 25 * 60;
-  const defaultBreakTime = 5 * 60;
+  const defaultWorkTime = 25; //* 60; set in seconds for dev.
+  const defaultBreakTime = 5; //* 60; set in seconds for dev.
 
   const startTimer = () => {
 	setIsRunning(true);
