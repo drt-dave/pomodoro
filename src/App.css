@@ -5,21 +5,60 @@
  *
  * This file contains all the visual styles for our Pomodoro app.
  *
+ * LAYOUT TEMPLATE SYSTEM (Similar to Terminal Multiplexer Configuration)
+ * -----------------------------------------------------------------------
+ *
+ * Grid Template Structure (Desktop):
+ * ┌─────────────────────────────────────────────┐
+ * │  HEADER      (85px grid area)               │  ← Logo and title
+ * ├─────────────────────────────────────────────┤
+ * │  MAIN        (1fr fills remaining space)    │  ← Content area
+ * │  Padding: 1rem vertical, 2rem horizontal    │
+ * │  Overflow: hidden (no scroll!)              │
+ * │  ┌───────────────────────────────────────┐  │
+ * │  │ Tag Selector  (500px × 220px)         │  │  ← Fixed dimensions
+ * │  ├───────────────────────────────────────┤  │
+ * │  │ Gap           (1.5rem / 24px)         │  │
+ * │  ├───────────────────────────────────────┤  │
+ * │  │ Timer         (500px × 380px)         │  │  ← Fixed dimensions
+ * │  └───────────────────────────────────────┘  │
+ * ├─────────────────────────────────────────────┤
+ * │  FOOTER      (90px grid area)               │  ← Navigation
+ * └─────────────────────────────────────────────┘
+ *
+ * Grid Layout: 100vh = 85px + 1fr + 90px
+ * Main area (1fr): Automatically fills remaining space
+ *
+ * ✅ NO SCROLLING:
+ * - html/body: overflow: hidden, height: 100vh
+ * - .app: width/height: 100vw/100vh, overflow: hidden
+ * - .main-content: overflow: hidden, components centered
+ * - Components use fixed positioning within grid (not position: fixed)
+ *
+ * Mobile Breakpoint (max-width: 600px):
+ * - Grid: 70px + 1fr + 80px
+ * - Tag Selector: 220px → 200px
+ * - Timer: 380px → 320px
+ * - Gap: 1.5rem → 1rem
+ * - Width: 500px → 100%
+ * - Padding: 0.5rem vertical, 1rem horizontal
+ *
  * KEY CSS CONCEPTS COVERED:
  * -------------------------
  *
- * 1. SELECTORS (ID, Class, Element, Pseudo-classes, Pseudo-elements)
- * 2. BOX MODEL (margin, padding, border, content)
- * 3. FLEXBOX LAYOUT (display: flex, justify-content, align-items)
- * 4. COLOR SYSTEMS (hex, rgba, named colors)
- * 5. TRANSITIONS & ANIMATIONS (smooth state changes)
- * 6. GRADIENTS (linear-gradient, color stops)
- * 7. SHADOWS (box-shadow, text-shadow, drop-shadow)
- * 8. TRANSFORMS (translate, scale, rotate)
- * 9. PSEUDO-CLASSES (:hover, :focus, :active, :not())
- * 10. MEDIA QUERIES (responsive design)
- * 11. KEYFRAME ANIMATIONS (@keyframes)
- * 12. CSS VARIABLES (custom properties)
+ * 1. CSS GRID LAYOUT (template areas, rows, columns)
+ * 2. SELECTORS (ID, Class, Element, Pseudo-classes, Pseudo-elements)
+ * 3. BOX MODEL (margin, padding, border, content)
+ * 4. FLEXBOX LAYOUT (display: flex, justify-content, align-items)
+ * 5. COLOR SYSTEMS (hex, rgba, named colors)
+ * 6. TRANSITIONS & ANIMATIONS (smooth state changes)
+ * 7. GRADIENTS (linear-gradient, color stops)
+ * 8. SHADOWS (box-shadow, text-shadow, drop-shadow)
+ * 9. TRANSFORMS (translate, scale, rotate)
+ * 10. PSEUDO-CLASSES (:hover, :focus, :active, :not())
+ * 11. MEDIA QUERIES (responsive design)
+ * 12. KEYFRAME ANIMATIONS (@keyframes)
+ * 13. CSS VARIABLES (custom properties)
  */
 
 /* ===========================================================================
@@ -352,7 +391,7 @@
 }
 
 /* ===========================================================================
-   APP LAYOUT
+   APP LAYOUT - CSS GRID TEMPLATE
    =========================================================================== */
 
 /**
@@ -551,6 +590,94 @@
     padding: 0.7rem 1.2rem;
     font-size: 0.95rem;
   }
+}
+
+/* ===========================================================================
+   TAG SELECTOR COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .tag-selector - Main Tag Selector Container
+ * --------------------------------------------
+ * Matches the timer component width for visual consistency.
+ */
+.tag-selector {
+  max-width: 500px;
+  margin: 1rem auto;
+}
+
+.tag-selector h3 {
+  text-align: center;
+  color: #ff6347;
+  margin-bottom: 1.5rem;
+}
+
+.add-tag-section {
+  margin-bottom: 1.5rem;
+}
+
+.add-tag-btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #2b2b2b 0%, #3a3a3a 100%);
+  border: 2px dashed rgba(255, 99, 71, 0.3);
+  color: #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-tag-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  border-color: rgba(255, 99, 71, 0.6);
+  color: #ff6347;
+}
+
+.add-tag-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.add-tag-form input {
+  flex: 1;
+  padding: 0.8rem;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.add-tag-form input:focus {
+  outline: none;
+  border-color: #ff6347;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.2);
+}
+
+.add-tag-form button {
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, #ff6347 0%, #ff4757 100%);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-tag-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 99, 71, 0.4);
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 /* ===========================================================================
