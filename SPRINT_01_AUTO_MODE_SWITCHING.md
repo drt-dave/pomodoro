@@ -135,10 +135,12 @@ AND it should have a close button for manual dismissal
 #### 1. `src/hooks/PomodoroContext.tsx`
 **What to add:**
 - No major changes needed, but ensure `setMode` is properly exposed
+- ⚠️ **Performance Note:** Functions like `saveSession`, `pauseTimer`, `resetTimer`, and `startTimer` should be wrapped in `useCallback` to prevent unnecessary re-renders (see Issue #5)
 
 **Current state:**
 - ✅ Already has mode state management
 - ✅ Already has defaultWorkTime and defaultBreakTime constants
+- ⚠️ Functions are not memoized (performance optimization recommended)
 
 #### 2. `src/components/Timer.tsx`
 **What to add:**
@@ -469,6 +471,9 @@ const [notification, setNotification] = useState({
 
 ### 5. Reuse ConfirmModal Pattern
 Look at how `ConfirmModal` is implemented - you can follow the same pattern for `SessionNotification`.
+
+### 6. Performance Optimization (Optional but Recommended)
+After implementing the features, consider optimizing the PomodoroContext functions with `useCallback` (Issue #5). This prevents unnecessary re-renders but is not critical for functionality.
 
 ---
 
