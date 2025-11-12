@@ -37,6 +37,8 @@
 
 import { useState, useEffect } from 'react';
 import type { PomodoroMode } from '../types/pomodoro.types';
+//TODO: 
+//save in exporer storage the taglist
 
 // ===========================================================================
 // COMPONENT PROPS INTERFACE
@@ -195,34 +197,34 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
    * If we omitted [], this would run after every render (infinite loop risk!).
    */
   useEffect(() => {
-    // Try to get saved tags from localStorage
-    const savedTags = localStorage.getItem('pomodoroTags');
+	// Try to get saved tags from localStorage
+	const savedTags = localStorage.getItem('pomodoroTags');
 
-    // If there are saved tags, parse and use them
-    if (savedTags) {
-      try {
-        /**
-         * JSON PARSING WITH TYPE ASSERTION
-         * --------------------------------
-         * JSON.parse() returns 'any' type (TypeScript doesn't know what it is).
-         * We use 'as string[]' to tell TypeScript "trust me, this is a string array".
-         *
-         * This is called a TYPE ASSERTION or TYPE CAST.
-         * Use carefully - if the data isn't actually string[], errors will occur at runtime.
-         */
-        const parsed = JSON.parse(savedTags) as string[];
-        setTags(parsed);
-      } catch {
-        /**
-         * ERROR HANDLING
-         * --------------
-         * If JSON.parse() fails (corrupted data), we catch the error and ignore it.
-         * This prevents the app from crashing.
-         * We use an empty catch block because we're okay with just using default tags.
-         */
-        // Ignore parse errors - will use default tags
-      }
-    }
+	// If there are saved tags, parse and use them
+	if (savedTags) {
+	  try {
+		/**
+		 * JSON PARSING WITH TYPE ASSERTION
+		 * --------------------------------
+		 * JSON.parse() returns 'any' type (TypeScript doesn't know what it is).
+		 * We use 'as string[]' to tell TypeScript "trust me, this is a string array".
+		 *
+		 * This is called a TYPE ASSERTION or TYPE CAST.
+		 * Use carefully - if the data isn't actually string[], errors will occur at runtime.
+		 */
+	  const parsed = JSON.parse(savedTags) as string[];
+	  setTags(parsed);
+	  } catch {
+	  /**
+	   * ERROR HANDLING
+	   * --------------
+	   * If JSON.parse() fails (corrupted data), we catch the error and ignore it.
+	   * This prevents the app from crashing.
+	   * We use an empty catch block because we're okay with just using default tags.
+	   */
+		// Ignore parse errors - will use default tags
+	  }
+	}
   }, []); // Empty array = run once on mount
 
   /**
@@ -242,363 +244,364 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
    * 2. Different dependency arrays
    * 3. Easier to understand and maintain
    */
-  useEffect(() => {
-    /**
-     * JSON STRINGIFICATION
-     * --------------------
-     * localStorage can only store strings, not arrays/objects.
-     * JSON.stringify() converts JavaScript values to JSON string format.
-     *
-     * Example:
-     * ['Work', 'Study'] → '["Work","Study"]'
-     */
-    localStorage.setItem('pomodoroTags', JSON.stringify(tags));
-  }, [tags]); // Run whenever 'tags' changes
+		useEffect(() => {
+		  /**
+		   * JSON STRINGIFICATION
+		   * --------------------
+		   * localStorage can only store strings, not arrays/objects.
+		   * JSON.stringify() converts JavaScript values to JSON string format.
+		   *
+		   * Example:
+		   * ['Work', 'Study'] → '["Work","Study"]'
+		   */
+		  localStorage.setItem('pomodoroTags', JSON.stringify(tags));
+		}, [tags]); // Run whenever 'tags' changes
 
-  /**
-   * EFFECT 3: Ensure UI has a selected tag on mount and sync with context
-   * ----------------------------------------------------------------------
-   *
-   * WHEN DOES THIS RUN?
-   * - After the component mounts
-   * - Whenever 'tag' prop changes (parent updates the selected tag)
-   *
-   * WHY IS THIS NEEDED?
-   * 1. If no tag is selected (empty string), default to 'General'
-   * 2. If the selected tag doesn't exist in our tags list, add it
-   *    This handles edge cases where the tag comes from saved context state
-   *
-   * DEPENDENCY ARRAY: [tag]
-   * We intentionally omit setTag and setTags to avoid triggering this effect
-   * when those functions change. See the eslint-disable comment.
-   */
-  useEffect(() => {
-    // Case 1: No tag selected - default to 'General'
-    if (!tag || tag.trim() === '') {
-      setTag('General');
-      return; // Exit early, no need to continue
-    }
+		/**
+		 * EFFECT 3: Ensure UI has a selected tag on mount and sync with context
+		 * ----------------------------------------------------------------------
+		 *
+		 * WHEN DOES THIS RUN?
+		 * - After the component mounts
+		 * - Whenever 'tag' prop changes (parent updates the selected tag)
+		 *
+		 * WHY IS THIS NEEDED?
+		 * 1. If no tag is selected (empty string), default to 'General'
+		 * 2. If the selected tag doesn't exist in our tags list, add it
+		 *    This handles edge cases where the tag comes from saved context state
+		 *
+		 * DEPENDENCY ARRAY: [tag]
+		 * We intentionally omit setTag and setTags to avoid triggering this effect
+		 * when those functions change. See the eslint-disable comment.
+		 */
+		useEffect(() => {
+		  // Case 1: No tag selected - default to 'General'
+		  if (!tag || tag.trim() === '') {
+			setTag('General');
+			return; // Exit early, no need to continue
+		  }
 
-    // Case 2: Selected tag doesn't exist in our list - add it
-    if (!tags.includes(tag)) {
-      /**
-       * FUNCTIONAL STATE UPDATE WITH PREVIOUS STATE
-       * --------------------------------------------
-       * setTags((prev) => [tag, ...prev])
-       *
-       * This pattern is used when new state depends on old state.
-       * - prev: The current tags array
-       * - [tag, ...prev]: Create new array with tag first, then existing tags
-       * - ... is the SPREAD OPERATOR - it "spreads" array elements
-       *
-       * Example:
-       * prev = ['Work', 'Study']
-       * tag = 'Exercise'
-       * [tag, ...prev] → ['Exercise', 'Work', 'Study']
-       *
-       * WHY FUNCTIONAL UPDATE?
-       * Guarantees we're working with the latest state, even if multiple
-       * updates happen quickly. Same reason as in Timer component.
-       */
-      setTags((prev) => [tag, ...prev]);
-    }
+		  // Case 2: Selected tag doesn't exist in our list - add it
+		  if (!tags.includes(tag)) {
+			/**
+			 * FUNCTIONAL STATE UPDATE WITH PREVIOUS STATE
+			 * --------------------------------------------
+			 * setTags((prev) => [tag, ...prev])
+			 *
+			 * This pattern is used when new state depends on old state.
+			 * - prev: The current tags array
+			 * - [tag, ...prev]: Create new array with tag first, then existing tags
+			 * - ... is the SPREAD OPERATOR - it "spreads" array elements
+			 *
+			 * Example:
+			 * prev = ['Work', 'Study']
+			 * tag = 'Exercise'
+			 * [tag, ...prev] → ['Exercise', 'Work', 'Study']
+			 *
+			 * WHY FUNCTIONAL UPDATE?
+			 * Guarantees we're working with the latest state, even if multiple
+			 * updates happen quickly. Same reason as in Timer component.
+			 */
+			setTags((prev) => [tag, ...prev]);
+		  }
 
-    /**
-     * DISABLING ESLINT RULE
-     * ----------------------
-     * eslint-disable-line react-hooks/exhaustive-deps
-     *
-     * React's linter wants us to include setTag and setTags in dependencies.
-     * We intentionally omit them because:
-     * - They're stable functions (don't change between renders)
-     * - Including them might cause unnecessary effect runs
-     *
-     * This is an advanced pattern - beginners should usually follow the linter!
-     */
-  }, [tag]); // eslint-disable-line react-hooks/exhaustive-deps
+		  /**
+		   * DISABLING ESLINT RULE
+		   * ----------------------
+		   * eslint-disable-line react-hooks/exhaustive-deps
+		   *
+		   * React's linter wants us to include setTag and setTags in dependencies.
+		   * We intentionally omit them because:
+		   * - They're stable functions (don't change between renders)
+		   * - Including them might cause unnecessary effect runs
+		   *
+		   * This is an advanced pattern - beginners should usually follow the linter!
+		   */
+		  }, [tag]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ===========================================================================
-  // EVENT HANDLERS
-  // ===========================================================================
+		  // ===========================================================================
+		  // EVENT HANDLERS
+		  // ===========================================================================
 
-  /**
-   * handleAddTag
-   * ------------
-   * Adds a new tag to the tags list.
-   *
-   * WHEN IS THIS CALLED?
-   * - When user clicks the "Add" button
-   * - When user presses Enter in the input field
-   *
-   * VALIDATION:
-   * We check two conditions before adding:
-   * 1. Tag name is not empty (after trimming whitespace)
-   * 2. Tag doesn't already exist (no duplicates)
-   */
-  const handleAddTag = () => {
-    // Remove leading/trailing whitespace
-    const trimmedTag = newTagName.trim();
+		  /**
+		   * handleAddTag
+		   * ------------
+		   * Adds a new tag to the tags list.
+		   *
+		   * WHEN IS THIS CALLED?
+		   * - When user clicks the "Add" button
+		   * - When user presses Enter in the input field
+		   *
+		   * VALIDATION:
+		   * We check two conditions before adding:
+		   * 1. Tag name is not empty (after trimming whitespace)
+		   * 2. Tag doesn't already exist (no duplicates)
+		   */
+		  const handleAddTag = () => {
+			// Remove leading/trailing whitespace
+			const trimmedTag = newTagName.trim();
 
-    // Validate: non-empty and unique
-    if (trimmedTag && !tags.includes(trimmedTag)) {
-      /**
-       * ADD NEW TAG TO LIST
-       * -------------------
-       * [...tags, trimmedTag] creates a new array with all existing tags
-       * plus the new one at the end.
-       *
-       * IMMUTABILITY:
-       * We don't do: tags.push(trimmedTag)
-       * Why? React state should never be mutated directly.
-       * Always create a new array/object when updating state.
-       */
-      setTags([...tags, trimmedTag]);
+			// Validate: non-empty and unique
+			if (trimmedTag && !tags.includes(trimmedTag)) {
+			  /**
+			   * ADD NEW TAG TO LIST
+			   * -------------------
+			   * [...tags, trimmedTag] creates a new array with all existing tags
+			   * plus the new one at the end.
+			   *
+			   * IMMUTABILITY:
+			   * We don't do: tags.push(trimmedTag)
+			   * Why? React state should never be mutated directly.
+			   * Always create a new array/object when updating state.
+			   */
+			  setTags([...tags, trimmedTag]);
 
-      // Automatically select the newly created tag
-      setTag(trimmedTag);
+			  // Automatically select the newly created tag
+			  setTag(trimmedTag);
 
-      // Clear the input field
-      setNewTagName('');
+			  // Clear the input field
+			  setNewTagName('');
 
-      // Hide the add tag form
-      setShowAddTag(false);
-    }
-  };
+			  // Hide the add tag form
+			  setShowAddTag(false);
+			}
+		  };
 
-  /**
-   * handleSelectTag
-   * ---------------
-   * Selects a tag when user clicks on it.
-   *
-   * PARAMETERS:
-   * @param selectedTag - The tag that was clicked
-   *
-   * This calls the setTag function passed from the parent,
-   * updating the selected tag in the global context.
-   */
-  const handleSelectTag = (selectedTag: string) => {
-    setTag(selectedTag);
-  };
+		  /**
+		   * handleSelectTag
+		   * ---------------
+		   * Selects a tag when user clicks on it.
+		   *
+		   * PARAMETERS:
+		   * @param selectedTag - The tag that was clicked
+		   *
+		   * This calls the setTag function passed from the parent,
+		   * updating the selected tag in the global context.
+		   */
+		  const handleSelectTag = (selectedTag: string) => {
+			setTag(selectedTag);
+		  };
 
-  // ===========================================================================
-  // JSX RETURN - Component UI
-  // ===========================================================================
+		  // ===========================================================================
+		  // JSX RETURN - Component UI
+		  // ===========================================================================
 
-  return (
-    <div className="tag-selector">
-      <h3>Select Category</h3>
+		  return (
+			<div className="tag-selector">
+			  <h3>Select Category</h3>
 
-      {/* TAG BUTTONS LIST */}
-      <div className="tags-list">
-        {/**
-         * LIST RENDERING WITH .map()
-         * ---------------------------
-         * .map() transforms each array element into JSX.
-         *
-         * SYNTAX:
-         * array.map((item) => <Element key={item.id}>...</Element>)
-         *
-         * For each tag in the tags array, we create a <button> element.
-         *
-         * THE KEY PROP:
-         * key={t} is CRITICAL for React's performance.
-         *
-         * Why does React need keys?
-         * When the list changes, React uses keys to:
-         * - Track which items changed/added/removed
-         * - Reorder elements efficiently without recreating them
-         * - Preserve component state
-         *
-         * Keys must be:
-         * - Unique among siblings (but not globally)
-         * - Stable (same item = same key across renders)
-         * - Not the array index (unless list never reorders)
-         *
-         * Since tag names are unique, we can use them as keys.
-         */}
-        {tags.map((t) => (
-          <button
-            key={t} // Unique identifier for React's reconciliation
-            type="button" // Prevents form submission if inside a form
-            className={`tag-btn ${t === tag ? 'active' : ''}`} // Dynamic class
-            onClick={() => handleSelectTag(t)} // Arrow function to pass parameter
-            disabled={mode === 'break'} // Disable during break mode
-            aria-pressed={t === tag} // Accessibility: tells screen readers if button is "pressed"
-          >
-            {/**
-             * TEMPLATE LITERALS IN CLASSNAME
-             * -------------------------------
-             * className={`tag-btn ${t === tag ? 'active' : ''}`}
-             *
-             * This creates dynamic classes:
-             * - Always has 'tag-btn' class
-             * - Adds 'active' class if this tag is currently selected
-             *
-             * Example:
-             * If t='Work' and tag='Work': className="tag-btn active"
-             * If t='Study' and tag='Work': className="tag-btn "
-             *
-             * CSS can then style .tag-btn.active differently.
-             */}
+			  {/* ADD TAG SECTION */}
+			  <div className="add-tag-section">
+				{/**
+				  * CONDITIONAL RENDERING
+				  * ---------------------
+				  * We use a ternary operator to show different UI based on state.
+				  *
+				  * Pattern: {condition ? <ComponentA /> : <ComponentB />}
+				  *
+				  * If showAddTag is false: Show the "➕ Add Tag" button
+				  * If showAddTag is true: Show the form with input and buttons
+				  */}
+				{!showAddTag ? (
+					// CASE 1: Form is hidden - show "Add Tag" button
+					<button
+					type="button"
+					className="add-tag-btn"
+					onClick={() => setShowAddTag(true)} // Show the form when clicked
+					disabled={mode === 'break'} // Disable during break time
+					>
+					➕ Add Tag
+					</button>
+					) : (
+					  // CASE 2: Form is visible - show input and action buttons
+					  <div className="add-tag-form">
+					  {/**
+						* CONTROLLED INPUT PATTERN
+						* ------------------------
+						* A controlled input's value is controlled by React state.
+						*
+						* ATTRIBUTES:
+						* - value={newTagName}: Input displays whatever's in state
+						* - onChange={(e) => setNewTagName(e.target.value)}: Update state on every keystroke
+						*
+						* DATA FLOW:
+						* 1. User types character → onChange event fires
+						* 2. Event handler calls setNewTagName with new value
+						* 3. State updates, component re-renders
+						* 4. Input displays new state value
+						*
+						* This makes the input's value always match the state.
+						* We have a "single source of truth" - the state variable.
+						*
+						* UNCONTROLLED INPUT (alternative):
+						* <input defaultValue="..." ref={inputRef} />
+						* Value is managed by the DOM, not React.
+						* We rarely use this in modern React.
+						*/}
+				<input
+				  type="text"
+				  value={newTagName}
+				onChange={(e) => setNewTagName(e.target.value)}
+				onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+				placeholder="Tag name..."
+				  autoFocus // Automatically focus this input when it appears
+				  />
 
-            {/**
-             * ARROW FUNCTION IN onClick
-             * --------------------------
-             * onClick={() => handleSelectTag(t)}
-             *
-             * WHY THE ARROW FUNCTION?
-             * We need to pass the specific tag 't' to the handler.
-             *
-             * ❌ onClick={handleSelectTag(t)}
-             *    This calls handleSelectTag immediately during render!
-             *
-             * ✅ onClick={() => handleSelectTag(t)}
-             *    This creates a function that React calls on click.
-             *
-             * ALTERNATIVE: onClick={handleSelectTag.bind(null, t)}
-             * But arrow functions are more common and readable.
-             */}
+				  {/**
+					* ONKEYPRESS EVENT
+					* ----------------
+					* onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+					*
+					* This allows users to press Enter to submit instead of clicking Add.
+					*
+					* BREAKDOWN:
+					* - e: KeyboardEvent object
+					* - e.key: String representing the key pressed ('Enter', 'a', 'Shift', etc.)
+					* - e.key === 'Enter': Check if Enter was pressed
+					* - && handleAddTag(): If true, call handleAddTag (short-circuit evaluation)
+					*
+					* SHORT-CIRCUIT EVALUATION:
+					* condition && action
+					* If condition is false, action never runs.
+					* If condition is true, action runs.
+					*
+					* This is equivalent to:
+					* if (e.key === 'Enter') {
+					*   handleAddTag();
+					* }
+					*/}
 
-            {/**
-             * DISABLED ATTRIBUTE
-             * ------------------
-             * disabled={mode === 'break'}
-             *
-             * When mode is 'break', this evaluates to:
-             * disabled={true} → button cannot be clicked
-             *
-             * When mode is 'work', this evaluates to:
-             * disabled={false} → button works normally
-             *
-             * This prevents users from changing categories during break time.
-             */}
+				<button type="button" onClick={handleAddTag}>
+				  Add
+				  </button>
 
-            {/**
-             * ARIA-PRESSED ATTRIBUTE
-             * ----------------------
-             * aria-pressed={t === tag}
-             *
-             * Accessibility attribute for screen readers.
-             * Indicates whether this toggle button is in a pressed state.
-             *
-             * - aria-pressed="true": This tag is selected
-             * - aria-pressed="false": This tag is not selected
-             *
-             * Screen readers announce "Work, button, pressed" vs "Study, button, not pressed"
-             */}
-            {t}
-          </button>
-        ))}
-      </div>
+				  {/**
+					* CANCEL BUTTON
+					* -------------
+					* Resets the form state without adding a tag.
+					*
+					* When clicked:
+					* 1. Hide the form (setShowAddTag(false))
+					* 2. Clear any text in the input (setNewTagName(''))
+					*
+					* This is a "cleanup" action that returns UI to initial state.
+					*/}
+				<button
+				  type="button"
+				  onClick={() => {
+					setShowAddTag(false);
+					setNewTagName('');
+				  }}
+				>
+				  Cancel
+				  </button>
+				  </div>
+				  )}
+				</div>
+				{/* TAG BUTTONS LIST */}
+				<div className="tags-list">
+				{/**
+				  * LIST RENDERING WITH .map()
+				  * ---------------------------
+				  * .map() transforms each array element into JSX.
+				  *
+				  * SYNTAX:
+				  * array.map((item) => <Element key={item.id}>...</Element>)
+				  *
+				  * For each tag in the tags array, we create a <button> element.
+				  *
+				  * THE KEY PROP:
+				  * key={t} is CRITICAL for React's performance.
+				  *
+				  * Why does React need keys?
+				  * When the list changes, React uses keys to:
+				  * - Track which items changed/added/removed
+				  * - Reorder elements efficiently without recreating them
+				  * - Preserve component state
+				  *
+				  * Keys must be:
+				  * - Unique among siblings (but not globally)
+				  * - Stable (same item = same key across renders)
+				  * - Not the array index (unless list never reorders)
+				  *
+				  * Since tag names are unique, we can use them as keys.
+				  */}
+				{tags.map((t) => (
+					  <button
+					  key={t} // Unique identifier for React's reconciliation
+					  type="button" // Prevents form submission if inside a form
+					  className={`tag-btn ${t === tag ? 'active' : ''}`} // Dynamic class
+					  onClick={() => handleSelectTag(t)} // Arrow function to pass parameter
+					  disabled={mode === 'break'} // Disable during break mode
+					  aria-pressed={t === tag} // Accessibility: tells screen readers if button is "pressed"
+					  >
+					  {/**
+						* TEMPLATE LITERALS IN CLASSNAME
+						* -------------------------------
+						* className={`tag-btn ${t === tag ? 'active' : ''}`}
+						*
+						* This creates dynamic classes:
+						* - Always has 'tag-btn' class
+						* - Adds 'active' class if this tag is currently selected
+						*
+						* Example:
+						* If t='Work' and tag='Work': className="tag-btn active"
+						* If t='Study' and tag='Work': className="tag-btn "
+						*
+						* CSS can then style .tag-btn.active differently.
+						*/}
 
-      {/* ADD TAG SECTION */}
-      <div className="add-tag-section">
-        {/**
-         * CONDITIONAL RENDERING
-         * ---------------------
-         * We use a ternary operator to show different UI based on state.
-         *
-         * Pattern: {condition ? <ComponentA /> : <ComponentB />}
-         *
-         * If showAddTag is false: Show the "➕ Add Tag" button
-         * If showAddTag is true: Show the form with input and buttons
-         */}
-        {!showAddTag ? (
-          // CASE 1: Form is hidden - show "Add Tag" button
-          <button
-            type="button"
-            className="add-tag-btn"
-            onClick={() => setShowAddTag(true)} // Show the form when clicked
-            disabled={mode === 'break'} // Disable during break time
-          >
-            ➕ Add Tag
-          </button>
-        ) : (
-          // CASE 2: Form is visible - show input and action buttons
-          <div className="add-tag-form">
-            {/**
-             * CONTROLLED INPUT PATTERN
-             * ------------------------
-             * A controlled input's value is controlled by React state.
-             *
-             * ATTRIBUTES:
-             * - value={newTagName}: Input displays whatever's in state
-             * - onChange={(e) => setNewTagName(e.target.value)}: Update state on every keystroke
-             *
-             * DATA FLOW:
-             * 1. User types character → onChange event fires
-             * 2. Event handler calls setNewTagName with new value
-             * 3. State updates, component re-renders
-             * 4. Input displays new state value
-             *
-             * This makes the input's value always match the state.
-             * We have a "single source of truth" - the state variable.
-             *
-             * UNCONTROLLED INPUT (alternative):
-             * <input defaultValue="..." ref={inputRef} />
-             * Value is managed by the DOM, not React.
-             * We rarely use this in modern React.
-             */}
-            <input
-              type="text"
-              value={newTagName}
-              onChange={(e) => setNewTagName(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-              placeholder="Tag name..."
-              autoFocus // Automatically focus this input when it appears
-            />
+				{/**
+				  * ARROW FUNCTION IN onClick
+				  * --------------------------
+				  * onClick={() => handleSelectTag(t)}
+				  *
+				  * WHY THE ARROW FUNCTION?
+				  * We need to pass the specific tag 't' to the handler.
+				  *
+				  * ❌ onClick={handleSelectTag(t)}
+				  *    This calls handleSelectTag immediately during render!
+				  *
+				  * ✅ onClick={() => handleSelectTag(t)}
+				  *    This creates a function that React calls on click.
+				  *
+				  * ALTERNATIVE: onClick={handleSelectTag.bind(null, t)}
+				  * But arrow functions are more common and readable.
+				  */}
 
-            {/**
-             * ONKEYPRESS EVENT
-             * ----------------
-             * onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-             *
-             * This allows users to press Enter to submit instead of clicking Add.
-             *
-             * BREAKDOWN:
-             * - e: KeyboardEvent object
-             * - e.key: String representing the key pressed ('Enter', 'a', 'Shift', etc.)
-             * - e.key === 'Enter': Check if Enter was pressed
-             * - && handleAddTag(): If true, call handleAddTag (short-circuit evaluation)
-             *
-             * SHORT-CIRCUIT EVALUATION:
-             * condition && action
-             * If condition is false, action never runs.
-             * If condition is true, action runs.
-             *
-             * This is equivalent to:
-             * if (e.key === 'Enter') {
-             *   handleAddTag();
-             * }
-             */}
+				{/**
+				  * DISABLED ATTRIBUTE
+				  * ------------------
+				  * disabled={mode === 'break'}
+				  *
+				  * When mode is 'break', this evaluates to:
+				  * disabled={true} → button cannot be clicked
+				  *
+				  * When mode is 'work', this evaluates to:
+				  * disabled={false} → button works normally
+				  *
+				  * This prevents users from changing categories during break time.
+				  */}
 
-            <button type="button" onClick={handleAddTag}>
-              Add
-            </button>
+				{/**
+				  * ARIA-PRESSED ATTRIBUTE
+				  * ----------------------
+				  * aria-pressed={t === tag}
+				  *
+				  * Accessibility attribute for screen readers.
+				  * Indicates whether this toggle button is in a pressed state.
+				  *
+				  * - aria-pressed="true": This tag is selected
+				  * - aria-pressed="false": This tag is not selected
+				  *
+				  * Screen readers announce "Work, button, pressed" vs "Study, button, not pressed"
+				  */}
+				{t}
+				</button>
+				  ))}
+				</div>
 
-            {/**
-             * CANCEL BUTTON
-             * -------------
-             * Resets the form state without adding a tag.
-             *
-             * When clicked:
-             * 1. Hide the form (setShowAddTag(false))
-             * 2. Clear any text in the input (setNewTagName(''))
-             *
-             * This is a "cleanup" action that returns UI to initial state.
-             */}
-            <button
-              type="button"
-              onClick={() => {
-                setShowAddTag(false);
-                setNewTagName('');
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+
+				  </div>
+				  );
 }
