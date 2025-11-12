@@ -5,7 +5,7 @@
 **Milestone Name:** Sprint 01 - Auto Mode Switching & Mode Visibility
 **Description:** Implement automatic session transitions and mode visibility to improve user workflow and reduce manual interactions.
 **Due Date:** [Set based on sprint planning]
-**Total Story Points:** 9
+**Total Story Points:** 10
 
 ---
 
@@ -740,6 +740,161 @@ if(timeLeft === 0 && !showConfirmModal) {
 
 ---
 
+## Issue #5: Optimize Context Functions with useCallback
+
+**Labels:** `refactor`, `priority: medium`, `story-points: 1`, `performance`
+
+### Description
+
+Wrap timer control functions in `useCallback` to prevent unnecessary re-renders and effect re-executions. Currently, `saveSession`, `pauseTimer`, `resetTimer`, and `startTimer` functions are recreated on every render, causing dependent useEffect hooks to re-run unnecessarily.
+
+### User Story
+
+```
+As a developer maintaining the codebase
+I want timer control functions to be stable across renders
+So that effect dependencies don't cause unnecessary re-executions and potential performance issues
+```
+
+### Current Problem
+
+**File:** `src/hooks/PomodoroContext.tsx:139-154`
+
+Functions are defined inline without `useCallback`:
+```typescript
+const startTimer = () => {
+  setIsRunning(true);
+};
+
+const pauseTimer = () => {
+  setIsRunning(false);
+};
+
+const resetTimer = () => {
+  setIsRunning(false);
+  setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
+};
+
+const saveSession = (session: PomodoroSession) => {
+  setSessions((prev) => [...prev, session]);
+};
+```
+
+**Impact:** These functions are included in useEffect dependencies in Timer.tsx:58, causing the timer completion effect to re-run on every render.
+
+### Acceptance Criteria
+
+- [ ] `startTimer` wrapped in `useCallback` with empty dependency array
+- [ ] `pauseTimer` wrapped in `useCallback` with empty dependency array
+- [ ] `resetTimer` wrapped in `useCallback` with `[mode, defaultWorkTime, defaultBreakTime]` dependencies
+- [ ] `saveSession` wrapped in `useCallback` with empty dependency array
+- [ ] No behavioral changes to timer functionality
+- [ ] ESLint exhaustive-deps warnings resolved
+- [ ] Timer effects only re-run when necessary values change
+
+### Technical Implementation
+
+**File to Modify:**
+- `src/hooks/PomodoroContext.tsx`
+
+**Expected Implementation:**
+```typescript
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+
+// ... existing code ...
+
+export function PomodoroProvider({ children }: PomodoroProviderProps) {
+  // ... existing state ...
+
+  const startTimer = useCallback(() => {
+    setIsRunning(true);
+  }, []);
+
+  const pauseTimer = useCallback(() => {
+    setIsRunning(false);
+  }, []);
+
+  const resetTimer = useCallback(() => {
+    setIsRunning(false);
+    setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
+  }, [mode, defaultWorkTime, defaultBreakTime]);
+
+  const saveSession = useCallback((session: PomodoroSession) => {
+    setSessions((prev) => [...prev, session]);
+  }, []);
+
+  // ... rest of the code ...
+}
+```
+
+### Why Setters Are Currently Included in Dependencies
+
+**Context:** Timer.tsx includes setters like `setTimeLeft` in useEffect dependencies (line 40):
+```typescript
+}, [isRunning, timeLeft, setTimeLeft]);
+```
+
+**Explanation:**
+1. **React's exhaustive-deps rule** enforces including ALL referenced values, including setters
+2. **setState setters are stable** - they never change between renders (guaranteed by React)
+3. **Including them is optional but recommended** for:
+   - Consistency and explicit dependencies
+   - Future-proofing if implementation changes
+   - Satisfying the linter without disable comments
+
+**However:** Functions like `saveSession`, `pauseTimer`, `resetTimer` are NOT stable and should be wrapped in `useCallback` to prevent unnecessary effect re-runs.
+
+### Testing Checklist
+
+**Functional Tests:**
+- [ ] Timer start/pause functionality unchanged
+- [ ] Reset timer works correctly for both modes
+- [ ] Session saving still works
+- [ ] Mode switching works correctly
+- [ ] No regressions in existing features
+
+**Performance Tests:**
+- [ ] useEffect in Timer.tsx:32-40 only runs when `isRunning` or `timeLeft` change
+- [ ] useEffect in Timer.tsx:43-58 only runs when actual dependencies change
+- [ ] React DevTools Profiler shows reduced re-renders (optional verification)
+
+**Code Quality:**
+- [ ] No ESLint warnings for exhaustive-deps
+- [ ] All useCallback dependencies are correct
+- [ ] TypeScript types remain correct
+
+### Definition of Done
+
+- [ ] All functions wrapped in useCallback with correct dependencies
+- [ ] No behavioral changes verified through manual testing
+- [ ] No ESLint warnings
+- [ ] Code follows existing patterns
+- [ ] Committed with clear explanation
+
+### Dependencies
+
+None - can be implemented independently
+
+### Related Issues
+
+- Related to: #1 (these functions are used in auto-switching logic)
+- Related to: #4 (these functions trigger notifications)
+
+### Notes
+
+**Priority Justification:** Medium priority because:
+- Current code works correctly (no bugs)
+- Performance impact is minimal for this small app
+- Good practice for code quality and maintainability
+- Prevents future issues as app grows
+
+**Estimated Effort:** 1 story point (30-60 minutes)
+- Simple refactor
+- Clear implementation pattern
+- Easy to test
+
+---
+
 ## Sprint Testing Plan
 
 ### Integration Testing Sequence
@@ -827,6 +982,7 @@ Category:
 - user-facing (blue)
 - backend (grey)
 - testing (orange)
+- performance (teal)
 ```
 
 ---
@@ -838,6 +994,7 @@ feature/1-auto-mode-switching
 feature/2-mode-indicator
 feature/3-manual-mode-toggle
 feature/4-session-notifications
+refactor/5-optimize-context-functions
 ```
 
 **Commit Message Format:**

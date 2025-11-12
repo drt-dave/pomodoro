@@ -112,6 +112,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   const [timeLeft, setTimeLeft] = useState<number>(savedState.timeLeft ?? defaultWorkTime);
   // Always start paused on page load (even if it was running before)
   const [isRunning, setIsRunning] = useState<boolean>(false);
+
   const [sessions, setSessions] = useState<PomodoroSession[]>(() => loadSessionsFromStorage());
 
   // Confirm modal state (persisted)
