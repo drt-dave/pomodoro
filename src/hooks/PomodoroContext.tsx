@@ -15,7 +15,7 @@
  * (prevents timer from running in background after page reload)
  */
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { PomodoroState, PomodoroMode, PomodoroSession } from '../types/pomodoro.types';
 
@@ -136,23 +136,23 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 	});
   }, [tag, mode, timeLeft, isRunning, showConfirmModal, wasRunningBeforeModal]);
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
 	setIsRunning(true);
-  };
-
-  const pauseTimer = () => {
+  }, []);
+ 
+  const pauseTimer = useCallback(() => {
 	setIsRunning(false);
-  };
-
-  const resetTimer = () => {
+  }, []);
+ 
+  const resetTimer = useCallback(() => {
 	setIsRunning(false);
 	setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
-  };
+  }, [mode, defaultWorkTime, defaultBreakTime]);
 
-  const saveSession = (session: PomodoroSession) => {
+  const saveSession = useCallback((session: PomodoroSession) => {
 	setSessions((prev) => [...prev, session]);
-  };
-
+  }, []);
+ 
   return (
 	<PomodoroContext.Provider
 	  value={{
