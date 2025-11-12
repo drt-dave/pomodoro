@@ -4,6 +4,7 @@
  */
 
 import { usePomodoro } from '../hooks/PomodoroContext';
+import { formatTimeDuration } from '../utils/formatTime';
 
 export function TagStats() {
   const { sessions } = usePomodoro();
@@ -13,15 +14,15 @@ export function TagStats() {
     if (!acc[session.tag]) {
       acc[session.tag] = {
         count: 0,
-        totalMinutes: 0,
+        totalSeconds: 0,
       };
     }
 
     acc[session.tag].count += 1;
-    acc[session.tag].totalMinutes += session.duration / 60;
+    acc[session.tag].totalSeconds += session.duration;
 
     return acc;
-  }, {} as Record<string, { count: number; totalMinutes: number }>);
+  }, {} as Record<string, { count: number; totalSeconds: number }>);
 
   // Convert to sorted array
   const sortedStats = Object.entries(tagStats)
@@ -30,7 +31,7 @@ export function TagStats() {
 
   // Calculate overall statistics
   const totalSessions = sessions.length;
-  const totalMinutes = sessions.reduce((sum, s) => sum + s.duration / 60, 0);
+  const totalSeconds = sessions.reduce((sum, s) => sum + s.duration, 0);
 
   return (
     <div className="stats-container">
@@ -43,8 +44,7 @@ export function TagStats() {
             🍅 Total Sessions: <strong>{totalSessions}</strong>
           </p>
           <p>
-            ⏱️ Total Time: <strong>{Math.round(totalMinutes)} minutes</strong> (
-            {(totalMinutes / 60).toFixed(1)} hours)
+            ⏱️ Total Time: <strong>{formatTimeDuration(totalSeconds)}</strong>
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export function TagStats() {
           </p>
         ) : (
           <div className="tag-stats-list">
-            {sortedStats.map(({ tag, count, totalMinutes }) => (
+            {sortedStats.map(({ tag, count, totalSeconds }) => (
               <div key={tag} className="tag-stat-card">
                 <div className="tag-stat-header">
                   <h4>{tag}</h4>
@@ -64,8 +64,7 @@ export function TagStats() {
                 </div>
 
                 <div className="tag-stat-time">
-                  ⏱️ {Math.round(totalMinutes)} minutes ({(totalMinutes / 60).toFixed(1)}{' '}
-                  hours)
+                  ⏱️ {formatTimeDuration(totalSeconds)}
                 </div>
 
                 <div className="progress-bar">

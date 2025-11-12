@@ -12,47 +12,47 @@ function App() {
   const [activeView, setActiveView] = useState<ViewType>('timer');
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1 className="logo-title">🍅 PomoDoroto</h1>
-      </header>
+	<div className="app">
+	  <header className="app-header">
+		<h1 className="logo-title">🍅 PomoDoroto</h1>
+	  </header>
 
-      <main className="main-content">
-        {activeView === 'timer' && (
-          <>
-            <div className="card timer-card">
-              <Timer />
-            </div>
+	  <main className="main-content">
+		{activeView === 'timer' && (
+		  <>
+			<div className="card tagselector-card">
+			  <TagSelector tag={tag} setTag={setTag} mode={mode} />
+			</div>
 
-            <div className="card tagselector-card">
-              <TagSelector tag={tag} setTag={setTag} mode={mode} />
-            </div>
-          </>
-        )}
+			<div className="card timer-card">
+			  <Timer />
+			</div>
+		  </>
+		)}
 
-        {activeView === 'stats' && (
-          <div className="card stats-card">
-            <TagStats />
-          </div>
-        )}
-      </main>
+		{activeView === 'stats' && (
+		  <div className="card stats-card">
+			<TagStats />
+		  </div>
+		)}
+	  </main>
 
-      <footer className="bottom-nav">
-        <div
-          className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
-          onClick={() => setActiveView('timer')}
-        >
-          ⏱️<span>Timer</span>
-        </div>
+	  <footer className="bottom-nav">
+		<div
+		  className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
+		  onClick={() => setActiveView('timer')}
+		>
+		  ⏱️<span>Timer</span>
+		</div>
 
-        <div
-          className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
-          onClick={() => setActiveView('stats')}
-        >
-          📊<span>Stats</span>
-        </div>
-      </footer>
-    </div>
+		<div
+		  className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
+		  onClick={() => setActiveView('stats')}
+		>
+		  📊<span>Stats</span>
+		</div>
+	  </footer>
+	</div>
   );
 }
 
