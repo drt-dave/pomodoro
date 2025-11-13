@@ -8,24 +8,25 @@ import { usePomodoro } from "../hooks/PomodoroContext";
 import type {PomodoroSession} from "../types/pomodoro.types";
 import { ConfirmModal } from "./ConfirmModal";
 import { formatTimeMMSS } from "../utils/formatTime";
+import {ModeIndicator} from "./ModeIndicator";
 
 export const Timer = () => {
   const {
-    timeLeft,
-    setTimeLeft,
-    isRunning,
-    startTimer,
-    pauseTimer,
-    resetTimer,
-    saveSession,
-    tag,
-    mode,
-    defaultWorkTime,
-    defaultBreakTime,
-    showConfirmModal,
-    setShowConfirmModal,
-    wasRunningBeforeModal,
-    setWasRunningBeforeModal
+	timeLeft,
+	setTimeLeft,
+	isRunning,
+	startTimer,
+	pauseTimer,
+	resetTimer,
+	saveSession,
+	tag,
+	mode,
+	defaultWorkTime,
+	defaultBreakTime,
+	showConfirmModal,
+	setShowConfirmModal,
+	wasRunningBeforeModal,
+	setWasRunningBeforeModal
   } = usePomodoro();
 
   // Timer interval effect
@@ -98,6 +99,8 @@ export const Timer = () => {
 
   return (
 	<div className="timer">
+		
+	  <ModeIndicator />
 	  <div className="time-display">
 		{formatTimeMMSS(timeLeft)}
 	  </div>

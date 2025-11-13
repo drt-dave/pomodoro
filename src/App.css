@@ -681,6 +681,70 @@
 }
 
 /* ===========================================================================
+   MODE INDICATOR COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .mode-indicator - Mode Display Component
+ * -----------------------------------------
+ * Prominently displays current session mode (Work or Break)
+ */
+.mode-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/**
+ * .mode-indicator__icon - Mode Icon
+ * ----------------------------------
+ * Emoji icon for visual mode identification
+ */
+.mode-indicator__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/**
+ * .mode-indicator__label - Mode Label Text
+ * -----------------------------------------
+ * Text label describing current mode
+ */
+.mode-indicator__label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/**
+ * .mode-indicator--work - Work Mode Styling
+ * ------------------------------------------
+ * Professional, focused purple gradient for work sessions
+ */
+.mode-indicator--work {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 2px solid rgba(118, 75, 162, 0.3);
+}
+
+/**
+ * .mode-indicator--break - Break Mode Styling
+ * --------------------------------------------
+ * Relaxed, warm pink gradient for break sessions
+ */
+.mode-indicator--break {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: 2px solid rgba(245, 87, 108, 0.3);
+}
+
+/* ===========================================================================
    BUTTON STYLES - Interactive Elements
    =========================================================================== */
 
@@ -1822,6 +1886,18 @@ button:focus:not(:focus-visible) {
 
   .stats-content {
     padding: 1rem;
+  }
+
+  .mode-indicator {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .mode-indicator__icon {
+    font-size: 1.3rem;
+  }
+
+  .mode-indicator__label {
+    font-size: 1rem;
   }
 
   .bottom-nav {
