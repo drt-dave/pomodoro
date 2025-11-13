@@ -1,11 +1,6 @@
-/**
- * Timer Component
- * Displays the Pomodoro countdown timer and provides controls.
- */
-
 import { useEffect } from "react";
 import { usePomodoro } from "../hooks/PomodoroContext";
-import type {PomodoroSession} from "../types/pomodoro.types";
+import type {PomodoroMode, PomodoroSession} from "../types/pomodoro.types";
 import { ConfirmModal } from "./ConfirmModal";
 import { formatTimeMMSS } from "../utils/formatTime";
 import {ModeIndicator} from "./ModeIndicator";
@@ -21,6 +16,7 @@ export const Timer = () => {
 	saveSession,
 	tag,
 	mode,
+	setMode,
 	defaultWorkTime,
 	defaultBreakTime,
 	showConfirmModal,
@@ -45,6 +41,7 @@ export const Timer = () => {
 	if( timeLeft === 0 && !showConfirmModal){
 	  //Timer naturally completed
 	  const initialTime = mode === 'work' ? defaultWorkTime : defaultBreakTime;
+	  //1. Save the completed session
 	  const session: PomodoroSession = {
 		tag:tag,
 		duration: initialTime, //Full duration since completed
@@ -52,11 +49,19 @@ export const Timer = () => {
 		completed: true, //Actually completed (not ended early)
 	  };
 	  saveSession(session);
-	  pauseTimer(); //Stop the timer
-	  resetTimer(); //Reset back to default time
+	  // 2. Determine next mode and switch
+	  const nextMode: PomodoroMode = mode === 'work' ? 'break' : 'work';
+	  setMode(nextMode);
+
+	  // 3. Set timer to new mode's default duration
+	  const nextDuration : number = nextMode === 'work' ? defaultWorkTime : defaultBreakTime;
+	  setTimeLeft(nextDuration);
+
+	  // 4. Keep timer paused (don't autostart)
+	  pauseTimer(); 
 	  //TODO: Play sound, show notification,etc.
 	}
-  }, [ timeLeft, showConfirmModal, mode, tag, defaultWorkTime, defaultBreakTime, saveSession, pauseTimer, resetTimer ]);
+  }, [ timeLeft, showConfirmModal, mode, tag, defaultWorkTime, defaultBreakTime, saveSession, pauseTimer, setMode, setTimeLeft ]);
 
   // Stop timer and show confirmation modal
   const handlerFinishSession = () => {
