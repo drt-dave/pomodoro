@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePomodoro } from "../hooks/PomodoroContext";
 import type {PomodoroMode, PomodoroSession} from "../types/pomodoro.types";
 import { ConfirmModal } from "./ConfirmModal";
 import { formatTimeMMSS } from "../utils/formatTime";
 import {ModeIndicator} from "./ModeIndicator";
+import { Toast } from "./Toast";
 
 export const Timer = () => {
   const {
@@ -24,6 +25,17 @@ export const Timer = () => {
 	wasRunningBeforeModal,
 	setWasRunningBeforeModal
   } = usePomodoro();
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastData, setToastData] = useState<{
+	message: string;
+	duration: number;
+	type: 'work' | 'break';
+  }>({
+	message: '',
+	duration: 0,
+	type: 'work'
+  });
 
   // Timer interval effect
   useEffect(() => {
@@ -49,6 +61,19 @@ export const Timer = () => {
 		completed: true, //Actually completed (not ended early)
 	  };
 	  saveSession(session);
+
+	  // Show completion notification
+	  const completionMessage = mode === 'work' 
+	  ? '✅ Work session completed!'
+	  : '☕ Break completed!';
+
+	  setToastData({
+		message: completionMessage,
+		duration: initialTime,
+		type: mode
+	  });
+	  setShowToast(true);
+
 	  // 2. Determine next mode and switch
 	  const nextMode: PomodoroMode = mode === 'work' ? 'break' : 'work';
 	  setMode(nextMode);
@@ -129,6 +154,13 @@ export const Timer = () => {
 		onCancel={cancelFinishSession}
 		title="Finish Session?"
 		message="Are you sure you want to end this Pomodoro session early?"
+	  />
+	  <Toast
+		isVisible={showToast}
+		message={toastData.message}
+		duration={toastData.duration}
+		type={toastData.type}
+		onClose={()=> setShowToast(false)}
 	  />
 	</div>
   );
