@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import styles from './Toast.module.css';
 
 interface ToastProps {
   isVisible: boolean;
@@ -38,25 +39,28 @@ export const Toast =({
 
   return (
 	<div 
-	  className={`toast toast--${type}`}
+	  className={[
+	  styles.toast,
+	  type === 'work' ? styles.toastWork : styles.toastBreak
+	  ].join(' ')}
 	  role="alert"
 	  aria-live="polite"
 	>
-	  <div className="toast__content">
-		<span className="toast__icon" aria-hidden="true">
+	  <div className={ styles.toastContent }>
+		<span className={ styles.toastIcon } aria-hidden="true">
 		  {type === 'work' ? '✅' : '☕'}
 		</span>
-		<div className="toast__text">
-		  <span className="toast__message">{message}</span>
+		<div className={ styles.toastText }>
+		  <span className={ styles.toastMessage }>{message}</span>
 		  {duration !== undefined && (
-			<span className="toast__duration">
+			<span className={ styles.toastDuration }>
 			  Duration: {formatDuration(duration)}
 			</span>
 		  )}
 		</div>
 	  </div>
 	  <button 
-		className="toast__close"
+		className={ styles.toastClose }
 		onClick={onClose}
 		aria-label="Close notification"
 	  >
