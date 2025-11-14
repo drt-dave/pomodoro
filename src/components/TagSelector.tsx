@@ -37,7 +37,8 @@
 
 import { useState, useEffect } from 'react';
 import type { PomodoroMode } from '../types/pomodoro.types';
-//TODO: 
+import styles from './TagSelector.module.css';
+//TODO:
 //save in exporer storage the taglist
 
 // ===========================================================================
@@ -387,11 +388,11 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 		  // ===========================================================================
 
 		  return (
-			<div className="tag-selector">
+			<div className={styles.tagSelector}>
 			  <h3>Select Category</h3>
 
 			  {/* ADD TAG SECTION */}
-			  <div className="add-tag-section">
+			  <div className={styles.addTagSection}>
 				{/**
 				  * CONDITIONAL RENDERING
 				  * ---------------------
@@ -406,7 +407,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 					// CASE 1: Form is hidden - show "Add Tag" button
 					<button
 					type="button"
-					className="add-tag-btn"
+					className={styles.addTagBtn}
 					onClick={() => setShowAddTag(true)} // Show the form when clicked
 					disabled={mode === 'break'} // Disable during break time
 					>
@@ -414,7 +415,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 					</button>
 					) : (
 					  // CASE 2: Form is visible - show input and action buttons
-					  <div className="add-tag-form">
+					  <div className={styles.addTagForm}>
 					  {/**
 						* CONTROLLED INPUT PATTERN
 						* ------------------------
@@ -499,7 +500,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 				  )}
 				</div>
 				{/* TAG BUTTONS LIST */}
-				<div className="tags-list">
+				<div className={styles.tagsList}>
 				{/**
 				  * LIST RENDERING WITH .map()
 				  * ---------------------------
@@ -530,7 +531,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 					  <button
 					  key={t} // Unique identifier for React's reconciliation
 					  type="button" // Prevents form submission if inside a form
-					  className={`tag-btn ${t === tag ? 'active' : ''}`} // Dynamic class
+					  className={[styles.tagBtn, t === tag ? styles.active : ''].join(' ')} // Dynamic class
 					  onClick={() => handleSelectTag(t)} // Arrow function to pass parameter
 					  disabled={mode === 'break'} // Disable during break mode
 					  aria-pressed={t === tag} // Accessibility: tells screen readers if button is "pressed"

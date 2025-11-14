@@ -1,0 +1,142 @@
+/* ===========================================================================
+   TAG SELECTOR COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .tagSelector - Main Tag Selector Container
+ * -------------------------------------------
+ * Matches the timer component width for visual consistency.
+ */
+.tagSelector {
+  max-width: 500px;
+  margin: 1rem auto;
+}
+
+.tagSelector h3 {
+  text-align: center;
+  color: #ff6347;
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * .addTagSection - Container for Add Tag Controls
+ * ------------------------------------------------
+ * Wraps the add tag button or form
+ */
+.addTagSection {
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * .addTagBtn - Add Tag Button
+ * ----------------------------
+ * Button to reveal the tag creation form
+ */
+.addTagBtn {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #2b2b2b 0%, #3a3a3a 100%);
+  border: 2px dashed rgba(255, 99, 71, 0.3);
+  color: #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addTagBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  border-color: rgba(255, 99, 71, 0.6);
+  color: #ff6347;
+}
+
+/**
+ * .addTagForm - Add Tag Form Container
+ * -------------------------------------
+ * Form with input and action buttons
+ */
+.addTagForm {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.addTagForm input {
+  flex: 1;
+  padding: 0.8rem;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.addTagForm input:focus {
+  outline: none;
+  border-color: #ff6347;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.2);
+}
+
+.addTagForm button {
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, #ff6347 0%, #ff4757 100%);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addTagForm button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 99, 71, 0.4);
+}
+
+/**
+ * .tagsList - Container for Tag Buttons
+ * --------------------------------------
+ * Flexbox layout for tag chips
+ */
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/**
+ * .tagBtn - Individual Tag Button
+ * --------------------------------
+ * Base styles for tag selection buttons
+ */
+.tagBtn {
+  background-color: #2b2b2b;
+  color: #ccc;
+  border: 1px solid #444;
+  margin: 4px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tagBtn:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/**
+ * .tagBtn.active - Active Tag State
+ * ----------------------------------
+ * Highlights the currently selected tag
+ */
+.tagBtn.active {
+  background-color: #ff6347;
+  color: #fff;
+  font-weight: bold;
+  border: 2px solid #ffb199;
+  box-shadow: 0 0 10px rgba(255, 99, 71, 0.6);
+  transition: all 0.3s ease;
+}

@@ -1,3 +1,5 @@
+import { usePomodoro } from '../hooks/PomodoroContext';
+import styles from './ConfirmModal.module.css';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -8,24 +10,50 @@ interface ConfirmModalProps {
 }
 
 export function ConfirmModal({ isOpen, onConfirm, onCancel, title, message }: ConfirmModalProps) {
+  const { mode } = usePomodoro();
+
   if (!isOpen) return null;
 
-  return(
-	<div 
-	  className="modal-overlay"
-	  onClick={onCancel}>
-	  <div 
-		className="modal-content"
-		onClick={(e)=> e.stopPropagation()}>
-		<h3>{title}</h3>
-		<p>{message}</p>
-		<div className="modal-buttons">
-		  <button onClick={onConfirm}
-			className="modal-btn-confirm">Yes</button>
-		  <button className="modal-btn-cancel"
-			onClick={onCancel}>No</button>
-		</div>
-	  </div>
-	</div>
+  return (
+    <div
+      className={[
+        styles.confirmModal,
+        mode === 'work' ? styles.confirmModalWork : styles.confirmModalBreak
+      ].join(' ')}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirm-modal-title"
+      aria-describedby="confirm-modal-message"
+    >
+      <div className={styles.confirmModalContent}>
+        <span className={styles.confirmModalIcon} aria-hidden="true">
+          ❓
+        </span>
+        <div className={styles.confirmModalText}>
+          <h3 id="confirm-modal-title" className={styles.confirmModalTitle}>
+            {title}
+          </h3>
+          <p id="confirm-modal-message" className={styles.confirmModalMessage}>
+            {message}
+          </p>
+        </div>
+      </div>
+      <div className={styles.confirmModalActions}>
+        <button
+          className={styles.confirmModalButtonCancel}
+          onClick={onCancel}
+          aria-label="Cancel"
+        >
+          No
+        </button>
+        <button
+          className={styles.confirmModalButtonConfirm}
+          onClick={onConfirm}
+          aria-label="Confirm"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
   );
 }

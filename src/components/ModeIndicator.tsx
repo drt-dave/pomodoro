@@ -31,12 +31,12 @@ export const ModeIndicator = () => {
     work: {
       icon: '💼',
       label: 'Work Session',
-      className: 'mode-indicator--work'
+      className: styles.modeIndicatorWork
     },
     break: {
       icon: '☕',
       label: 'Break Time',
-      className: 'mode-indicator--break'
+      className: styles.modeIndicatorBreak
     }
   } as const;
 
