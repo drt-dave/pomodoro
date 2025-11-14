@@ -5,6 +5,7 @@
 
 import { usePomodoro } from '../hooks/PomodoroContext';
 import { formatTimeDuration } from '../utils/formatTime';
+import styles from './TagStats.module.css';
 
 export function TagStats() {
   const { sessions } = usePomodoro();
@@ -34,11 +35,11 @@ export function TagStats() {
   const totalSeconds = sessions.reduce((sum, s) => sum + s.duration, 0);
 
   return (
-    <div className="stats-container">
+    <div className={styles.statsContainer}>
       <h2>📊 Your Pomodoro Stats</h2>
 
-      <div className="stats-content">
-        <div className="overall-stats">
+      <div className={styles.statsContent}>
+        <div className={styles.overallStats}>
           <h3>Overall</h3>
           <p>
             🍅 Total Sessions: <strong>{totalSessions}</strong>
@@ -51,30 +52,30 @@ export function TagStats() {
         <h3>By Category</h3>
 
         {sortedStats.length === 0 ? (
-          <p className="empty-state">
+          <p className={styles.emptyState}>
             No completed sessions yet. Start a timer to see stats! 🚀
           </p>
         ) : (
-          <div className="tag-stats-list">
+          <div className={styles.tagStatsList}>
             {sortedStats.map(({ tag, count, totalSeconds }) => (
-              <div key={tag} className="tag-stat-card">
-                <div className="tag-stat-header">
+              <div key={tag} className={styles.tagStatCard}>
+                <div className={styles.tagStatHeader}>
                   <h4>{tag}</h4>
-                  <span className="session-badge">{count} sessions</span>
+                  <span className={styles.sessionBadge}>{count} sessions</span>
                 </div>
 
-                <div className="tag-stat-time">
+                <div className={styles.tagStatTime}>
                   ⏱️ {formatTimeDuration(totalSeconds)}
                 </div>
 
-                <div className="progress-bar">
+                <div className={styles.progressBar}>
                   <div
-                    className="progress-fill"
+                    className={styles.progressFill}
                     style={{ width: `${(count / totalSessions) * 100}%` }}
                   />
                 </div>
 
-                <div className="percentage-text">
+                <div className={styles.percentageText}>
                   {((count / totalSessions) * 100).toFixed(1)}% of total sessions
                 </div>
               </div>

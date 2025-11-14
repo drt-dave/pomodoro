@@ -5,6 +5,7 @@ import { ConfirmModal } from "./ConfirmModal";
 import { formatTimeMMSS } from "../utils/formatTime";
 import {ModeIndicator} from "./ModeIndicator";
 import { Toast } from "./Toast";
+import styles from './Timer.module.css';
 
 export const Timer = () => {
   const {
@@ -128,15 +129,15 @@ export const Timer = () => {
   }
 
   return (
-	<div className="timer">
-		
+	<div className={styles.timer}>
+
 	  <ModeIndicator />
-	  <div className="time-display">
+	  <div className={styles.timeDisplay}>
 		{formatTimeMMSS(timeLeft)}
 	  </div>
 
-	  <div className="timer-controls">
-		<button 
+	  <div className={styles.timerControls}>
+		<button
 		  onClick={isRunning ? pauseTimer : startTimer}
 		  disabled={showConfirmModal}
 		>
@@ -145,7 +146,7 @@ export const Timer = () => {
 		<button onClick={resetTimer}>🔄 Reset</button>
 		<button
 		  onClick={handlerFinishSession}
-		  className="full-width-btn">FINISH</button>
+		  className={styles.fullWidthBtn}>FINISH</button>
 	  </div>
 
 	  <ConfirmModal

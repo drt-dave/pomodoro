@@ -1,0 +1,109 @@
+/* ===========================================================================
+   TIMER COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .timer - Main Timer Container
+ * ------------------------------
+ * Central component displaying the Pomodoro countdown.
+ */
+.timer {
+  max-width: 500px;
+  margin: 1rem auto;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-radius: 24px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.timer:hover {
+  box-shadow: 0 16px 56px rgba(255, 99, 71, 0.3);
+  border-color: rgba(255, 99, 71, 0.3);
+}
+
+/**
+ * .timeDisplay - Countdown Time Display
+ * --------------------------------------
+ * Large, prominent display showing MM:SS format.
+ */
+.timeDisplay {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  text-shadow: 0 4px 16px rgba(255, 99, 71, 0.4);
+  background: linear-gradient(180deg, #fff 0%, #ffb199 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/**
+ * .timerControls - Button Container
+ * ----------------------------------
+ * Uses Flexbox for button layout with gap spacing.
+ */
+.timerControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.timerControls button {
+  min-width: 140px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff6347 0%, #ff4757 100%);
+  border: 2px solid transparent;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255, 99, 71, 0.3);
+  transition: all 0.3s ease;
+}
+
+.timerControls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 99, 71, 0.5);
+  background: linear-gradient(135deg, #ff4757 0%, #ff6347 100%);
+  border-color: #ffb199;
+}
+
+.timerControls button:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 2px 8px rgba(255, 99, 71, 0.4);
+}
+
+.timerControls .fullWidthBtn {
+  width: 100%;
+  flex-basis: 100%;
+}
+
+/**
+ * RESPONSIVE DESIGN - Mobile Optimization
+ * ----------------------------------------
+ * Adjusts timer for smaller screens
+ */
+@media (max-width: 600px) {
+  .timeDisplay {
+    font-size: 3.5rem;
+  }
+
+  .timer {
+    margin: 0.5rem auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .timerControls button {
+    min-width: 110px;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
