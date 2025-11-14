@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { usePomodoro } from '../hooks/PomodoroContext';
+import styles  from './ModeIndicator.module.css'
 
 export const ModeIndicator = () => {
   const { 
@@ -60,16 +61,19 @@ export const ModeIndicator = () => {
 
   return (
     <div 
-	  className={`mode-indicator ${config.className} ${!isRunning ? 'mode-indicator--clickable' : 'mode-indicator--disabled'}`}
+	  className={[
+	  styles.modeIndicator,
+	  config.className,
+	  isRunning ? styles.modeIndicatorDisabled : styles.modeIndicatorClickable].join(' ')}
 	  onClick={handleToggle}
 	  role="button"
 	  tabIndex={isRunning ? -1 : 0}
 	  aria-label={isRunning ? 'Timer Running - pause to switch modes' : `Click to switch to ${nextMode} mode`}
 	>
-      <span className="mode-indicator__icon" aria-hidden="true">
+      <span className={styles.modeIndicatorIcon} aria-hidden="true">
         {config.icon}
       </span>
-      <span className="mode-indicator__label">
+      <span className={styles.modeIndicatorLabel}>
         {config.label}
       </span>
     </div>
