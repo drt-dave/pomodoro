@@ -1891,6 +1891,136 @@ button:focus:not(:focus-visible) {
   letter-spacing: 0.5px;
 }
 
+/* ===========================================================================
+   TOAST NOTIFICATION COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .toast - Toast Notification Container
+ * --------------------------------------
+ * Fixed position notification that appears when sessions complete
+ */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  min-width: 300px;
+  max-width: 400px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/**
+ * .toast--work - Work Session Notification
+ * -----------------------------------------
+ * Purple accent for work session completions
+ */
+.toast--work {
+  border-left: 4px solid #667eea;
+}
+
+/**
+ * .toast--break - Break Session Notification
+ * -------------------------------------------
+ * Pink accent for break session completions
+ */
+.toast--break {
+  border-left: 4px solid #f093fb;
+}
+
+/**
+ * .toast__content - Toast Content Area
+ * -------------------------------------
+ * Container for icon and text
+ */
+.toast__content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/**
+ * .toast__icon - Toast Icon
+ * --------------------------
+ * Emoji icon for visual identification
+ */
+.toast__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/**
+ * .toast__text - Toast Text Container
+ * ------------------------------------
+ * Holds message and duration text
+ */
+.toast__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/**
+ * .toast__message - Main Toast Message
+ * -------------------------------------
+ * Primary notification text
+ */
+.toast__message {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+/**
+ * .toast__duration - Session Duration
+ * ------------------------------------
+ * Secondary information showing duration
+ */
+.toast__duration {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/**
+ * .toast__close - Close Button
+ * -----------------------------
+ * Manual dismiss button
+ */
+.toast__close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toast__close:hover {
+  color: #333;
+}
+
 /**
  * RESPONSIVE DESIGN - Mobile Optimization
  * ----------------------------------------
@@ -1954,6 +2084,28 @@ button:focus:not(:focus-visible) {
    */
   .nav-item span {
     display: inline;
+  }
+
+  /**
+   * Toast notification - mobile adjustments
+   * ----------------------------------------
+   * Smaller toast for mobile screens
+   */
+  .toast {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+    padding: 0.75rem 1rem;
+  }
+
+  .toast__message {
+    font-size: 0.9rem;
+  }
+
+  .toast__duration {
+    font-size: 0.8rem;
   }
 }
 
