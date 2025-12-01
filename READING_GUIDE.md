@@ -58,21 +58,34 @@ A Pomodoro Timer that helps users manage their time using the Pomodoro Technique
 src/
 ├── main.tsx                    # App entry point (start here!)
 ├── App.tsx                     # Root component with navigation
+├── App.css                     # Global styles (reset, variables, layout)
 ├── types/
 │   └── pomodoro.types.ts      # TypeScript type definitions
 ├── hooks/
 │   └── PomodoroContext.tsx    # Global state management
+├── contexts/                   # NEW: Theme and context providers
+│   └── ThemeContext.tsx       # Dark mode theme system (in progress)
 ├── components/
 │   ├── Timer.tsx              # Main timer display and controls
+│   ├── Timer.module.css       # ← CSS Module (scoped styles)
+│   ├── ModeIndicator.tsx      # Mode display component
+│   ├── ModeIndicator.module.css # ← CSS Module
+│   ├── Toast.tsx              # Toast notification component
+│   ├── Toast.module.css       # ← CSS Module
 │   ├── TagSelector.tsx        # Category selector dropdown
+│   ├── TagSelector.module.css # ← CSS Module
 │   ├── TagStats.tsx           # Statistics view
-│   └── ConfirmModal.tsx       # Modal for confirming early finish
+│   ├── TagStats.module.css    # ← CSS Module
+│   ├── ConfirmModal.tsx       # Modal for confirming early finish
+│   └── ConfirmModal.module.css # ← CSS Module
 └── utils/
     └── formatTime.ts          # Time formatting helpers
 ```
 
-**Architecture Pattern:**
-This app uses a **centralized state management** pattern with React Context. All shared state lives in `PomodoroContext`, and components access it via the `usePomodoro()` hook.
+**Architecture Patterns:**
+- **Centralized State Management:** React Context pattern - all shared state lives in `PomodoroContext`, components access via `usePomodoro()` hook
+- **CSS Modules:** Co-located component styles with scoped CSS (`.module.css` files) - prevents style conflicts and improves maintainability
+- **Component Co-location:** Each component has its TypeScript file and CSS Module in the same directory
 
 ---
 
@@ -653,6 +666,59 @@ useEffect(() => {
 
 This creates automatic two-way sync! 🔄
 
+### 7. CSS Modules
+
+**What are CSS Modules?**
+A build-time feature that scopes CSS to specific components, preventing global style conflicts.
+
+**The Problem:** Global CSS can cause conflicts
+```css
+/* App.css - styles apply globally */
+.button {
+  background: blue;
+}
+
+/* Another file also has .button class - CONFLICT! */
+.button {
+  background: red; /* Which one wins? */
+}
+```
+
+**The Solution:** CSS Modules scope styles locally
+```typescript
+// Timer.tsx
+import styles from './Timer.module.css';
+
+export const Timer = () => {
+  return <div className={styles.timer}>...</div>;
+  // Becomes: <div className="Timer_timer__abc123">
+};
+```
+
+**Benefits:**
+- **No conflicts:** Classes are automatically scoped (e.g., `Timer_timer__abc123`)
+- **Co-location:** Styles live next to the component that uses them
+- **Maintainability:** Easy to find and update component-specific styles
+- **Portability:** Can move component + CSS Module together
+
+**Key conventions in this project:**
+- File naming: `ComponentName.module.css`
+- Class naming: camelCase (e.g., `modeIndicator`, `toastContainer`)
+- Import pattern: `import styles from './Component.module.css'`
+- Usage: `className={styles.className}`
+
+**Dynamic classes:**
+```typescript
+// Single class
+<div className={styles.timer}>
+
+// Multiple classes
+<div className={`${styles.timer} ${styles.active}`}>
+
+// Array join pattern (cleaner for many classes)
+<div className={[styles.timer, isActive && styles.active].filter(Boolean).join(' ')}>
+```
+
 ---
 
 ## 📊 Data Flow Diagram
@@ -739,9 +805,10 @@ This creates automatic two-way sync! 🔄
 
 3. **Advanced:**
    - Add a "long break" mode (15 minutes after 4 work sessions)
-   - Create a chart visualization for statistics
+   - Create a chart visualization for statistics (🔄 Issue #7 planned)
    - Add export/import functionality for session data
-   - Implement dark mode toggle
+   - ✅ Implement dark mode toggle (🔄 Issue #8 in progress)
+   - ✅ Refactor to CSS Modules (COMPLETED - Issue #6)
 
 ### Debugging Tips
 
