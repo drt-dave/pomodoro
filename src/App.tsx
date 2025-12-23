@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
+import { useTheme } from './contexts/ThemeContext';
 import { Timer } from './components/Timer';
 import { TagSelector } from './components/TagSelector';
 import { TagStats } from './components/TagStats';
@@ -9,12 +10,20 @@ type ViewType = 'timer' | 'stats';
 
 function App() {
   const { tag, setTag, mode } = usePomodoro();
+  const { theme, toggleTheme } = useTheme();
   const [activeView, setActiveView] = useState<ViewType>('timer');
 
   return (
 	<div className="app">
 	  <header className="app-header">
 		<h1 className="logo-title">🍅 PomoDoroto</h1>
+		<button
+		  className="theme-toggle"
+		  onClick={toggleTheme}
+		  aria-label="Toggle theme"
+		>
+		  {theme === 'light' ? '🌙' : '☀️'}
+		</button>
 	  </header>
 
 	  <main className="main-content">
