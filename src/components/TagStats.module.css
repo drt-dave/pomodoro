@@ -14,26 +14,26 @@
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 185px);
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px var(--shadow-md);
 }
 
 .statsContainer h2 {
-  color: #ff6347;
+  color: var(--accent-primary);
   margin: 0;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   position: sticky;
   top: 85px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
   z-index: 100;
   border-radius: 16px 16px 0 0;
-  text-shadow: 0 2px 8px rgba(255, 99, 71, 0.3);
+  text-shadow: 0 2px 8px var(--shadow-accent);
 }
 
 .statsContainer h3 {
-  color: #ffb199;
+  color: var(--accent-light);
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.3rem;
@@ -49,7 +49,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding: 2rem;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
   border-radius: 0 0 16px 16px;
 }
 
@@ -60,7 +60,7 @@
  */
 .overallStats {
   background: rgba(255, 99, 71, 0.1);
-  border: 2px solid rgba(255, 99, 71, 0.3);
+  border: 2px solid var(--border-primary);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -68,17 +68,17 @@
 
 .overallStats h3 {
   margin-top: 0;
-  color: #ff6347;
+  color: var(--accent-primary);
 }
 
 .overallStats p {
   font-size: 1.1rem;
   margin: 0.8rem 0;
-  color: #ccc;
+  color: var(--text-secondary);
 }
 
 .overallStats strong {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.2rem;
 }
 
@@ -108,9 +108,9 @@
 
 .tagStatCard:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 99, 71, 0.4);
+  border-color: var(--border-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(255, 99, 71, 0.2);
+  box-shadow: 0 4px 16px var(--shadow-accent);
 }
 
 /**
@@ -127,7 +127,7 @@
 
 .tagStatHeader h4 {
   margin: 0;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.3rem;
 }
 
@@ -137,7 +137,7 @@
  * Displays session count in a highlighted badge
  */
 .sessionBadge {
-  background: #ff6347;
+  background: var(--accent-primary);
   color: #fff;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
@@ -151,7 +151,7 @@
  * Shows total time for this tag
  */
 .tagStatTime {
-  color: #ccc;
+  color: var(--text-secondary);
   font-size: 1rem;
   margin-bottom: 1rem;
 }
@@ -177,7 +177,7 @@
  */
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #ff6347 0%, #ffb199 100%);
+  background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-light) 100%);
   border-radius: 4px;
   transition: width 0.5s ease;
 }
@@ -188,7 +188,7 @@
  * Shows percentage of total sessions
  */
 .percentageText {
-  color: #999;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-align: right;
 }
@@ -199,7 +199,7 @@
  * Shown when user hasn't completed any Pomodoro sessions yet
  */
 .emptyState {
-  color: #999;
+  color: var(--text-muted);
   font-style: italic;
   padding: 2rem;
   text-align: center;
