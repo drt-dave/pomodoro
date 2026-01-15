@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { usePomodoro } from '../hooks/PomodoroContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import styles  from './ModeIndicator.module.css'
 
 export const ModeIndicator = () => {
   const { 
@@ -12,6 +14,7 @@ export const ModeIndicator = () => {
 	defaultWorkTime,
 	defaultBreakTime
   } = usePomodoro();
+  const { translations } = useLanguage();
 
   // Store the time left for each mode separately
   const [ workTimeLeft, setWorkTimeLeft ] = useState(defaultWorkTime);
@@ -29,15 +32,15 @@ export const ModeIndicator = () => {
   const modeConfig = {
     work: {
       icon: '💼',
-      label: 'Work Session',
-      className: 'mode-indicator--work'
+      label: translations.workSession,
+      className: styles.modeIndicatorWork
     },
     break: {
       icon: '☕',
-      label: 'Break Time',
-      className: 'mode-indicator--break'
+      label: translations.breakTime,
+      className: styles.modeIndicatorBreak
     }
-  } as const;
+  };
 
   const handleToggle = () => { 
 	// Don't allow toggle while timer is running
@@ -60,16 +63,19 @@ export const ModeIndicator = () => {
 
   return (
     <div 
-	  className={`mode-indicator ${config.className} ${!isRunning ? 'mode-indicator--clickable' : 'mode-indicator--disabled'}`}
+	  className={[
+	  styles.modeIndicator,
+	  config.className,
+	  isRunning ? styles.modeIndicatorDisabled : styles.modeIndicatorClickable].join(' ')}
 	  onClick={handleToggle}
 	  role="button"
 	  tabIndex={isRunning ? -1 : 0}
 	  aria-label={isRunning ? 'Timer Running - pause to switch modes' : `Click to switch to ${nextMode} mode`}
 	>
-      <span className="mode-indicator__icon" aria-hidden="true">
+      <span className={styles.modeIndicatorIcon} aria-hidden="true">
         {config.icon}
       </span>
-      <span className="mode-indicator__label">
+      <span className={styles.modeIndicatorLabel}>
         {config.label}
       </span>
     </div>
