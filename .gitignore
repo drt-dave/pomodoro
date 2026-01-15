@@ -25,3 +25,6 @@ dist-ssr
 
 # Claude Code configuration
 .claude/
+
+# Learning documentation (for personal use)
+REACT_LEARNING_GUIDE.md

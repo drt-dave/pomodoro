@@ -1,7 +1,7 @@
 # 📊 Project Progress Tracker
 
 > **Purpose:** Living document to track development progress, completions, and project traceability
-> **Updated:** 2025-12-01
+> **Updated:** 2026-01-15
 > **Current Sprint:** Sprint 02 - Polish, Refactor & Advanced Features
 
 ---
@@ -137,14 +137,15 @@ Issue #5 (1 pt):      ████████████ 100% ✅
 ### Sprint 02 Progress
 
 ```
-Sprint Completion: ███░░░░░░░░░ 23% (3 of 13 points completed)
+Sprint Completion: ████████░░░░ 62% (8 of 13 points completed)
 
 Issue #6 (3 pts):     ████████████ 100% ✅ CSS Modules Refactor
 Issue #7 (3 pts):     ░░░░░░░░░░░░   0% ⏳ Enhanced Statistics
-Issue #8 (2 pts):     ████░░░░░░░░  30% 🔄 Dark Mode (ThemeContext created)
+Issue #8 (2 pts):     ████████████ 100% ✅ Dark Mode Theme System
 Issue #9 (2 pts):     ░░░░░░░░░░░░   0% ⏳ Settings Panel
 Issue #10 (2 pts):    ░░░░░░░░░░░░   0% ⏳ Sound Effects
-Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Notifications
+Issue #11 (1 pt):     ████████████ 100% ✅ Browser Notifications
+Issue #12 (2 pts):    ████████████ 100% ✅ i18n / Language Selection
 ```
 
 ### Issue Status
@@ -153,20 +154,21 @@ Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Noti
 |-------|-------|----------|--------|--------|--------|----|----|
 | #6 | Refactor to CSS Modules | High | 3 | ✅ Complete | feature/6-css-modules-refactor | - | 0019cdc |
 | #7 | Enhanced Statistics Dashboard | High | 3 | ⏳ Todo | - | - | - |
-| #8 | Dark Mode Theme System | High | 2 | 🔄 In Progress | feature/6-css-modules-refactor | - | - |
+| #8 | Dark Mode Theme System | High | 2 | ✅ Complete | feature/6-css-modules-refactor | - | 3012621 |
 | #9 | Settings Panel | Medium | 2 | ⏳ Todo | - | - | - |
 | #10 | Sound Effects & Audio | Medium | 2 | ⏳ Todo | - | - | - |
-| #11 | Browser Notifications | Low | 1 | ⏳ Todo | - | - | - |
+| #11 | Browser Notifications | Low | 1 | ✅ Complete | feature/6-css-modules-refactor | - | - |
+| #12 | i18n / Language Selection | Medium | 2 | ✅ Complete | feature/6-css-modules-refactor | - | - |
 
 ---
 
 ## 🚧 Current Work
 
 **Active Branch:** `feature/6-css-modules-refactor`
-**Current Task:** Issue #8 - Dark Mode Theme System (ThemeContext in progress)
-**Next Task:** Complete Dark Mode implementation and test across all components
+**Current Task:** Issue #7 - Enhanced Statistics Dashboard
+**Next Task:** Issue #9 - Settings Panel or Issue #11 - Browser Notifications
 
-### Recent Progress (2025-11-14 to 2025-12-01)
+### Recent Progress (2025-12-23 to 2026-01-14)
 
 ✅ Issue #6 COMPLETE - CSS Modules refactor (commit: 0019cdc)
   - All 6 components migrated to CSS Modules
@@ -174,9 +176,39 @@ Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Noti
   - Global styles remain in App.css
   - Co-located architecture implemented
 
-🔄 Issue #8 IN PROGRESS - Dark Mode Theme System
+✅ Issue #8 COMPLETE - Dark Mode Theme System (commit: 3012621)
   - ThemeContext.tsx created in src/contexts/
-  - Need to: implement theme toggle, CSS variables, component integration
+  - Theme toggle button in header (🌙/☀️)
+  - CSS variables for light/dark themes
+  - localStorage persistence with key 'pomodoro-theme'
+  - System preference detection via matchMedia
+  - Smooth transitions between themes
+  - WCAG contrast compliance
+
+✅ Issue #12 COMPLETE - i18n / Language Selection (2026-01-14)
+  - LanguageContext.tsx created in src/contexts/
+  - translations.ts with 5 languages: EN, ES, FR, EO, RU
+  - Language selector dropdown in header with flag emojis
+  - localStorage persistence with key 'pomodoro-language'
+  - All components updated to use translations:
+    - App.tsx (nav tabs)
+    - Timer.tsx (buttons, notifications, modal)
+    - TagSelector.tsx (labels, placeholders)
+    - TagStats.tsx (all stats labels)
+    - ModeIndicator.tsx (Work Session / Break Time labels) - added 2026-01-15
+  - English as default language
+
+🔧 Fixes (2026-01-15)
+  - Light theme corrected: now truly light (white backgrounds, dark text)
+  - ModeIndicator translations: added workSession/breakTime keys for all 5 languages
+
+✅ Issue #11 COMPLETE - Browser Notifications (2026-01-15)
+  - Created src/utils/notifications.ts utility
+  - Functions: isNotificationSupported(), requestNotificationPermission(), sendNotification()
+  - Permission requested when user starts timer
+  - Notification sent on session completion (work or break)
+  - Body text translated in all 5 languages
+  - Works when tab is in background
 
 ---
 
@@ -184,22 +216,22 @@ Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Noti
 
 ### Immediate (This Week)
 
-- [ ] Complete Issue #8: Dark Mode Theme System
-  - [ ] Finish ThemeContext implementation
-  - [ ] Add theme toggle button UI
-  - [ ] Define CSS variables for colors
-  - [ ] Update all components to use theme variables
-  - [ ] Test light/dark mode switching
-  - [ ] Ensure WCAG contrast compliance
+- [ ] Complete Issue #7: Enhanced Statistics Dashboard
+  - [ ] Choose charting library (Chart.js or Recharts)
+  - [ ] Implement daily/weekly/monthly view toggle
+  - [ ] Add bar chart for sessions per day
+  - [ ] Add pie chart for time distribution by tag
+  - [ ] Make charts responsive for mobile
 
 ### Sprint 02 Remaining
 
 - [x] Complete Issue #6: CSS Modules refactor ✅
 - [ ] Complete Issue #7: Enhanced statistics dashboard
-- [ ] Complete Issue #8: Dark mode theme system (IN PROGRESS)
+- [x] Complete Issue #8: Dark mode theme system ✅
 - [ ] Complete Issue #9: Settings panel
 - [ ] Complete Issue #10: Sound effects & audio
 - [ ] Complete Issue #11: Browser notifications
+- [x] Complete Issue #12: i18n / Language Selection ✅
 - [ ] Full integration testing
 - [ ] Sprint retrospective
 
@@ -270,7 +302,9 @@ Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Noti
 - [x] 🔧 **Manual Mode Toggle** - Click to switch modes with time persistence (Issue #3)
 - [x] 🔔 **Notifications** - Toast notifications for session completions (Issue #4)
 - [x] 🏗️ **CSS Modules Refactor** - Migrated to professional component architecture (Issue #6)
-- [ ] 🌙 **Dark Mode** - Theme system with light/dark toggle (Issue #8 in progress)
+- [x] 🌙 **Dark Mode** - Theme system with light/dark toggle (Issue #8)
+- [x] 🌍 **Internationalization** - Multi-language support with 5 languages (Issue #12)
+- [x] 🔔 **Browser Notifications** - Native browser notifications for session completion (Issue #11)
 - [ ] 🚀 **First Deployment** - Deploy to production
 - [ ] 💼 **Portfolio Ready** - Complete README and demo
 - [ ] 🎉 **First Job Application** - Apply with this project
@@ -433,25 +467,27 @@ Issue #11 (1 pt):     ░░░░░░░░░░░░   0% ⏳ Browser Noti
 
 ## 📊 Summary Status
 
-**Overall Status:** 🚀 Sprint 02 In Progress - 85% Complete!
+**Overall Status:** 🚀 Sprint 02 In Progress - 62% Complete!
 
-**Current Phase:** Sprint 02 - Issue #8 (Dark Mode) in progress
+**Current Phase:** Sprint 02 - Ready for remaining issues
 
 **Completion Rate:**
 - Foundation: 100% ✅
 - Sprint 01: 100% ✅ (5 issues)
-- Sprint 02: 23% 🔄 (3 of 13 story points)
+- Sprint 02: 62% 🔄 (8 of 13 story points)
   - Issue #6: CSS Modules ✅
-  - Issue #8: Dark Mode 🔄 (30% - ThemeContext started)
+  - Issue #8: Dark Mode ✅
+  - Issue #11: Browser Notifications ✅
+  - Issue #12: i18n / Language Selection ✅
 
 **Blockers:** None
 
-**Next Milestone:** Complete Issue #8 (Dark Mode), then move to Issue #7 (Enhanced Statistics)
+**Next Milestone:** Complete Issue #9 (Settings Panel) or Issue #10 (Sound Effects)
 
 **Confidence Level:** 🟢 High - Excellent progress, professional architecture in place
 
 ---
 
 *This tracker is updated regularly to maintain project traceability and progress visibility.*
-*Last updated: 2025-12-01*
-*Next update: After Issue #8 completion or significant progress*
+*Last updated: 2026-01-15*
+*Next update: After Issue #7 completion or significant progress*

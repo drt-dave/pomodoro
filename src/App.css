@@ -1,498 +1,102 @@
-/**
- * ===========================================================================
- * APP.CSS - Main Stylesheet for Pomodoro Application
- * ===========================================================================
- *
- * This file contains all the visual styles for our Pomodoro app.
- *
- * LAYOUT TEMPLATE SYSTEM (Similar to Terminal Multiplexer Configuration)
- * -----------------------------------------------------------------------
- *
- * Grid Template Structure (Desktop):
- * ┌─────────────────────────────────────────────┐
- * │  HEADER      (85px grid area)               │  ← Logo and title
- * ├─────────────────────────────────────────────┤
- * │  MAIN        (1fr fills remaining space)    │  ← Content area
- * │  Padding: 1rem vertical, 2rem horizontal    │
- * │  Overflow: hidden (no scroll!)              │
- * │  ┌───────────────────────────────────────┐  │
- * │  │ Tag Selector  (500px × 220px)         │  │  ← Fixed dimensions
- * │  ├───────────────────────────────────────┤  │
- * │  │ Gap           (1.5rem / 24px)         │  │
- * │  ├───────────────────────────────────────┤  │
- * │  │ Timer         (500px × 380px)         │  │  ← Fixed dimensions
- * │  └───────────────────────────────────────┘  │
- * ├─────────────────────────────────────────────┤
- * │  FOOTER      (90px grid area)               │  ← Navigation
- * └─────────────────────────────────────────────┘
- *
- * Grid Layout: 100vh = 85px + 1fr + 90px
- * Main area (1fr): Automatically fills remaining space
- *
- * ✅ NO SCROLLING:
- * - html/body: overflow: hidden, height: 100vh
- * - .app: width/height: 100vw/100vh, overflow: hidden
- * - .main-content: overflow: hidden, components centered
- * - Components use fixed positioning within grid (not position: fixed)
- *
- * Mobile Breakpoint (max-width: 600px):
- * - Grid: 70px + 1fr + 80px
- * - Tag Selector: 220px → 200px
- * - Timer: 380px → 320px
- * - Gap: 1.5rem → 1rem
- * - Width: 500px → 100%
- * - Padding: 0.5rem vertical, 1rem horizontal
- *
- * KEY CSS CONCEPTS COVERED:
- * -------------------------
- *
- * 1. CSS GRID LAYOUT (template areas, rows, columns)
- * 2. SELECTORS (ID, Class, Element, Pseudo-classes, Pseudo-elements)
- * 3. BOX MODEL (margin, padding, border, content)
- * 4. FLEXBOX LAYOUT (display: flex, justify-content, align-items)
- * 5. COLOR SYSTEMS (hex, rgba, named colors)
- * 6. TRANSITIONS & ANIMATIONS (smooth state changes)
- * 7. GRADIENTS (linear-gradient, color stops)
- * 8. SHADOWS (box-shadow, text-shadow, drop-shadow)
- * 9. TRANSFORMS (translate, scale, rotate)
- * 10. PSEUDO-CLASSES (:hover, :focus, :active, :not())
- * 11. MEDIA QUERIES (responsive design)
- * 12. KEYFRAME ANIMATIONS (@keyframes)
- * 13. CSS VARIABLES (custom properties)
- */
-
-/* ===========================================================================
-   CSS VARIABLES - THEME SYSTEM
-   =========================================================================== */
-
-/**
- * :root - Light Theme (Default)
- * ------------------------------
- * CSS Custom Properties (Variables) for theming.
- * These can be overridden by [data-theme='dark'] for dark mode.
- */
 :root {
-  /* Background Colors */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #1a1a1a;
-  --bg-card: #2b2b2b;
-  --bg-card-hover: #3a3a3a;
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f0;
 
-  /* Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
   --text-muted: #888888;
 
-  /* Border Colors */
-  --border-primary: rgba(255, 99, 71, 0.2);
-  --border-hover: rgba(255, 99, 71, 0.3);
-  --border-active: rgba(255, 255, 255, 0.2);
+  --border-primary: rgba(255, 99, 71, 0.3);
+  --border-hover: rgba(255, 99, 71, 0.5);
+  --border-active: rgba(0, 0, 0, 0.1);
 
-  /* Accent Colors (Tomato Red - Consistent across themes) */
   --accent-primary: #ff6347;
   --accent-secondary: #ff4757;
   --accent-light: #ffb199;
 
-  /* Shadow Colors */
-  --shadow-sm: rgba(0, 0, 0, 0.2);
-  --shadow-md: rgba(0, 0, 0, 0.3);
-  --shadow-accent: rgba(255, 99, 71, 0.2);
-  --shadow-accent-md: rgba(255, 99, 71, 0.4);
-  --shadow-accent-lg: rgba(255, 99, 71, 0.6);
+  --shadow-sm: rgba(0, 0, 0, 0.08);
+  --shadow-md: rgba(0, 0, 0, 0.12);
+  --shadow-accent: rgba(255, 99, 71, 0.15);
+  --shadow-accent-md: rgba(255, 99, 71, 0.25);
+  --shadow-accent-lg: rgba(255, 99, 71, 0.35);
 
-  /* Header/Footer Gradients */
-  --gradient-header-start: rgba(10, 10, 10, 0.98);
-  --gradient-header-end: rgba(26, 26, 26, 0.95);
-  --gradient-footer-start: rgba(26, 26, 26, 0.95);
-  --gradient-footer-end: rgba(10, 10, 10, 0.98);
+  --gradient-header-start: rgba(255, 255, 255, 0.98);
+  --gradient-header-end: rgba(245, 245, 245, 0.95);
+  --gradient-footer-start: rgba(245, 245, 245, 0.95);
+  --gradient-footer-end: rgba(255, 255, 255, 0.98);
 }
 
-/**
- * [data-theme='dark'] - Dark Theme
- * ---------------------------------
- * Dark mode theme variables.
- * Applied when ThemeContext sets data-theme="dark" on document root.
- */
 [data-theme='dark'] {
-  /* Background Colors - Darker shades */
   --bg-primary: #000000;
   --bg-secondary: #0f0f0f;
   --bg-card: #1a1a1a;
   --bg-card-hover: #252525;
 
-  /* Text Colors - Slightly dimmer for dark mode */
   --text-primary: #e0e0e0;
   --text-secondary: #b0b0b0;
   --text-muted: #707070;
 
-  /* Border Colors */
   --border-primary: rgba(255, 99, 71, 0.25);
   --border-hover: rgba(255, 99, 71, 0.4);
   --border-active: rgba(255, 255, 255, 0.15);
 
-  /* Shadows - Deeper for dark mode */
   --shadow-sm: rgba(0, 0, 0, 0.4);
   --shadow-md: rgba(0, 0, 0, 0.6);
   --shadow-accent: rgba(255, 99, 71, 0.3);
   --shadow-accent-md: rgba(255, 99, 71, 0.5);
   --shadow-accent-lg: rgba(255, 99, 71, 0.7);
 
-  /* Header/Footer Gradients - Darker */
   --gradient-header-start: rgba(0, 0, 0, 0.98);
   --gradient-header-end: rgba(15, 15, 15, 0.95);
   --gradient-footer-start: rgba(15, 15, 15, 0.95);
   --gradient-footer-end: rgba(0, 0, 0, 0.98);
 }
 
-/* ===========================================================================
-   ROOT CONTAINER STYLES
-   =========================================================================== */
-
-/**
- * #root - ID Selector
- * -------------------
- * Targets the element with id="root" (the main React mount point).
- *
- * CSS SELECTOR TYPES:
- * - #id:      Selects element with specific ID (highest specificity)
- * - .class:   Selects all elements with specific class
- * - element:  Selects all elements of a type (e.g., div, p, button)
- * - *:        Universal selector (selects everything)
- *
- * WHY USE ID SELECTOR HERE?
- * There's only one root element in the entire app, so ID is appropriate.
- * Generally, prefer classes for styling (IDs are too specific and hard to override).
- */
 #root {
-  /**
-   * max-width: 1280px
-   * -----------------
-   * Limits the maximum width of the container.
-   * On larger screens, content won't stretch beyond 1280px.
-   * This prevents very wide layouts that are hard to read.
-   *
-   * Units in CSS:
-   * - px (pixels): Absolute unit, 1px = 1 device pixel
-   * - rem (root em): Relative to root font size (usually 16px, so 1rem = 16px)
-   * - em: Relative to parent font size
-   * - % (percentage): Relative to parent element's dimension
-   * - vw/vh: Viewport width/height (100vw = full screen width)
-   */
   max-width: 1280px;
-
-  /**
-   * margin: 0 auto
-   * --------------
-   * SHORTHAND PROPERTY for margin-top/right/bottom/left.
-   *
-   * Syntax patterns:
-   * - margin: 10px;                  → All sides: 10px
-   * - margin: 10px 20px;             → Top/Bottom: 10px, Left/Right: 20px
-   * - margin: 10px 20px 30px;        → Top: 10px, Left/Right: 20px, Bottom: 30px
-   * - margin: 10px 20px 30px 40px;   → Top, Right, Bottom, Left (clockwise)
-   *
-   * "0 auto" means:
-   * - Top/Bottom: 0
-   * - Left/Right: auto (automatically distributes space equally)
-   *
-   * CENTERING TRICK:
-   * When you have a fixed/max width and set left/right margins to "auto",
-   * the browser centers the element horizontally.
-   */
   margin: 0 auto;
-
-  /**
-   * padding: 2rem
-   * -------------
-   * Adds inner spacing (space between content and border).
-   *
-   * BOX MODEL:
-   * Every element is a box with layers:
-   * 1. Content: The actual content (text, images)
-   * 2. Padding: Space around content, inside border
-   * 3. Border: Edge around padding
-   * 4. Margin: Space outside border, between this and other elements
-   *
-   * Visual:
-   * ┌─────────────── margin ───────────────┐
-   * │ ┌────────── border ──────────────┐   │
-   * │ │ ┌────── padding ─────────┐     │   │
-   * │ │ │                        │     │   │
-   * │ │ │      CONTENT           │     │   │
-   * │ │ │                        │     │   │
-   * │ │ └────────────────────────┘     │   │
-   * │ └────────────────────────────────┘   │
-   * └──────────────────────────────────────┘
-   */
   padding: 2rem;
-
-  /**
-   * text-align: center
-   * ------------------
-   * Horizontally centers inline content (text, images, inline-block elements).
-   *
-   * Values:
-   * - left: Default, align to left
-   * - center: Align to center
-   * - right: Align to right
-   * - justify: Stretch lines to fill width (like newspaper columns)
-   *
-   * NOTE: This only works on inline/inline-block content.
-   * Block elements need margin: auto for centering.
-   */
   text-align: center;
 }
 
-/* ===========================================================================
-   LOGO STYLES (Example/Demo styles from Vite template)
-   =========================================================================== */
-
-/**
- * .logo - Class Selector
- * ----------------------
- * Styles for logo images (if used).
- */
 .logo {
-  height: 6em; /* 6 times the font size */
+  height: 6em;
   padding: 1.5em;
-
-  /**
-   * will-change: filter
-   * -------------------
-   * PERFORMANCE OPTIMIZATION hint for the browser.
-   *
-   * Tells the browser: "This element's 'filter' property will change soon."
-   * The browser can optimize rendering by preparing for this change.
-   *
-   * USE SPARINGLY!
-   * Overuse can hurt performance by consuming memory.
-   * Only use when you know an animation/transition will happen frequently.
-   */
   will-change: filter;
-
-  /**
-   * transition: filter 300ms
-   * ------------------------
-   * Smoothly animates changes to the 'filter' property over 300 milliseconds.
-   *
-   * SYNTAX: transition: property duration timing-function delay;
-   * - property: What to animate (filter, all, background-color, etc.)
-   * - duration: How long the transition takes (300ms = 0.3 seconds)
-   * - timing-function: Animation curve (ease, linear, ease-in, ease-out, etc.)
-   * - delay: Wait before starting (optional)
-   *
-   * Without transition, property changes happen instantly (jarring).
-   * With transition, changes happen smoothly (pleasant).
-   */
   transition: filter 300ms;
 }
 
-/**
- * PSEUDO-CLASS - :hover
- * ---------------------
- * Applies styles when user hovers mouse over the element.
- *
- * Common pseudo-classes:
- * - :hover - Mouse over element
- * - :active - Element is being clicked
- * - :focus - Element has keyboard focus
- * - :visited - Link has been visited
- * - :first-child - First child of parent
- * - :last-child - Last child of parent
- * - :nth-child(n) - Nth child of parent
- */
 .logo:hover {
-  /**
-   * filter: drop-shadow(...)
-   * ------------------------
-   * Applies a shadow effect to the element.
-   *
-   * FILTER FUNCTIONS:
-   * CSS filters modify how an element is rendered:
-   * - blur(5px): Blur the element
-   * - brightness(150%): Make brighter/darker
-   * - contrast(200%): Adjust contrast
-   * - grayscale(100%): Convert to grayscale
-   * - drop-shadow(x y blur color): Add a shadow
-   *
-   * DROP-SHADOW vs BOX-SHADOW:
-   * - box-shadow: Rectangle shadow (doesn't follow transparent areas)
-   * - drop-shadow: Follows the actual shape (respects transparency)
-   *
-   * SYNTAX: drop-shadow(offset-x offset-y blur-radius color)
-   * - 0: Horizontal offset (0 = directly under)
-   * - 0: Vertical offset (0 = directly under)
-   * - 2em: Blur radius (larger = softer shadow)
-   * - #646cffaa: Color with alpha (aa = transparency)
-   */
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-/**
- * CHAINING SELECTORS
- * ------------------
- * .logo.react:hover
- * Selects elements that have BOTH "logo" AND "react" classes, on hover.
- *
- * NO SPACE between .logo.react means both classes on same element:
- * <div class="logo react">...</div>  ✅ Matches
- * <div class="logo">...</div>        ❌ Doesn't match
- *
- * WITH SPACE .logo .react means react inside logo:
- * <div class="logo"><div class="react">...</div></div>  ✅ Matches
- */
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* ===========================================================================
-   KEYFRAME ANIMATIONS
-   =========================================================================== */
-
-/**
- * @keyframes - Animation Definition
- * ---------------------------------
- * Defines a named animation that can be reused on multiple elements.
- *
- * SYNTAX:
- * @keyframes animation-name {
- *   0% { ... }      // Starting state
- *   50% { ... }     // Halfway point
- *   100% { ... }    // Ending state
- * }
- *
- * Can also use "from" and "to" instead of percentages:
- * @keyframes slide {
- *   from { left: 0; }
- *   to { left: 100px; }
- * }
- *
- * USAGE:
- * .element {
- *   animation: animation-name duration timing-function iteration-count;
- * }
- */
 @keyframes logo-spin {
-  /**
-   * from - Starting state (same as 0%)
-   */
   from {
-    /**
-     * transform: rotate(0deg)
-     * -----------------------
-     * Rotates the element 0 degrees (starting position).
-     *
-     * TRANSFORM FUNCTIONS:
-     * - rotate(angle): Rotate element
-     * - scale(x, y): Resize element
-     * - translate(x, y): Move element
-     * - skew(x, y): Slant element
-     *
-     * Transforms don't affect document flow (other elements don't move).
-     */
     transform: rotate(0deg);
   }
-
-  /**
-   * to - Ending state (same as 100%)
-   */
   to {
-    /**
-     * transform: rotate(360deg)
-     * -------------------------
-     * Rotates the element 360 degrees (full circle).
-     *
-     * The browser automatically animates from 0deg to 360deg smoothly.
-     */
     transform: rotate(360deg);
   }
 }
 
-/* ===========================================================================
-   MEDIA QUERIES - Responsive Design
-   =========================================================================== */
-
-/**
- * @media - Conditional Styles
- * ---------------------------
- * Applies styles only when certain conditions are met.
- *
- * MEDIA QUERY TYPES:
- * - @media (max-width: 768px) { ... }  → Screens up to 768px wide (mobile)
- * - @media (min-width: 769px) { ... }  → Screens 769px and wider (tablet/desktop)
- * - @media (prefers-color-scheme: dark) { ... }  → User prefers dark mode
- * - @media (prefers-reduced-motion: reduce) { ... }  → User wants less animation
- * - @media print { ... }  → When printing the page
- *
- * ACCESSIBILITY FEATURE:
- * prefers-reduced-motion detects if the user has motion sensitivity.
- * Some users get dizzy/nauseous from animations (vestibular disorders).
- * Respecting this preference makes your site more accessible.
- */
 @media (prefers-reduced-motion: no-preference) {
-  /**
-   * This applies only if the user HASN'T requested reduced motion.
-   * If they have motion sensitivity, this animation won't run.
-   */
-
-  /**
-   * COMPLEX SELECTOR:
-   * a:nth-of-type(2) .logo
-   * ----------------------
-   * Breaks down:
-   * - a:nth-of-type(2): The 2nd <a> element among its siblings
-   * - (space): Descendant combinator
-   * - .logo: Any element with class "logo" inside that <a>
-   *
-   * Result: Targets .logo inside the second link on the page.
-   */
   a:nth-of-type(2) .logo {
-    /**
-     * animation: logo-spin infinite 20s linear
-     * ----------------------------------------
-     * SHORTHAND for animation properties:
-     *
-     * Full syntax:
-     * animation: name duration timing-function delay iteration-count direction;
-     *
-     * Here:
-     * - logo-spin: Animation name (defined above with @keyframes)
-     * - infinite: Never stop (other values: 1, 2, 3, etc.)
-     * - 20s: Duration (takes 20 seconds for one full rotation)
-     * - linear: Constant speed (no easing in/out)
-     *
-     * TIMING FUNCTIONS:
-     * - linear: Constant speed throughout
-     * - ease: Slow start, fast middle, slow end (default)
-     * - ease-in: Slow start, fast end
-     * - ease-out: Fast start, slow end
-     * - ease-in-out: Slow start and end, fast middle
-     * - cubic-bezier(n,n,n,n): Custom curve
-     */
     animation: logo-spin infinite 20s linear;
   }
 }
 
-/* ===========================================================================
-   APP LAYOUT - CSS GRID TEMPLATE
-   =========================================================================== */
-
-/**
- * .app - Main App Container
- * -------------------------
- * Root container for the entire application
- */
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/**
- * .app-header - Fixed Header
- * ---------------------------
- * Header fixed at the top of the viewport
- */
 .app-header {
   position: fixed;
   top: 0;
@@ -510,11 +114,6 @@
   box-shadow: 0 4px 20px var(--shadow-md);
 }
 
-/**
- * .logo-title - App Title
- * ------------------------
- * Main application title styling
- */
 .logo-title {
   margin: 0;
   flex: 1;
@@ -546,11 +145,32 @@
   transform: translateY(-2px);
 }
 
-/**
- * .main-content - Main Content Area
- * ----------------------------------
- * Padding top and bottom to prevent content from being hidden behind fixed header/footer
- */
+.language-select {
+  position: absolute;
+  right: 6rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border-primary);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.language-select:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px var(--shadow-accent);
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--shadow-accent);
+}
+
 .main-content {
   flex: 1;
   padding-top: 85px;
@@ -558,79 +178,25 @@
   overflow-y: visible;
 }
 
-/* ===========================================================================
-   CARD COMPONENT
-   =========================================================================== */
-
-/**
- * .card - Reusable Card Container
- * --------------------------------
- * Generic container class for content sections.
- */
 .card {
-  /**
-   * padding: 2em
-   * ------------
-   * Adds internal spacing so content doesn't touch the edges.
-   */
   padding: 2em;
 }
-
-/* ===========================================================================
-   UTILITY CLASSES
-   =========================================================================== */
 
 .read-the-docs {
   color: var(--text-muted);
 }
 
-/* ===========================================================================
-   BOTTOM NAVIGATION (FOOTER)
-   =========================================================================== */
-
-/**
- * .bottom-nav - Footer Navigation Container
- * ------------------------------------------
- * Container for the navigation buttons at the bottom.
- * Uses flexbox to display buttons side by side.
- */
 .bottom-nav {
-  /**
-   * display: flex
-   * -------------
-   * Enables Flexbox layout for side-by-side navigation items.
-   */
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem; /* Space between navigation buttons */
-
-  /**
-   * Fixed positioning
-   * -----------------
-   * position: fixed keeps the footer visible at all times
-   * bottom: 0 anchors it to the bottom of the viewport
-   * left/right: 0 makes it full width
-   * z-index: 1000 ensures it stays above other content
-   */
+  gap: 1rem;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-
-  /**
-   * Spacing
-   * -------
-   */
   padding: 1.5rem 2rem;
-
-  /**
-   * Background with backdrop blur
-   * -----------------------------
-   * Solid background with slight transparency
-   * backdrop-filter adds blur effect for content behind it
-   */
   background: linear-gradient(180deg, var(--gradient-footer-start) 0%, var(--gradient-footer-end) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -638,73 +204,24 @@
   box-shadow: 0 -4px 20px var(--shadow-md);
 }
 
-/**
- * .nav-item - Navigation Button
- * ------------------------------
- * Individual navigation items (Timer and Stats buttons).
- * Default state: inactive appearance.
- */
 .nav-item {
-  /**
-   * Flexbox for emoji + text alignment
-   * -----------------------------------
-   */
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
-  /**
-   * Size and spacing
-   * ----------------
-   */
   padding: 0.75rem 2rem;
   min-width: 120px;
-
-  /**
-   * Typography
-   * ----------
-   * Inactive buttons use light gray color
-   */
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-secondary);
-
-  /**
-   * Shape and borders
-   * -----------------
-   * Rounded corners and dark background for inactive state
-   */
   border-radius: 12px;
   border: 2px solid transparent;
   background-color: var(--bg-card);
-
-  /**
-   * Interaction
-   * -----------
-   * cursor: pointer - Shows hand cursor on hover
-   * user-select: none - Prevents text selection on click
-   */
   cursor: pointer;
   user-select: none;
-
-  /**
-   * Smooth animations
-   * -----------------
-   */
   transition: all 0.3s ease;
-
-  /**
-   * Subtle shadow
-   * -------------
-   */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/**
- * .nav-item:hover - Hover State
- * ------------------------------
- * Visual feedback when hovering over navigation items.
- */
 .nav-item:hover {
   background-color: var(--bg-card-hover);
   transform: translateY(-2px);
@@ -712,83 +229,26 @@
   box-shadow: 0 4px 12px var(--shadow-accent);
 }
 
-/**
- * .nav-item.active - Active State
- * --------------------------------
- * Highlights the currently selected view.
- * Uses the signature tomato gradient from the app design.
- *
- * COMPOUND SELECTOR: .nav-item.active
- * This selects elements that have BOTH classes: "nav-item" AND "active"
- */
 .nav-item.active {
-  /**
-   * Signature gradient
-   * ------------------
-   * Uses the same tomato red gradient as timer buttons
-   * for visual consistency across the app
-   */
   background: linear-gradient(135deg, #ff6347 0%, #ff4757 100%);
-
-  /**
-   * White text for contrast
-   * -----------------------
-   */
   color: #fff;
-
-  /**
-   * Highlighted border
-   * ------------------
-   */
   border-color: var(--border-active);
-
-  /**
-   * More pronounced shadow
-   * ----------------------
-   * Creates a "floating" effect for active button
-   */
   box-shadow: 0 4px 16px var(--shadow-accent-md);
-
-  /**
-   * Slightly larger scale
-   * ---------------------
-   * Makes active button stand out
-   */
   transform: scale(1.05);
 }
 
-/**
- * .nav-item.active:hover - Active Hover State
- * --------------------------------------------
- * Even when active, provide hover feedback.
- */
 .nav-item.active:hover {
-  /**
-   * Inverted gradient on hover
-   * --------------------------
-   * Subtle color shift for interactivity
-   */
   background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
   border-color: var(--accent-light);
   box-shadow: 0 6px 20px var(--shadow-accent-lg);
   transform: scale(1.05) translateY(-2px);
 }
 
-/**
- * .nav-item span - Text Label
- * ----------------------------
- * Styles for the text portion of navigation items.
- */
 .nav-item span {
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
-/**
- * RESPONSIVE DESIGN - Mobile Optimization
- * ----------------------------------------
- * Adjusts navigation and header for smaller screens
- */
 @media (max-width: 600px) {
   .app-header {
     padding: 1rem;
@@ -796,6 +256,18 @@
 
   .logo-title {
     font-size: 1.5rem;
+  }
+
+  .theme-toggle {
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+  }
+
+  .language-select {
+    right: 4rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
   }
 
   .main-content {
@@ -814,13 +286,7 @@
     font-size: 0.9rem;
   }
 
-  /**
-   * Keep text visible on mobile
-   * ----------------------------
-   * Change to 'display: none' if you want emoji-only on small screens
-   */
   .nav-item span {
     display: inline;
   }
 }
-
