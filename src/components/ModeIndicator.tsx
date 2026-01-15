@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { usePomodoro } from '../hooks/PomodoroContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import styles  from './ModeIndicator.module.css'
 
 export const ModeIndicator = () => {
@@ -13,6 +14,7 @@ export const ModeIndicator = () => {
 	defaultWorkTime,
 	defaultBreakTime
   } = usePomodoro();
+  const { translations } = useLanguage();
 
   // Store the time left for each mode separately
   const [ workTimeLeft, setWorkTimeLeft ] = useState(defaultWorkTime);
@@ -30,15 +32,15 @@ export const ModeIndicator = () => {
   const modeConfig = {
     work: {
       icon: '💼',
-      label: 'Work Session',
+      label: translations.workSession,
       className: styles.modeIndicatorWork
     },
     break: {
       icon: '☕',
-      label: 'Break Time',
+      label: translations.breakTime,
       className: styles.modeIndicatorBreak
     }
-  } as const;
+  };
 
   const handleToggle = () => { 
 	// Don't allow toggle while timer is running

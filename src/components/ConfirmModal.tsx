@@ -41,14 +41,20 @@ export function ConfirmModal({ isOpen, onConfirm, onCancel, title, message }: Co
       <div className={styles.confirmModalActions}>
         <button
           className={styles.confirmModalButtonCancel}
-          onClick={onCancel}
+          onClick={() => {
+            console.log('Vi alklakis butonon! (Cancel)');
+            onCancel();
+          }}
           aria-label="Cancel"
         >
           No
         </button>
         <button
           className={styles.confirmModalButtonConfirm}
-          onClick={onConfirm}
+          onClick={() => {
+            console.log('Vi alklakis butonon! (Confirm)');
+            onConfirm();
+          }}
           aria-label="Confirm"
         >
           Yes

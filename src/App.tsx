@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
 import { useTheme } from './contexts/ThemeContext';
+import { useLanguage } from './contexts/LanguageContext'; 
 import { Timer } from './components/Timer';
 import { TagSelector } from './components/TagSelector';
 import { TagStats } from './components/TagStats';
 import './App.css';
+import type {Language} from './utils/translations';
 
 type ViewType = 'timer' | 'stats';
 
@@ -12,6 +14,7 @@ function App() {
   const { tag, setTag, mode } = usePomodoro();
   const { theme, toggleTheme } = useTheme();
   const [activeView, setActiveView] = useState<ViewType>('timer');
+  const { language, setLanguage, translations } = useLanguage();
 
   return (
 	<div className="app">
@@ -19,11 +22,26 @@ function App() {
 		<h1 className="logo-title">🍅 PomoDoroto</h1>
 		<button
 		  className="theme-toggle"
-		  onClick={toggleTheme}
+		  onClick={() => {
+			console.log('Vi alklakis butonon! (Toggle Theme)');
+			toggleTheme();
+		  }}
 		  aria-label="Toggle theme"
 		>
 		  {theme === 'light' ? '🌙' : '☀️'}
 		</button>
+		<select
+		  className="language-select"
+		  value={language}
+		  onChange={(e) => setLanguage(e.target.value as Language)}
+		  aria-label="Select language"
+		>
+		  <option value="en">🇬🇧 </option>
+		  <option value="es">🇪🇸 </option>
+		  <option value="fr">🇫🇷 </option>
+		  <option value="eo">⭐ </option>
+		  <option value="ru">🇷🇺 </option>
+		</select>
 	  </header>
 
 	  <main className="main-content">
@@ -49,16 +67,22 @@ function App() {
 	  <footer className="bottom-nav">
 		<div
 		  className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
-		  onClick={() => setActiveView('timer')}
+		  onClick={() => {
+			console.log('Vi alklakis butonon! (Timer View)');
+			setActiveView('timer');
+		  }}
 		>
-		  ⏱️<span>Timer</span>
+		  {translations.timerTab}
 		</div>
 
 		<div
 		  className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
-		  onClick={() => setActiveView('stats')}
+		  onClick={() => {
+			console.log('Vi alklakis butonon! (Stats View)');
+			setActiveView('stats');
+		  }}
 		>
-		  📊<span>Stats</span>
+		  {translations.statsTab}
 		</div>
 	  </footer>
 	</div>
