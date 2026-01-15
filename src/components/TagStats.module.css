@@ -1,0 +1,227 @@
+/* ===========================================================================
+   TAG STATS COMPONENT STYLES
+   =========================================================================== */
+
+/**
+ * .statsContainer - Main Statistics Section
+ * ------------------------------------------
+ * Container for all statistics displays
+ */
+.statsContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 185px);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--shadow-md);
+}
+
+.statsContainer h2 {
+  color: var(--accent-primary);
+  margin: 0;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  position: sticky;
+  top: 85px;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+  z-index: 100;
+  border-radius: 16px 16px 0 0;
+  text-shadow: 0 2px 8px var(--shadow-accent);
+}
+
+.statsContainer h3 {
+  color: var(--accent-light);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+/**
+ * .statsContent - Scrollable Content Wrapper
+ * -------------------------------------------
+ * Wraps the scrollable content (overall stats and tag list)
+ */
+.statsContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+  border-radius: 0 0 16px 16px;
+}
+
+/**
+ * .overallStats - Summary Statistics Card
+ * ----------------------------------------
+ * Highlighted section showing total sessions and time
+ */
+.overallStats {
+  background: rgba(255, 99, 71, 0.1);
+  border: 2px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.overallStats h3 {
+  margin-top: 0;
+  color: var(--accent-primary);
+}
+
+.overallStats p {
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+  color: var(--text-secondary);
+}
+
+.overallStats strong {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+}
+
+/**
+ * .tagStatsList - Container for Individual Tag Cards
+ * ---------------------------------------------------
+ * Uses Flexbox for layout
+ */
+.tagStatsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/**
+ * .tagStatCard - Individual Tag Statistics Card
+ * ----------------------------------------------
+ * Each card shows stats for one category
+ */
+.tagStatCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.tagStatCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-accent);
+}
+
+/**
+ * .tagStatHeader - Card Header with Title and Badge
+ * --------------------------------------------------
+ * Uses Flexbox for layout
+ */
+.tagStatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.tagStatHeader h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+/**
+ * .sessionBadge - Pill-Shaped Badge
+ * ----------------------------------
+ * Displays session count in a highlighted badge
+ */
+.sessionBadge {
+  background: var(--accent-primary);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/**
+ * .tagStatTime - Time Display
+ * ----------------------------
+ * Shows total time for this tag
+ */
+.tagStatTime {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/**
+ * .progressBar - Progress Bar Container
+ * --------------------------------------
+ * Background track for the progress fill
+ */
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+/**
+ * .progressFill - Animated Progress Bar Fill
+ * -------------------------------------------
+ * The colored fill that grows based on percentage
+ */
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-light) 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/**
+ * .percentageText - Percentage Display
+ * -------------------------------------
+ * Shows percentage of total sessions
+ */
+.percentageText {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+/**
+ * .emptyState - Placeholder When No Data Exists
+ * ----------------------------------------------
+ * Shown when user hasn't completed any Pomodoro sessions yet
+ */
+.emptyState {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 2rem;
+  text-align: center;
+}
+
+/**
+ * RESPONSIVE DESIGN - Mobile Optimization
+ * ----------------------------------------
+ * Adjusts stats for smaller screens
+ */
+@media (max-width: 600px) {
+  .statsContainer {
+    max-height: calc(100vh - 160px);
+  }
+
+  .statsContainer h2 {
+    top: 70px;
+    font-size: 1.2rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .statsContent {
+    padding: 1rem;
+  }
+}

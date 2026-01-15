@@ -1,13 +1,11 @@
-/**
- * TagStats Component
- * Displays analytics about completed Pomodoro sessions.
- */
-
 import { usePomodoro } from '../hooks/PomodoroContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { formatTimeDuration } from '../utils/formatTime';
+import styles from './TagStats.module.css';
 
 export function TagStats() {
   const { sessions } = usePomodoro();
+  const { translations } = useLanguage();
 
   // Aggregate sessions by tag
   const tagStats = sessions.reduce((acc, session) => {
@@ -34,48 +32,48 @@ export function TagStats() {
   const totalSeconds = sessions.reduce((sum, s) => sum + s.duration, 0);
 
   return (
-    <div className="stats-container">
-      <h2>📊 Your Pomodoro Stats</h2>
+    <div className={styles.statsContainer}>
+      <h2>{translations.statsTitle}</h2>
 
-      <div className="stats-content">
-        <div className="overall-stats">
-          <h3>Overall</h3>
+      <div className={styles.statsContent}>
+        <div className={styles.overallStats}>
+          <h3>{translations.overall}</h3>
           <p>
-            🍅 Total Sessions: <strong>{totalSessions}</strong>
+            {translations.totalSessions} <strong>{totalSessions}</strong>
           </p>
           <p>
-            ⏱️ Total Time: <strong>{formatTimeDuration(totalSeconds)}</strong>
+            {translations.totalTime} <strong>{formatTimeDuration(totalSeconds)}</strong>
           </p>
         </div>
 
-        <h3>By Category</h3>
+        <h3>{translations.byCategory}</h3>
 
         {sortedStats.length === 0 ? (
-          <p className="empty-state">
-            No completed sessions yet. Start a timer to see stats! 🚀
+          <p className={styles.emptyState}>
+            {translations.noSessionsYet}
           </p>
         ) : (
-          <div className="tag-stats-list">
+          <div className={styles.tagStatsList}>
             {sortedStats.map(({ tag, count, totalSeconds }) => (
-              <div key={tag} className="tag-stat-card">
-                <div className="tag-stat-header">
+              <div key={tag} className={styles.tagStatCard}>
+                <div className={styles.tagStatHeader}>
                   <h4>{tag}</h4>
-                  <span className="session-badge">{count} sessions</span>
+                  <span className={styles.sessionBadge}>{count} {translations.sessions}</span>
                 </div>
 
-                <div className="tag-stat-time">
+                <div className={styles.tagStatTime}>
                   ⏱️ {formatTimeDuration(totalSeconds)}
                 </div>
 
-                <div className="progress-bar">
+                <div className={styles.progressBar}>
                   <div
-                    className="progress-fill"
+                    className={styles.progressFill}
                     style={{ width: `${(count / totalSessions) * 100}%` }}
                   />
                 </div>
 
-                <div className="percentage-text">
-                  {((count / totalSessions) * 100).toFixed(1)}% of total sessions
+                <div className={styles.percentageText}>
+                  {((count / totalSessions) * 100).toFixed(1)}% {translations.ofTotalSessions}
                 </div>
               </div>
             ))}
