@@ -28,3 +28,7 @@ dist-ssr
 
 # Learning documentation (for personal use)
 REACT_LEARNING_GUIDE.md
+*.explained.md
+
+# Dev build output
+dev-dist/
