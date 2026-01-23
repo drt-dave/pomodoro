@@ -19,7 +19,6 @@ function App() {
   return (
 	<div className="app">
 	  <header className="app-header">
-		<h1 className="logo-title">🍅 PomoDoroto</h1>
 		<button
 		  className="theme-toggle"
 		  onClick={() => {
@@ -30,6 +29,7 @@ function App() {
 		>
 		  {theme === 'light' ? '🌙' : '☀️'}
 		</button>
+		<h1 className="logo-title">🍅 PomoDoroto</h1>
 		<select
 		  className="language-select"
 		  value={language}
