@@ -8,6 +8,7 @@ import {ModeIndicator} from "./ModeIndicator";
 import { Toast } from "./Toast";
 import styles from './Timer.module.css';
 import { requestNotificationPermission, sendNotification } from '../utils/notifications';
+import { SettingsPanel } from './SettingsPanel';
 
 export const Timer = () => {
   const {
@@ -41,6 +42,7 @@ export const Timer = () => {
 	duration: 0,
 	type: 'work'
   });
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
 	if (!isRunning || timeLeft <= 0) return;
@@ -131,8 +133,17 @@ export const Timer = () => {
 	<div className={styles.timer}>
 	  <ModeIndicator />
 
-	  <div className={styles.timeDisplay}>
-		{formatTimeMMSS(timeLeft)}
+	  <div className={styles.timeWrapper}>
+		<div className={styles.timeDisplay}>
+		  {formatTimeMMSS(timeLeft)}
+		</div>
+		<button
+		  onClick={() => setSettingsOpen(true)}
+		  className={styles.settingsIcon}
+		  aria-label="Settings"
+		>
+		  ⚙️
+		</button>
 	  </div>
 
 	  <div className={styles.timerControls}>
@@ -178,6 +189,11 @@ export const Timer = () => {
 		duration={toastData.duration}
 		type={toastData.type}
 		onClose={() => setShowToast(false)}
+	  />
+
+	  <SettingsPanel
+		isOpen={settingsOpen}
+		onClose={() => setSettingsOpen(false)}
 	  />
 	</div>
   );

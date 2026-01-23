@@ -5,6 +5,7 @@ import { PomodoroProvider } from './hooks/PomodoroContext.tsx'
 import { ThemeProvider } from './contexts/ThemeContext.tsx'
 import { LanguageProvider } from './contexts/LanguageContext.tsx';
 import './index.css'
+import {SettingsProvider} from './contexts/SettingsContext.tsx'
 
 // Eruda DevTools para desarrollo móvil
 if (import.meta.env.DEV) {
@@ -20,6 +21,7 @@ if (import.meta.env.DEV) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+	<SettingsProvider>
 	<LanguageProvider>
 	  <ThemeProvider>
 		<PomodoroProvider>
@@ -27,5 +29,6 @@ createRoot(document.getElementById('root')!).render(
 		</PomodoroProvider>
 	  </ThemeProvider>
 	</LanguageProvider>
+	</SettingsProvider>
   </StrictMode>
 )

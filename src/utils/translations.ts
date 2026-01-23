@@ -51,6 +51,18 @@ export interface Translations {
   defaultTagGeneral: string;
   defaultTagWork: string;
   defaultTagStudy: string;
+
+  // Settings panel
+  settings: string;
+  settingsTitle: string;
+  workDuration: string;
+  breakDuration: string;
+  minutes: string;
+  soundEffects: string;
+  clearData: string;
+  clearDataConfirm: string;
+  save: string;
+  close: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -86,6 +98,16 @@ const translations: Record<Language, Translations> = {
 	defaultTagGeneral: 'General',
 	defaultTagWork: 'Work',
 	defaultTagStudy: 'Study',
+	settings: 'Settings',
+	settingsTitle: 'Settings',
+	workDuration: 'Work Duration',
+	breakDuration: 'Break Duration',
+	minutes: 'minutes',
+	soundEffects: 'Sound Effects',
+	clearData: 'Clear All Data',
+	clearDataConfirm: 'Are you sure? This will delete all sessions and settings.',
+	save: 'Save',
+	close: 'Close',
   },
 
   es: {
@@ -120,6 +142,16 @@ const translations: Record<Language, Translations> = {
 	defaultTagGeneral: 'General',
 	defaultTagWork: 'Trabajo',
 	defaultTagStudy: 'Estudio',
+	settings: 'Ajustes',
+	settingsTitle: 'Ajustes',
+	workDuration: 'Duración de Trabajo',
+	breakDuration: 'Duración de Descanso',
+	minutes: 'minutos',
+	soundEffects: 'Efectos de Sonido',
+	clearData: 'Borrar Todos los Datos',
+	clearDataConfirm: 'Esto eliminará todas las sesiones y ajustes.',
+	save: 'Guardar',
+	close: 'Cerrar',
   },
 
   fr: {
@@ -154,6 +186,16 @@ const translations: Record<Language, Translations> = {
 	defaultTagGeneral: 'Général',
 	defaultTagWork: 'Travail',
 	defaultTagStudy: 'Étude',
+	settings: 'Paramètres',
+	settingsTitle: 'Paramètres',
+	workDuration: 'Durée de Travail',
+	breakDuration: 'Durée de Pause',
+	minutes: 'minutes',
+	soundEffects: 'Effets Sonores',
+	clearData: 'Effacer Toutes les Données',
+	clearDataConfirm: 'Cela supprimera toutes les sessions et paramètres.',
+	save: 'Enregistrer',
+	close: 'Fermer',
   },
 
   eo: {
@@ -188,6 +230,16 @@ const translations: Record<Language, Translations> = {
 	defaultTagGeneral: 'Ĝenerala',
 	defaultTagWork: 'Laboro',
 	defaultTagStudy: 'Studo',
+	settings: 'Agordoj',
+	settingsTitle: 'Agordoj',
+	workDuration: 'Labordaŭro',
+	breakDuration: 'Paŭzodaŭro',
+	minutes: 'minutoj',
+	soundEffects: 'Sonefektoj',
+	clearData: 'Forigi Ĉiujn Datumojn',
+	clearDataConfirm: 'Tio forigos ĉiujn seancojn kaj agordojn.',
+	save: 'Konservi',
+	close: 'Fermi',
   },
 
   ru: {
@@ -222,6 +274,16 @@ const translations: Record<Language, Translations> = {
 	defaultTagGeneral: 'Общее',
 	defaultTagWork: 'Работа',
 	defaultTagStudy: 'Учеба',
+	settings: 'Настройки',
+	settingsTitle: 'Настройки',
+	workDuration: 'Продолжительность Работы',
+	breakDuration: 'Продолжительность Перерыва',
+	minutes: 'минут',
+	soundEffects: 'Звуковые Эффекты',
+	clearData: 'Удалить Все Данные',
+	clearDataConfirm: 'Это удалит все сессии и настройки.',
+	save: 'Сохранить',
+	close: 'Закрыть',
   },
 };  
 
