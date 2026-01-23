@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type { ReactNode } from 'react';
 import type { PomodoroState, PomodoroMode, PomodoroSession } from '../types/pomodoro.types';
+import { useSettings } from '../contexts/SettingsContext';
+
 
 interface PomodoroContextType extends PomodoroState {
   setTag: (tag: string) => void;
@@ -28,8 +30,6 @@ interface PomodoroProviderProps {
 const SESSIONS_STORAGE_KEY = 'pomodoro_sessions';
 const STATE_STORAGE_KEY = 'pomodoro_state';
 
-const defaultWorkTime = 25; //* 60;
-const defaultBreakTime = 5; //* 60;
 
 interface PersistedState {
   tag: string;
@@ -81,6 +81,11 @@ const saveStateToStorage = (state: PersistedState) => {
 };
 
 export function PomodoroProvider({ children }: PomodoroProviderProps) {
+  const { workDuration, breakDuration } = useSettings();
+
+  const defaultWorkTime = workDuration;
+  const defaultBreakTime = breakDuration;
+
   const savedState = loadStateFromStorage();
 
   const [tag, setTag] = useState<string>(savedState.tag ?? 'General');
@@ -90,6 +95,23 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   const [sessions, setSessions] = useState<PomodoroSession[]>(() => loadSessionsFromStorage());
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(savedState.showConfirmModal ?? false);
   const [wasRunningBeforeModal, setWasRunningBeforeModal] = useState<boolean>(savedState.wasRunningBeforeModal ?? false);
+
+  // Track previous durations to detect settings changes
+  const prevWorkDuration = useRef(defaultWorkTime);
+  const prevBreakDuration = useRef(defaultBreakTime);
+
+  // Sync timer when settings change ( only if at reset state )
+  useEffect(() => {
+	if (!isRunning) {
+	  if (mode === 'work' && timeLeft === prevWorkDuration.current){
+		setTimeLeft(defaultWorkTime);
+	  } else if (mode === 'break' && timeLeft === prevBreakDuration.current) {
+		setTimeLeft(defaultBreakTime);
+	  }
+	}
+	prevWorkDuration.current = defaultWorkTime;
+	prevBreakDuration.current = defaultBreakTime;
+  }, [defaultWorkTime, defaultBreakTime, mode, timeLeft, isRunning]);
 
   useEffect(() => {
 	saveSessionsToStorage(sessions);
@@ -117,7 +139,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   const resetTimer = useCallback(() => {
 	setIsRunning(false);
 	setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
-  }, [mode]);
+  }, [mode, defaultWorkTime, defaultBreakTime]);
 
   const saveSession = useCallback((session: PomodoroSession) => {
 	setSessions((prev) => [...prev, session]);
