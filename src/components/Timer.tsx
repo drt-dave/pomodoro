@@ -1,3 +1,4 @@
+import { useSound } from "../hooks/useSound";
 import { useEffect, useState } from "react";
 import { usePomodoro } from "../hooks/PomodoroContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -30,6 +31,8 @@ export const Timer = () => {
 	setWasRunningBeforeModal
   } = usePomodoro();
 
+  const { playWorkComplete, playBreakComplete } = useSound();
+
   const { translations } = useLanguage();
 
   const [showToast, setShowToast] = useState(false);
@@ -56,6 +59,13 @@ export const Timer = () => {
 
   useEffect(() => {
 	if (timeLeft === 0 && !showConfirmModal) {
+
+	  if (mode === 'work') {
+		playWorkComplete();
+	  } else {
+		playBreakComplete();
+	  }
+
 	  const initialTime = mode === 'work' ? defaultWorkTime : defaultBreakTime;
 
 	  const session: PomodoroSession = {
