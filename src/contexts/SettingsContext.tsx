@@ -67,8 +67,7 @@ export function SettingsProvider({children}: SettingsProviderProps) {
 	setSettings(prev => ({ ...prev, soundEnabled: enabled }));
   };
 
-  const clearAllData = () => { 
-	localStorage.removeItem('pomodoro_sessions');
+  const clearAllData = () => {
 	localStorage.removeItem('pomodoro_state');
 	localStorage.removeItem(SETTINGS_STORAGE_KEY);
 	setSettings(defaultSettings);
