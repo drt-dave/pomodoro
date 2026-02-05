@@ -1,4 +1,4 @@
-# Explained Files Index
+[#](#) Explained Files Index
 
 This document provides an index of all the `.explained.md` files in this project. Each explanation file provides comprehensive, educational documentation about how specific files work, similar to a learning guide.
 
@@ -39,23 +39,44 @@ If you're new to React or this codebase, follow this path:
    - localStorage persistence
    - System preference detection
 
-4. **[PomodoroContext.explained.md](src/hooks/PomodoroContext.explained.md)** ⚠️ COMPLEX
+4. **[SettingsContext.explained.md](src/contexts/SettingsContext.explained.md)** 🆕
+   - Settings management
+   - Interface extends pattern
+   - Multiple setter functions
+   - Clear all data feature
+
+5. **[LanguageContext.explained.md](src/contexts/LanguageContext.explained.md)** 🆕
+   - Internationalization (i18n)
+   - Derived state pattern
+   - Multi-language support
+
+6. **[PomodoroContext.explained.md](src/hooks/PomodoroContext.explained.md)** ⚠️ COMPLEX
    - Global state management
    - Complex Context pattern
    - localStorage with sessions
    - useCallback optimization
 
-5. **[formatTime.explained.md](src/utils/formatTime.explained.md)**
+7. **[formatTime.explained.md](src/utils/formatTime.explained.md)**
    - Pure utility functions
    - Math operations (floor, modulo)
    - String manipulation (padStart)
    - Time formatting logic
 
-6. **[Timer.explained.md](src/components/Timer.explained.md)** ⚠️ COMPLEX
-   - Timer countdown logic
-   - Multiple useEffect hooks
-   - Cleanup functions
-   - Modal and Toast integration
+8. **[useSound.explained.md](src/hooks/useSound.explained.md)** 🆕
+   - Custom hook pattern
+   - Browser Audio API
+   - Vite asset imports
+
+9. **[notifications.explained.md](src/utils/notifications.explained.md)** 🆕
+   - Browser Notifications API
+   - Permission handling
+   - Feature detection
+
+10. **[Timer.explained.md](src/components/Timer.explained.md)** ⚠️ COMPLEX
+    - Timer countdown logic
+    - Multiple useEffect hooks
+    - Cleanup functions
+    - Modal and Toast integration
 
 ---
 
@@ -66,14 +87,27 @@ If you're new to React or this codebase, follow this path:
   - Topics: Application bootstrap, Provider hierarchy, StrictMode, Dynamic imports
   - Difficulty: ⭐ Beginner-friendly
 
-### State Management
+### State Management (Contexts)
 - **[src/contexts/ThemeContext.explained.md](src/contexts/ThemeContext.explained.md)**
   - Topics: Context API, Dark mode, Media queries, Preference detection
+  - Difficulty: ⭐⭐ Intermediate
+
+- **[src/contexts/LanguageContext.explained.md](src/contexts/LanguageContext.explained.md)** 🆕
+  - Topics: i18n, Derived state, Type imports, Multi-language support
+  - Difficulty: ⭐⭐ Intermediate
+
+- **[src/contexts/SettingsContext.explained.md](src/contexts/SettingsContext.explained.md)** 🆕
+  - Topics: Settings management, Interface extends, Spread operator, Clear data
   - Difficulty: ⭐⭐ Intermediate
 
 - **[src/hooks/PomodoroContext.explained.md](src/hooks/PomodoroContext.explained.md)**
   - Topics: Complex state, localStorage, useCallback, Session management
   - Difficulty: ⭐⭐⭐ Advanced
+
+### Custom Hooks
+- **[src/hooks/useSound.explained.md](src/hooks/useSound.explained.md)** 🆕
+  - Topics: Custom hooks, Browser Audio API, Vite asset imports, useCallback
+  - Difficulty: ⭐⭐ Intermediate
 
 ### Components
 - **[src/components/Timer.explained.md](src/components/Timer.explained.md)**
@@ -90,6 +124,14 @@ If you're new to React or this codebase, follow this path:
   - Topics: Pure functions, Math operations, String formatting
   - Difficulty: ⭐ Beginner-friendly
 
+- **[src/utils/notifications.explained.md](src/utils/notifications.explained.md)** 🆕
+  - Topics: Browser Notifications API, Permissions, Feature detection, Async/await
+  - Difficulty: ⭐⭐ Intermediate
+
+- **[src/utils/translations.explained.md](src/utils/translations.explained.md)** 🆕
+  - Topics: i18n structure, Union types, Record type, Translation organization
+  - Difficulty: ⭐⭐ Intermediate
+
 ---
 
 ## 🎓 Learning Paths
@@ -98,31 +140,44 @@ If you're new to React or this codebase, follow this path:
 Perfect for learning React Context and global state:
 
 1. ThemeContext.explained.md (simple example)
-2. PomodoroContext.explained.md (complex example)
-3. Timer.explained.md (consuming context)
+2. SettingsContext.explained.md (settings pattern) 🆕
+3. LanguageContext.explained.md (derived state) 🆕
+4. PomodoroContext.explained.md (complex example)
+5. Timer.explained.md (consuming context)
 
 ### Path 2: TypeScript Mastery
 For improving TypeScript skills:
 
 1. pomodoro.types.explained.md (type definitions)
-2. PomodoroContext.explained.md (using types in practice)
-3. Timer.explained.md (type safety in components)
+2. translations.explained.md (Record, union types) 🆕
+3. PomodoroContext.explained.md (using types in practice)
+4. Timer.explained.md (type safety in components)
 
 ### Path 3: React Hooks Deep Dive
 For mastering React hooks:
 
 1. formatTime.explained.md (no hooks - baseline)
 2. ThemeContext.explained.md (useState, useEffect)
-3. PomodoroContext.explained.md (useState, useEffect, useCallback)
-4. Timer.explained.md (multiple effects, cleanup)
+3. useSound.explained.md (useCallback, custom hooks) 🆕
+4. PomodoroContext.explained.md (useState, useEffect, useCallback)
+5. Timer.explained.md (multiple effects, cleanup)
 
-### Path 4: Complete Application Flow
+### Path 4: Browser APIs
+Understanding web platform features:
+
+1. notifications.explained.md (Notifications API) 🆕
+2. useSound.explained.md (Audio API) 🆕
+3. ThemeContext.explained.md (matchMedia API)
+4. Timer.explained.md (setInterval)
+
+### Path 5: Complete Application Flow
 Understanding data flow from start to finish:
 
 1. main.explained.md (initialization)
 2. PomodoroContext.explained.md (state layer)
-3. Timer.explained.md (UI layer)
-4. formatTime.explained.md (utility layer)
+3. SettingsContext.explained.md (settings layer) 🆕
+4. Timer.explained.md (UI layer)
+5. formatTime.explained.md (utility layer)
 
 ---
 
@@ -265,7 +320,12 @@ code src/main.explained.md
 
 ⭐⭐ **Intermediate**
 - ThemeContext.explained.md
+- SettingsContext.explained.md 🆕
+- LanguageContext.explained.md 🆕
 - pomodoro.types.explained.md
+- useSound.explained.md 🆕
+- notifications.explained.md 🆕
+- translations.explained.md 🆕
 
 ⭐⭐⭐ **Advanced**
 - PomodoroContext.explained.md
@@ -294,5 +354,6 @@ After reading these files, you might want to explore:
 ---
 
 *Created: December 2024*
-*Total explained files: 6*
-*Total learning concepts: 50+*
+*Updated: January 2026*
+*Total explained files: 11*
+*Total learning concepts: 80+*

@@ -1,11 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+
 import App from './App.tsx'
 import { PomodoroProvider } from './hooks/PomodoroContext.tsx'
 import { ThemeProvider } from './contexts/ThemeContext.tsx'
 import { LanguageProvider } from './contexts/LanguageContext.tsx';
-import './index.css'
 import {SettingsProvider} from './contexts/SettingsContext.tsx'
+import './index.css'
 
 // Eruda DevTools para desarrollo móvil
 if (import.meta.env.DEV) {
