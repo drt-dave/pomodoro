@@ -144,16 +144,12 @@ export const Timer = () => {
 	  <ModeIndicator />
 
 	  <div className={styles.timeWrapper}>
-		<div className={styles.timeDisplay}>
+		<div 
+		  className={styles.timeDisplay}
+		  onClick={() => setSettingsOpen(true)}
+		>
 		  {formatTimeMMSS(timeLeft)}
 		</div>
-		<button
-		  onClick={() => setSettingsOpen(true)}
-		  className={styles.settingsIcon}
-		  aria-label="Settings"
-		>
-		  ⚙️
-		</button>
 	  </div>
 
 	  <div className={styles.timerControls}>
@@ -166,22 +162,32 @@ export const Timer = () => {
 			isRunning ? pauseTimer() : startTimer();
 		  }}
 		  disabled={showConfirmModal}
+		  className={styles.iconBtn}
+		  aria-label={isRunning ? 'Pause' : 'Start'}
 		>
-		  {isRunning ? translations.pause : translations.start}
+		  {isRunning ? '⏸' : '▶'}
 		</button>
 
-		<button onClick={() => {
-		  console.log('Vi alklakis butonon! (Reset)');
-		  resetTimer();
-		}}>{translations.reset}</button>
+		<button
+		  onClick={() => {
+			console.log('Vi alklakis butonon! (Reset)');
+			resetTimer();
+		  }}
+		  className={styles.iconBtn}
+		  aria-label="Reset"
+		>
+		  ↺
+		</button>
 
 		<button
 		  onClick={() => {
 			console.log('Vi alklakis butonon! (Finish)');
 			handlerFinishSession();
 		  }}
-		  className={styles.fullWidthBtn}>
-		  {translations.finish}
+		  className={styles.iconBtn}
+		  aria-label="Stop"
+		>
+		  ⏹
 		</button>
 	  </div>
 

@@ -29,11 +29,13 @@ TIMER COMPONENT STYLES
  * Large, prominent display showing MM:SS format.
  */
 .timeDisplay {
-  font-size: 6rem;
+  font-size: 10rem;
   font-weight: 700;
   color: var(--text-primary);
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
   letter-spacing: 0.1em;
   text-shadow: 0 4px 16px var(--shadow-accent-md);
@@ -56,34 +58,35 @@ TIMER COMPONENT STYLES
   flex-wrap: wrap;
 }
 
-.timerControls button {
-  min-width: 140px;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+.iconBtn {
+  width: 70px;
+  height: 70px;
+  min-width: unset;
+  padding: 0;
+  font-size: 2rem;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   border: 2px solid transparent;
   color: #fff;
   box-shadow: 0 4px 16px var(--shadow-accent);
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.timerControls button:hover {
-  transform: translateY(-2px);
+.iconBtn:hover {
+  transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 24px var(--shadow-accent-md);
   background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
   border-color: var(--accent-light);
 }
 
-.timerControls button:active {
-  transform: translateY(0) scale(0.97);
+.iconBtn:active {
+  transform: translateY(0) scale(0.95);
   box-shadow: 0 2px 8px var(--shadow-accent-md);
-}
-
-.timerControls .fullWidthBtn {
-  width: 100%;
-  flex-basis: 100%;
 }
 
 .timeWrapper {
@@ -118,7 +121,7 @@ TIMER COMPONENT STYLES
  */
 @media (max-width: 600px) {
   .timeDisplay {
-	font-size: 3.5rem;
+	font-size: 4.5rem;
   }
 
   .timer {
@@ -126,9 +129,9 @@ TIMER COMPONENT STYLES
 	padding: 1.5rem 1rem;
   }
 
-  .timerControls button {
-	min-width: 110px;
-	padding: 0.7rem 1.2rem;
-	font-size: 0.95rem;
+  .iconBtn {
+	width: 60px;
+	height: 60px;
+	font-size: 1.5rem;
   }
 }
