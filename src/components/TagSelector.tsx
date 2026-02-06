@@ -19,8 +19,8 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 	const savedTags = localStorage.getItem('pomodoroTags');
 	if (savedTags) {
 	  try {
-	  const parsed = JSON.parse(savedTags) as string[];
-	  setTags(parsed);
+		const parsed = JSON.parse(savedTags) as string[];
+		setTags(parsed);
 	  } catch {
 		// Ignore parse errors - will use default tags
 	  }
@@ -57,30 +57,53 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 	setTag(selectedTag);
   };
 
+  const handleDeleteTag = () => { 
+	// Don't delete if it's the only tag
+	if (tags.length <= 1) return;
+	// Remove the selected tag
+	const newTags =tags.filter(t => t !== tag);
+	setTags(newTags);
+	// Select the first remaining tag
+	setTag(newTags[0]);
+  };
   return (
 	<div className={styles.tagSelector}>
 	  <h3>{translations.selectCategory}</h3>
 
 	  <div className={styles.addTagSection}>
 		{!showAddTag ? (
-		  <button
-			type="button"
-			className={styles.addTagBtn}
-			onClick={() => {
-			  console.log('Vi alklakis butonon! (Add Tag)');
-			  setShowAddTag(true);
-			}}
-			disabled={mode === 'break'}
-		  >
-			{translations.addTag}
-		  </button>
+		  <div className={ styles.tagActions }>
+			<button
+			  type="button"
+			  className={styles.addTagBtn}
+			  onClick={() => {
+				console.log('Vi alklakis butonon! (Add Tag)');
+				setShowAddTag(true);
+			  }}
+			  disabled={mode === 'break'}
+			>
+			  {translations.addTag}
+			</button>
+			<button
+			  type="button"
+			  className={styles.deleteTagBtn}
+			  onClick={() => {
+				console.log('Vi alklakis butonon! (Delete Tag)');
+				handleDeleteTag();
+			  }}
+			  disabled={mode === 'break' || tags.length <= 1}
+			  aria-label='Delete tag'
+			>
+			  🗑
+			</button>
+		  </div>
 		) : (
 		  <div className={styles.addTagForm}>
 			<input
 			  type="text"
 			  value={newTagName}
 			  onChange={(e) => setNewTagName(e.target.value)}
-			  onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
+			  onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
 			  placeholder={translations.tagPlaceholder}
 			  autoFocus
 			/>
