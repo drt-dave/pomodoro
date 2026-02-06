@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { PomodoroMode } from '../types/pomodoro.types';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles from './TagSelector.module.css';
+import { ConfirmModal } from './ConfirmModal';
 
 interface TagSelectorProps {
   tag: string;
@@ -14,6 +15,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
   const [tags, setTags] = useState<string[]>([translations.defaultTagGeneral, translations.defaultTagWork, translations.defaultTagStudy]);
   const [showAddTag, setShowAddTag] = useState<boolean>(false);
   const [newTagName, setNewTagName] = useState<string>('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
 
   useEffect(() => {
 	const savedTags = localStorage.getItem('pomodoroTags');
@@ -89,7 +91,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 			  className={styles.deleteTagBtn}
 			  onClick={() => {
 				console.log('Vi alklakis butonon! (Delete Tag)');
-				handleDeleteTag();
+				setShowDeleteConfirm(true);
 			  }}
 			  disabled={mode === 'break' || tags.length <= 1}
 			  aria-label='Delete tag'
@@ -146,7 +148,16 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 		  </button>
 		))}
 	  </div>
-
+	  <ConfirmModal
+		isOpen={showDeleteConfirm}
+		title={translations.deleteTagTitle}
+		message={`${translations.deleteTagMessage} "${tag}"?`}
+		onConfirm={() => {
+		  handleDeleteTag();
+		  setShowDeleteConfirm(false);
+		}}
+		onCancel={() => setShowDeleteConfirm(false)}
+	  />
 	</div>
   );
 }
