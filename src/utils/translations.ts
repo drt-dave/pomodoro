@@ -36,6 +36,8 @@ export interface Translations {
   tagPlaceholder: string;
   add: string;
   cancel: string;
+  deleteTagTitle: string;
+  deleteTagMessage: string;
 
   // Stats page
   statsTitle: string;
@@ -87,6 +89,8 @@ const translations: Record<Language, Translations> = {
 	tagPlaceholder: 'Tag name...',
 	add: 'Add',
 	cancel: 'Cancel',
+	deleteTagTitle: 'Delete Tag?',
+	deleteTagMessage: 'Are you sure you want to delete',
 	statsTitle: '📊 Your Pomodoro Stats',
 	overall: 'Overall',
 	byCategory: 'By Label',
@@ -131,6 +135,8 @@ const translations: Record<Language, Translations> = {
 	tagPlaceholder: 'Nombre de etiqueta...',
 	add: 'Agregar',
 	cancel: 'Cancelar',
+	deleteTagTitle: '¿Eliminar Etiqueta?',
+	deleteTagMessage: '¿Estás seguro de que quieres eliminar',
 	statsTitle: '📊 Tus Estadísticas Pomodoro',
 	overall: 'General',
 	byCategory: 'Por Etiqueta',
@@ -175,6 +181,8 @@ const translations: Record<Language, Translations> = {
 	tagPlaceholder: 'Nom de l\'étiquette...',
 	add: 'Ajouter',
 	cancel: 'Annuler',
+	deleteTagTitle: 'Supprimer l\'Étiquette ?',
+	deleteTagMessage: 'Êtes-vous sûr de vouloir supprimer',
 	statsTitle: '📊 Vos Statistiques Pomodoro',
 	overall: 'Général',
 	byCategory: 'Par Étiquette',
@@ -219,6 +227,8 @@ const translations: Record<Language, Translations> = {
 	tagPlaceholder: 'Nomo de etikedo...',
 	add: 'Aldoni',
 	cancel: 'Nuligi',
+	deleteTagTitle: 'Ĉu Forigi Etikedon?',
+	deleteTagMessage: 'Ĉu vi certas, ke vi volas forigi',
 	statsTitle: '📊 Viaj Pomodoro Statistikoj',
 	overall: 'Ĝenerala',
 	byCategory: 'Laŭ Etikedo',
@@ -263,6 +273,8 @@ const translations: Record<Language, Translations> = {
 	tagPlaceholder: 'Название метки...',
 	add: 'Добавить',
 	cancel: 'Отмена',
+	deleteTagTitle: 'Удалить Метку?',
+	deleteTagMessage: 'Вы уверены, что хотите удалить',
 	statsTitle: '📊 Ваша Статистика Помодоро',
 	overall: 'Общая',
 	byCategory: 'По Меткам',
