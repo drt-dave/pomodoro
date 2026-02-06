@@ -33,7 +33,7 @@
  * Button to reveal the tag creation form
  */
 .addTagBtn {
-  width: 100%;
+  flex: 1;
   padding: 0.8rem;
   background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
   border: 2px dashed var(--border-primary);
@@ -139,4 +139,38 @@
   border: 2px solid var(--accent-light);
   box-shadow: 0 0 10px var(--shadow-accent-lg);
   transition: all 0.3s ease;
+}
+
+/**
+ * .tagActions - Container for Add/Delete buttons 
+ */
+.tagActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/**
+ * .deleteTagBtn - Delete Tag Button
+ */
+.deleteTagBtn {
+  width: 50px;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+  border: 2px dashed var(--border-primary);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.deleteTagBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4a2020 0%, #3a1515 100%);
+  border-color: #ff4444;
+  color: #ff6666;
+}
+
+.deleteTagBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
