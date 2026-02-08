@@ -65,6 +65,9 @@ export interface Translations {
   clearDataConfirm: string;
   save: string;
   close: string;
+
+  // Session notes
+  sessionNotePlaceholder: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -112,6 +115,7 @@ const translations: Record<Language, Translations> = {
 	clearDataConfirm: 'Are you sure? This will reset timer and settings.',
 	save: 'Save',
 	close: 'Close',
+	sessionNotePlaceholder: 'Add a note about this pomodoro...',
   },
 
   es: {
@@ -158,6 +162,7 @@ const translations: Record<Language, Translations> = {
 	clearDataConfirm: 'Esto reiniciará el temporizador y los ajustes.',
 	save: 'Guardar',
 	close: 'Cerrar',
+	sessionNotePlaceholder: 'Agrega una nota sobre este pomodoro...',
   },
 
   fr: {
@@ -204,6 +209,7 @@ const translations: Record<Language, Translations> = {
 	clearDataConfirm: 'Cela réinitialisera le minuteur et les paramètres.',
 	save: 'Enregistrer',
 	close: 'Fermer',
+	sessionNotePlaceholder: 'Ajoutez une note sur ce pomodoro...',
   },
 
   eo: {
@@ -250,6 +256,7 @@ const translations: Record<Language, Translations> = {
 	clearDataConfirm: 'Tio restarigos la horloĝon kaj agordojn.',
 	save: 'Konservi',
 	close: 'Fermi',
+	sessionNotePlaceholder: 'Aldonu noton pri ĉi tiu pomodoro...',
   },
 
   ru: {
@@ -296,6 +303,7 @@ const translations: Record<Language, Translations> = {
 	clearDataConfirm: 'Это сбросит таймер и настройки.',
 	save: 'Сохранить',
 	close: 'Закрыть',
+	sessionNotePlaceholder: 'Добавьте заметку об этом помодоро...',
   },
 };  
 

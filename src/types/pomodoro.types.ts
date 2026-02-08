@@ -14,4 +14,5 @@ export interface PomodoroSession {
   duration: number;
   timestamp: number;
   completed: boolean;
+  note?: string;
 }

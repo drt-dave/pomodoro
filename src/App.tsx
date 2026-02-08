@@ -7,6 +7,7 @@ import { TagSelector } from './components/TagSelector';
 import { TagStats } from './components/TagStats';
 import './App.css';
 import type {Language} from './utils/translations';
+import {SessionNote} from './components/SessionNote';
 
 type ViewType = 'timer' | 'stats';
 
@@ -54,6 +55,7 @@ function App() {
 			<div className="card timer-card">
 			  <Timer />
 			</div>
+			<SessionNote />
 		  </>
 		)}
 

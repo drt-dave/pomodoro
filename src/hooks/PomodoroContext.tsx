@@ -19,6 +19,8 @@ interface PomodoroContextType extends PomodoroState {
   setShowConfirmModal: (show: boolean) => void;
   wasRunningBeforeModal: boolean;
   setWasRunningBeforeModal: (wasRunning: boolean) => void;
+  sessionNote: string;
+  setSessionNote: (note: string) => void;
 }
 
 const PomodoroContext = createContext<PomodoroContextType | undefined>(undefined);
@@ -38,6 +40,7 @@ interface PersistedState {
   isRunning: boolean;
   showConfirmModal: boolean;
   wasRunningBeforeModal: boolean;
+  sessionNote: string;
 }
 
 const loadSessionsFromStorage = (): PomodoroSession[] => {
@@ -95,6 +98,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   const [sessions, setSessions] = useState<PomodoroSession[]>(() => loadSessionsFromStorage());
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(savedState.showConfirmModal ?? false);
   const [wasRunningBeforeModal, setWasRunningBeforeModal] = useState<boolean>(savedState.wasRunningBeforeModal ?? false);
+  const [sessionNote, setSessionNote] = useState<string>(savedState.sessionNote ?? '');
 
   // Track previous durations to detect settings changes
   const prevWorkDuration = useRef(defaultWorkTime);
@@ -125,8 +129,9 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 	  isRunning,
 	  showConfirmModal,
 	  wasRunningBeforeModal,
+	  sessionNote
 	});
-  }, [tag, mode, timeLeft, isRunning, showConfirmModal, wasRunningBeforeModal]);
+  }, [tag, mode, timeLeft, isRunning, showConfirmModal, wasRunningBeforeModal, sessionNote]);
 
   const startTimer = useCallback(() => {
 	setIsRunning(true);
@@ -142,8 +147,9 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   }, [mode, defaultWorkTime, defaultBreakTime]);
 
   const saveSession = useCallback((session: PomodoroSession) => {
-	setSessions((prev) => [...prev, session]);
-  }, []);
+	setSessions((prev) => [...prev, {...session, note: sessionNote}]);
+	setSessionNote('');
+  }, [sessionNote]);
 
   return (
 	<PomodoroContext.Provider
@@ -168,6 +174,8 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 		setShowConfirmModal,
 		wasRunningBeforeModal,
 		setWasRunningBeforeModal,
+		sessionNote,
+		setSessionNote
 	  }}
 	>
 	  {children}
