@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { usePomodoro } from './hooks/PomodoroContext';
 import { useTheme } from './contexts/ThemeContext';
-import { useLanguage } from './contexts/LanguageContext'; 
+import { useLanguage } from './contexts/LanguageContext';
 import { Timer } from './components/Timer';
 import { TagSelector } from './components/TagSelector';
 import { TagStats } from './components/TagStats';
@@ -23,7 +23,6 @@ function App() {
 		<button
 		  className="theme-toggle"
 		  onClick={() => {
-			console.log('Vi alklakis butonon! (Toggle Theme)');
 			toggleTheme();
 		  }}
 		  aria-label="Toggle theme"
@@ -67,25 +66,27 @@ function App() {
 	  </main>
 
 	  <footer className="bottom-nav">
-		<div
+		<button
+		  type="button"
 		  className={`nav-item ${activeView === 'timer' ? 'active' : ''}`}
 		  onClick={() => {
-			console.log('Vi alklakis butonon! (Timer View)');
 			setActiveView('timer');
 		  }}
+		  aria-label='Timer view'
 		>
 		  {translations.timerTab}
-		</div>
+		</button>
 
-		<div
+		<button
+		  type="button"
 		  className={`nav-item ${activeView === 'stats' ? 'active' : ''}`}
 		  onClick={() => {
-			console.log('Vi alklakis butonon! (Stats View)');
 			setActiveView('stats');
 		  }}
+		  aria-label='Stats view'
 		>
 		  {translations.statsTab}
-		</div>
+		</button>
 	  </footer>
 	</div>
   );
