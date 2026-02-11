@@ -1,9 +1,9 @@
 import { usePomodoro } from '../hooks/PomodoroContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTimeDuration } from '../utils/formatTime';
-import styles from './TagStats.module.css';
+import styles from './Stats.module.css';
 
-export function TagStats() {
+export function Stats() {
   const { sessions } = usePomodoro();
   const { translations } = useLanguage();
 

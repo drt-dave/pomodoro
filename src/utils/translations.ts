@@ -68,6 +68,9 @@ export interface Translations {
 
   // Session notes
   sessionNotePlaceholder: string;
+
+  // Session history
+  sessionHistory: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -116,6 +119,7 @@ const translations: Record<Language, Translations> = {
 	save: 'Save',
 	close: 'Close',
 	sessionNotePlaceholder: 'Add a note about this pomodoro...',
+	sessionHistory: 'Session History',
   },
 
   es: {
@@ -163,6 +167,7 @@ const translations: Record<Language, Translations> = {
 	save: 'Guardar',
 	close: 'Cerrar',
 	sessionNotePlaceholder: 'Agrega una nota sobre este pomodoro...',
+	sessionHistory: 'Historial de Sesiones',
   },
 
   fr: {
@@ -210,6 +215,7 @@ const translations: Record<Language, Translations> = {
 	save: 'Enregistrer',
 	close: 'Fermer',
 	sessionNotePlaceholder: 'Ajoutez une note sur ce pomodoro...',
+	sessionHistory: 'Historique des Sessions',
   },
 
   eo: {
@@ -257,6 +263,7 @@ const translations: Record<Language, Translations> = {
 	save: 'Konservi',
 	close: 'Fermi',
 	sessionNotePlaceholder: 'Aldonu noton pri ĉi tiu pomodoro...',
+	sessionHistory: 'Seanca Historio',
   },
 
   ru: {
@@ -304,6 +311,7 @@ const translations: Record<Language, Translations> = {
 	save: 'Сохранить',
 	close: 'Закрыть',
 	sessionNotePlaceholder: 'Добавьте заметку об этом помодоро...',
+	sessionHistory: 'История Сессий',
   },
 };  
 

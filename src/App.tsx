@@ -4,7 +4,7 @@ import { useTheme } from './contexts/ThemeContext';
 import { useLanguage } from './contexts/LanguageContext';
 import { Timer } from './components/Timer';
 import { TagSelector } from './components/TagSelector';
-import { TagStats } from './components/TagStats';
+import { Stats } from './components/Stats';
 import './App.css';
 import type {Language} from './utils/translations';
 import {SessionNote} from './components/SessionNote';
@@ -60,7 +60,7 @@ function App() {
 
 		{activeView === 'stats' && (
 		  <div className="card stats-card">
-			<TagStats />
+			<Stats />
 		  </div>
 		)}
 	  </main>
