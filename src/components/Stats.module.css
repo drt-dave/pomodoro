@@ -203,6 +203,56 @@
 }
 
 /**
+ * Session History
+ */
+.sessionList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sessionItem {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.sessionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sessionDate {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.sessionTag {
+  background: var(--accent-primary);
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+.sessionDuration {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+.sessionNote {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+  font-style: italic;
+  border-left: 2px solid var(--accent-primary);
+  padding-left: 0.75rem;
+}
+
+/**
  * RESPONSIVE DESIGN - Mobile Optimization
  * ----------------------------------------
  * Adjusts stats for smaller screens
