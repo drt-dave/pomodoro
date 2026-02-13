@@ -29,13 +29,6 @@
   text-shadow: 0 2px 8px var(--shadow-accent);
 }
 
-.statsContainer h3 {
-  color: var(--accent-light);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
-
 /**
  * .statsContent - Scrollable Content Wrapper
  * -------------------------------------------
@@ -65,7 +58,9 @@
 
 .overallStats h3 {
   margin-top: 0;
+  margin-bottom: 1rem;
   color: var(--accent-primary);
+  font-size: 1.3rem;
 }
 
 .overallStats p {
@@ -77,117 +72,6 @@
 .overallStats strong {
   color: var(--text-primary);
   font-size: 1.2rem;
-}
-
-/**
- * .tagStatsList - Container for Individual Tag Cards
- * ---------------------------------------------------
- * Uses Flexbox for layout
- */
-.tagStatsList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/**
- * .tagStatCard - Individual Tag Statistics Card
- * ----------------------------------------------
- * Each card shows stats for one category
- */
-.tagStatCard {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.tagStatCard:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--shadow-accent);
-}
-
-/**
- * .tagStatHeader - Card Header with Title and Badge
- * --------------------------------------------------
- * Uses Flexbox for layout
- */
-.tagStatHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.8rem;
-}
-
-.tagStatHeader h4 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 1.3rem;
-}
-
-/**
- * .sessionBadge - Pill-Shaped Badge
- * ----------------------------------
- * Displays session count in a highlighted badge
- */
-.sessionBadge {
-  background: var(--accent-primary);
-  color: #fff;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-/**
- * .tagStatTime - Time Display
- * ----------------------------
- * Shows total time for this tag
- */
-.tagStatTime {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-/**
- * .progressBar - Progress Bar Container
- * --------------------------------------
- * Background track for the progress fill
- */
-.progressBar {
-  width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 0.5rem;
-}
-
-/**
- * .progressFill - Animated Progress Bar Fill
- * -------------------------------------------
- * The colored fill that grows based on percentage
- */
-.progressFill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-light) 100%);
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}
-
-/**
- * .percentageText - Percentage Display
- * -------------------------------------
- * Shows percentage of total sessions
- */
-.percentageText {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  text-align: right;
 }
 
 /**
@@ -250,6 +134,37 @@
   font-style: italic;
   border-left: 2px solid var(--accent-primary);
   padding-left: 0.75rem;
+}
+/**
+ * Tag Filter PIlls
+ */
+.tagFilter{
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap:wrap;
+  margin: 1.5rem 0 1rem;
+}
+
+.tagFilterBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tagFilterBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-primary);
+}
+
+.tagFilterBtnActive {
+  background: var(--accent-primary);
+  color: #fff;
+  border-color: var(--accent-primary);
 }
 
 /**
