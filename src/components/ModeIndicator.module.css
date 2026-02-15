@@ -101,8 +101,9 @@
 /**
  * RESPONSIVE DESIGN - Mobile Optimization
  * ----------------------------------------
- * Adjusts navigation and header for smaller screens
+ * Adjusts mode indicator for smaller screens
  */
+@media (max-width: 600px) {
   .modeIndicator {
     padding: 0.6rem 0.8rem;
   }
@@ -114,5 +115,6 @@
   .modeIndicatorLabel {
     font-size: 1rem;
   }
+}
 
 
