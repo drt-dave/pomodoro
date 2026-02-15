@@ -115,8 +115,8 @@
   background-color: var(--bg-card);
   color: var(--text-secondary);
   border: 1px solid #444;
-  margin: 4px;
-  padding: 8px 14px;
+  margin: var(--space-xs);
+  padding: var(--space-sm) 0.875rem;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;

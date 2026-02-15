@@ -20,28 +20,29 @@ function App() {
   return (
 	<div className="app">
 	  <header className="app-header">
-		<button
-		  className="theme-toggle"
-		  onClick={() => {
-			toggleTheme();
-		  }}
-		  aria-label="Toggle theme"
-		>
-		  {theme === 'light' ? '🌙' : '☀️'}
-		</button>
 		<h1 className="logo-title">🍅 PomoDoroto</h1>
-		<select
-		  className="language-select"
-		  value={language}
-		  onChange={(e) => setLanguage(e.target.value as Language)}
-		  aria-label="Select language"
-		>
-		  <option value="en">🇬🇧 </option>
-		  <option value="es">🇪🇸 </option>
-		  <option value="fr">🇫🇷 </option>
-		  <option value="eo">⭐ </option>
-		  <option value="ru">🇷🇺 </option>
-		</select>
+		<div className="header-controls">
+		  <select
+			className="language-select"
+			value={language}
+			onChange={(e) => setLanguage(e.target.value as Language)}
+			aria-label="Select language"
+		  >
+			<option value="en">🇬🇧 </option>
+			<option value="es">🇪🇸 </option>
+			<option value="fr">🇫🇷 </option>
+			<option value="eo">⭐ </option>
+			<option value="ru">🇷🇺 </option>
+		  </select>	<button
+			className="theme-toggle"
+			onClick={() => {
+			  toggleTheme();
+			}}
+			aria-label="Toggle theme"
+		  >
+			{theme === 'light' ? '🌙' : '☀️'}
+		  </button>
+		</div>
 	  </header>
 
 	  <main className="main-content">
