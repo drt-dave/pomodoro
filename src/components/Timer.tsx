@@ -1,5 +1,6 @@
 import { useSound } from "../hooks/useSound";
 import { useEffect, useState } from "react";
+import { Play, Pause, RotateCcw, Square } from "lucide-react";
 import { usePomodoro } from "../hooks/PomodoroContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import type {PomodoroMode, PomodoroSession} from "../types/pomodoro.types";
@@ -165,7 +166,7 @@ export const Timer = () => {
 		  className={styles.iconBtn}
 		  aria-label={isRunning ? 'Pause' : 'Start'}
 		>
-		  {isRunning ? '⏸' : '▶'}
+		  {isRunning ? <Pause size={20} /> : <Play size={20} />}
 		</button>
 
 		<button
@@ -176,7 +177,7 @@ export const Timer = () => {
 		  className={styles.iconBtn}
 		  aria-label="Reset"
 		>
-		  ↺
+		  <RotateCcw size={20} />
 		</button>
 
 		<button
@@ -187,7 +188,7 @@ export const Timer = () => {
 		  className={styles.iconBtn}
 		  aria-label="Stop"
 		>
-		  ⏹
+		  <Square size={20} />
 		</button>
 	  </div>
 

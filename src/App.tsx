@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Moon, Sun, Timer as TimerIcon, BarChart3 } from 'lucide-react';
 import { usePomodoro } from './hooks/PomodoroContext';
 import { useTheme } from './contexts/ThemeContext';
 import { useLanguage } from './contexts/LanguageContext';
@@ -8,6 +9,7 @@ import { Stats } from './components/Stats';
 import './App.css';
 import type {Language} from './utils/translations';
 import {SessionNote} from './components/SessionNote';
+import {Logo} from './components/Logo';
 
 type ViewType = 'timer' | 'stats';
 
@@ -20,7 +22,7 @@ function App() {
   return (
 	<div className="app">
 	  <header className="app-header">
-		<h1 className="logo-title">🍅 PomoDoroto</h1>
+		<h1 className="logo-title"><Logo size={44} /> PomoDoroto</h1>
 		<div className="header-controls">
 		  <select
 			className="language-select"
@@ -40,7 +42,7 @@ function App() {
 			}}
 			aria-label="Toggle theme"
 		  >
-			{theme === 'light' ? '🌙' : '☀️'}
+			{theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
 		  </button>
 		</div>
 	  </header>
@@ -75,7 +77,7 @@ function App() {
 		  }}
 		  aria-label='Timer view'
 		>
-		  {translations.timerTab}
+		  <TimerIcon size={16} /> {translations.timerTab}
 		</button>
 
 		<button
@@ -86,7 +88,7 @@ function App() {
 		  }}
 		  aria-label='Stats view'
 		>
-		  {translations.statsTab}
+		  <BarChart3 size={16} /> {translations.statsTab}
 		</button>
 	  </footer>
 	</div>

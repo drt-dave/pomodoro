@@ -1,3 +1,4 @@
+import { AlertCircle } from 'lucide-react';
 import { usePomodoro } from '../hooks/PomodoroContext';
 import styles from './ConfirmModal.module.css';
 
@@ -27,7 +28,7 @@ export function ConfirmModal({ isOpen, onConfirm, onCancel, title, message }: Co
     >
       <div className={styles.confirmModalContent}>
         <span className={styles.confirmModalIcon} aria-hidden="true">
-          ❓
+          <AlertCircle size={24} />
         </span>
         <div className={styles.confirmModalText}>
           <h3 id="confirm-modal-title" className={styles.confirmModalTitle}>

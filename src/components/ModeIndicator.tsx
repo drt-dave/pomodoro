@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Briefcase, Coffee } from 'lucide-react';
 import { usePomodoro } from '../hooks/PomodoroContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles  from './ModeIndicator.module.css'
@@ -31,12 +32,12 @@ export const ModeIndicator = () => {
 
   const modeConfig = {
     work: {
-      icon: '💼',
+      icon: <Briefcase size={18} />,
       label: translations.workSession,
       className: styles.modeIndicatorWork
     },
     break: {
-      icon: '☕',
+      icon: <Coffee size={18} />,
       label: translations.breakTime,
       className: styles.modeIndicatorBreak
     }

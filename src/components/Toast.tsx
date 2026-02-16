@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { CheckCircle, Coffee, X } from 'lucide-react';
 import styles from './Toast.module.css';
 
 interface ToastProps {
@@ -48,7 +49,7 @@ export const Toast =({
 	>
 	  <div className={ styles.toastContent }>
 		<span className={ styles.toastIcon } aria-hidden="true">
-		  {type === 'work' ? '✅' : '☕'}
+		  {type === 'work' ? <CheckCircle size={20} /> : <Coffee size={20} />}
 		</span>
 		<div className={ styles.toastText }>
 		  <span className={ styles.toastMessage }>{message}</span>
@@ -64,7 +65,7 @@ export const Toast =({
 		onClick={onClose}
 		aria-label="Close notification"
 	  >
-		X
+		<X size={16} />
 	  </button>
 	</div>
   );
