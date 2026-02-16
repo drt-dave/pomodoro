@@ -49,7 +49,7 @@
  * Highlighted section showing total sessions and time
  */
 .overallStats {
-  background: rgba(255, 99, 71, 0.1);
+  background: var(--shadow-accent);
   border: 2px solid var(--border-primary);
   border-radius: 12px;
   padding: 1.5rem;

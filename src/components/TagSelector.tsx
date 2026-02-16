@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
 import type { PomodoroMode } from '../types/pomodoro.types';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles from './TagSelector.module.css';
@@ -84,7 +85,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 			  }}
 			  disabled={mode === 'break'}
 			>
-			  {translations.addTag}
+			  <Plus size={16} /> {translations.addTag}
 			</button>
 			<button
 			  type="button"
@@ -96,7 +97,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 			  disabled={mode === 'break' || tags.length <= 1}
 			  aria-label='Delete tag'
 			>
-			  🗑
+			  <Trash2 size={16} />
 			</button>
 		  </div>
 		) : (
