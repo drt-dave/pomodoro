@@ -48,15 +48,7 @@ export const Timer = () => {
   });
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  useEffect(() => {
-	if (!isRunning || timeLeft <= 0) return;
-
-	const interval = setInterval(() => {
-	  setTimeLeft((prev) => prev - 1);
-	}, 1000);
-
-	return () => clearInterval(interval);
-  }, [isRunning, timeLeft, setTimeLeft]);
+  // Countdown is now handled by PomodoroContext (wall-clock based)
 
   useEffect(() => {
 	if (timeLeft === 0 && !showConfirmModal) {
