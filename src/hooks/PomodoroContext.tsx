@@ -41,6 +41,7 @@ interface PersistedState {
   showConfirmModal: boolean;
   wasRunningBeforeModal: boolean;
   sessionNote: string;
+  targetEndTime: number | null;
 }
 
 const loadSessionsFromStorage = (): PomodoroSession[] => {
@@ -89,20 +90,65 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
   const defaultWorkTime = workDuration;
   const defaultBreakTime = breakDuration;
 
-  const savedState = loadStateFromStorage();
+  const [savedState] = useState(() => loadStateFromStorage());
+
+  // Restore targetEndTime: if timer was running when page closed, recover it
+  const [initialTimeState] = useState(() => {
+	const restoredEndTime = savedState.targetEndTime ?? null;
+	if (restoredEndTime !== null) {
+	  const remaining = Math.ceil((restoredEndTime - Date.now()) / 1000);
+	  if (remaining > 0) {
+		return { timeLeft: remaining, isRunning: true, targetEndTime: restoredEndTime };
+	  }
+	  // Timer expired while page was closed — timeLeft=0 triggers completion effect
+	  return { timeLeft: 0, isRunning: false, targetEndTime: null };
+	}
+	return {
+	  timeLeft: savedState.timeLeft ?? defaultWorkTime,
+	  isRunning: false,
+	  targetEndTime: null
+	};
+  });
 
   const [tag, setTag] = useState<string>(savedState.tag ?? 'General');
   const [mode, setMode] = useState<PomodoroMode>(savedState.mode ?? 'work');
-  const [timeLeft, setTimeLeft] = useState<number>(savedState.timeLeft ?? defaultWorkTime);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(initialTimeState.timeLeft);
+  const [isRunning, setIsRunning] = useState<boolean>(initialTimeState.isRunning);
   const [sessions, setSessions] = useState<PomodoroSession[]>(() => loadSessionsFromStorage());
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(savedState.showConfirmModal ?? false);
   const [wasRunningBeforeModal, setWasRunningBeforeModal] = useState<boolean>(savedState.wasRunningBeforeModal ?? false);
   const [sessionNote, setSessionNote] = useState<string>(savedState.sessionNote ?? '');
+  const [targetEndTime, setTargetEndTime] = useState<number | null>(initialTimeState.targetEndTime);
 
   // Track previous durations to detect settings changes
   const prevWorkDuration = useRef(defaultWorkTime);
   const prevBreakDuration = useRef(defaultBreakTime);
+
+  // Wall-clock countdown: calculate remaining time from targetEndTime
+  useEffect(() => {
+	if (!isRunning || targetEndTime === null) return;
+
+	const tick = () => {
+	  const remaining = Math.ceil((targetEndTime - Date.now()) / 1000);
+	  setTimeLeft(remaining <= 0 ? 0 : remaining);
+	};
+
+	tick(); // immediate sync
+	const interval = setInterval(tick, 1000);
+	return () => clearInterval(interval);
+  }, [isRunning, targetEndTime]);
+
+  // Instant resync when tab becomes visible again (no 1s delay)
+  useEffect(() => {
+	const handleVisibility = () => {
+	  if (!document.hidden && isRunning && targetEndTime !== null) {
+		const remaining = Math.ceil((targetEndTime - Date.now()) / 1000);
+		setTimeLeft(remaining <= 0 ? 0 : remaining);
+	  }
+	};
+	document.addEventListener('visibilitychange', handleVisibility);
+	return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [isRunning, targetEndTime]);
 
   // Sync timer when settings change ( only if at reset state )
   useEffect(() => {
@@ -129,19 +175,29 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 	  isRunning,
 	  showConfirmModal,
 	  wasRunningBeforeModal,
-	  sessionNote
+	  sessionNote,
+	  targetEndTime
 	});
-  }, [tag, mode, timeLeft, isRunning, showConfirmModal, wasRunningBeforeModal, sessionNote]);
+  }, [tag, mode, timeLeft, isRunning, showConfirmModal, wasRunningBeforeModal, sessionNote, targetEndTime]);
 
   const startTimer = useCallback(() => {
+	setTargetEndTime(Date.now() + timeLeft * 1000);
 	setIsRunning(true);
-  }, []);
+  }, [timeLeft]);
 
   const pauseTimer = useCallback(() => {
+	setTargetEndTime((prev) => {
+	  if (prev !== null) {
+		const remaining = Math.max(0, Math.ceil((prev - Date.now()) / 1000));
+		setTimeLeft(remaining);
+	  }
+	  return null;
+	});
 	setIsRunning(false);
   }, []);
 
   const resetTimer = useCallback(() => {
+	setTargetEndTime(null);
 	setIsRunning(false);
 	setTimeLeft(mode === 'work' ? defaultWorkTime : defaultBreakTime);
   }, [mode, defaultWorkTime, defaultBreakTime]);
