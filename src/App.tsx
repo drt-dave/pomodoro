@@ -77,7 +77,7 @@ function App() {
 		  }}
 		  aria-label='Timer view'
 		>
-		  <TimerIcon size={16} /> {translations.timerTab}
+		  <TimerIcon size={20} /> {translations.timerTab}
 		</button>
 
 		<button
@@ -88,7 +88,7 @@ function App() {
 		  }}
 		  aria-label='Stats view'
 		>
-		  <BarChart3 size={16} /> {translations.statsTab}
+		  <BarChart3 size={20} /> {translations.statsTab}
 		</button>
 	  </footer>
 	</div>
