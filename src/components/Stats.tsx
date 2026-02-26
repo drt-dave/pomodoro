@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { usePomodoro } from '../hooks/PomodoroContext';
+import { usePomodoro } from '../hooks/pomodoro/PomodoroContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTimeDuration } from '../utils/formatTime';
 import styles from './Stats.module.css';

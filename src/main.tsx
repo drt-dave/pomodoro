@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import App from './App.tsx'
-import { PomodoroProvider } from './hooks/PomodoroContext.tsx'
+import { PomodoroProvider } from './hooks/pomodoro/PomodoroContext'
 import { ThemeProvider } from './contexts/ThemeContext.tsx'
 import { LanguageProvider } from './contexts/LanguageContext.tsx';
 import {SettingsProvider} from './contexts/SettingsContext.tsx'

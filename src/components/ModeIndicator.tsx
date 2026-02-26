@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Briefcase, Coffee } from 'lucide-react';
-import { usePomodoro } from '../hooks/PomodoroContext';
+import { usePomodoro } from '../hooks/pomodoro/PomodoroContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles  from './ModeIndicator.module.css'
 

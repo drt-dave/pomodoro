@@ -1,4 +1,4 @@
-import { usePomodoro } from "../hooks/PomodoroContext"
+import { usePomodoro } from "../hooks/pomodoro/PomodoroContext"
 import { useLanguage } from "../contexts/LanguageContext"
 import styles from "./SessionNote.module.css"
 

@@ -1,7 +1,7 @@
 import { useSound } from "../hooks/useSound";
 import { useEffect, useState } from "react";
 import { Play, Pause, RotateCcw, Square } from "lucide-react";
-import { usePomodoro } from "../hooks/PomodoroContext";
+import { usePomodoro } from "../hooks/pomodoro/PomodoroContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import type {PomodoroMode, PomodoroSession} from "../types/pomodoro.types";
 import { ConfirmModal } from "./ConfirmModal";

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Moon, Sun, Timer as TimerIcon, BarChart3 } from 'lucide-react';
-import { usePomodoro } from './hooks/PomodoroContext';
+import { usePomodoro } from './hooks/pomodoro/PomodoroContext';
 import { useTheme } from './contexts/ThemeContext';
 import { useLanguage } from './contexts/LanguageContext';
 import { Timer } from './components/Timer';

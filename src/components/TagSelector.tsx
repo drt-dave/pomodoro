@@ -4,7 +4,7 @@ import type { PomodoroMode } from '../types/pomodoro.types';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles from './TagSelector.module.css';
 import { ConfirmModal } from './ConfirmModal';
-import { usePomodoro } from '../hooks/PomodoroContext';
+import { usePomodoro } from '../hooks/pomodoro/PomodoroContext';
 
 interface TagSelectorProps {
   tag: string;
