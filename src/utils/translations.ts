@@ -38,6 +38,8 @@ export interface Translations {
   cancel: string;
   deleteTagTitle: string;
   deleteTagMessage: string;
+  tagNameEmpty: string;
+  tagNameDuplicate: string;
 
   // Stats page
   statsTitle: string;
@@ -98,6 +100,8 @@ const translations: Record<Language, Translations> = {
 	cancel: 'Cancel',
 	deleteTagTitle: 'Delete Tag?',
 	deleteTagMessage: 'Are you sure you want to delete',
+	tagNameEmpty:'Tag name cannot be empty',
+	tagNameDuplicate:'A tag with that name already exists',
 	statsTitle: 'Your Pomodoro Stats',
 	overall: 'Overall',
 	byCategory: 'By Label',
@@ -147,6 +151,8 @@ const translations: Record<Language, Translations> = {
 	cancel: 'Cancelar',
 	deleteTagTitle: '¿Eliminar Etiqueta?',
 	deleteTagMessage: '¿Estás seguro de que quieres eliminar',
+	tagNameEmpty: 'El nombre de la etiqueta no puede estar vacío',
+	tagNameDuplicate: 'Ya existe una etiqueta con ese nombre',
 	statsTitle: 'Tus Estadísticas Pomodoro',
 	overall: 'General',
 	byCategory: 'Por Etiqueta',
@@ -196,6 +202,8 @@ const translations: Record<Language, Translations> = {
 	cancel: 'Annuler',
 	deleteTagTitle: 'Supprimer l\'Étiquette ?',
 	deleteTagMessage: 'Êtes-vous sûr de vouloir supprimer',
+	tagNameEmpty: 'Le nom de l\'étiquette ne peut pas être vide',
+	tagNameDuplicate: 'Une étiquette avec ce nom existe déjà',
 	statsTitle: 'Vos Statistiques Pomodoro',
 	overall: 'Général',
 	byCategory: 'Par Étiquette',
@@ -245,6 +253,8 @@ const translations: Record<Language, Translations> = {
 	cancel: 'Nuligi',
 	deleteTagTitle: 'Ĉu Forigi Etikedon?',
 	deleteTagMessage: 'Ĉu vi certas, ke vi volas forigi',
+	tagNameEmpty: 'Etikedonomo ne povas esti malplena',
+	tagNameDuplicate: 'Etikedo kun tiu nomo jam ekzistas',
 	statsTitle: 'Viaj Pomodoro Statistikoj',
 	overall: 'Ĝenerala',
 	byCategory: 'Laŭ Etikedo',
@@ -294,6 +304,8 @@ const translations: Record<Language, Translations> = {
 	cancel: 'Отмена',
 	deleteTagTitle: 'Удалить Метку?',
 	deleteTagMessage: 'Вы уверены, что хотите удалить',
+	tagNameEmpty: 'Название метки не может быть пустым',
+	tagNameDuplicate: 'Метка с таким названием уже существует',
 	statsTitle: 'Ваша Статистика Помодоро',
 	overall: 'Общая',
 	byCategory: 'По Меткам',

@@ -127,6 +127,20 @@
   color: var(--text-primary);
 }
 
+.editInput {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--accent-light);
+  margin: var(--space-sm);
+  padding: var(--space-sm) 0.875rem;
+  border-radius: 8px;
+  cursor: text;
+  transition: all 0.3s ease;
+  outline: none;
+  font-size: inherit;
+}
+
+
 /**
  * .tagBtn.active - Active Tag State
  * ----------------------------------

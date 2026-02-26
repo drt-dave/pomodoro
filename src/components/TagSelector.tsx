@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import type { PomodoroMode } from '../types/pomodoro.types';
 import { useLanguage } from '../contexts/LanguageContext';
 import styles from './TagSelector.module.css';
 import { ConfirmModal } from './ConfirmModal';
+import { usePomodoro } from '../hooks/PomodoroContext';
 
 interface TagSelectorProps {
   tag: string;
@@ -13,10 +14,15 @@ interface TagSelectorProps {
 
 export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
   const { translations } = useLanguage();
+  const {renameTag} =usePomodoro();
   const [tags, setTags] = useState<string[]>([translations.defaultTagGeneral, translations.defaultTagWork, translations.defaultTagStudy]);
   const [showAddTag, setShowAddTag] = useState<boolean>(false);
   const [newTagName, setNewTagName] = useState<string>('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
+
+  const [editingTag, setEditingTag] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState<string>('');
+  const editInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
 	const savedTags = localStorage.getItem('pomodoroTags');
@@ -33,6 +39,12 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
   useEffect(() => {
 	localStorage.setItem('pomodoroTags', JSON.stringify(tags));
   }, [tags]);
+
+  useEffect(() => {
+	if (editingTag && editInputRef.current) {
+	  editInputRef.current.focus();
+	}
+  }, [editingTag]);
 
   useEffect(() => {
 	if (!tag || tag.trim() === '') {
@@ -69,6 +81,32 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 	// Select the first remaining tag
 	setTag(newTags[0]);
   };
+
+  const handleDoubleClick = (tagName: string) => { 
+	if (mode === 'break') return;
+	setEditingTag(tagName);
+	setEditValue(tagName);
+  }; 
+
+  const handleRenameConfirm = () => { 
+	const trimmed = editValue.trim();
+	if (!trimmed) {
+	  setEditingTag(null);
+	  return;
+	}
+	if (trimmed !== editingTag && tags.includes(trimmed)){
+	  setEditingTag(null);
+	  return;
+	}
+	if (trimmed !== editingTag) {
+	  setTags((prev) => prev.map((t) => (t === editingTag ? trimmed : t)));
+	  renameTag(editingTag!, trimmed);
+	  if (tag === editingTag) {
+		setTag(trimmed);
+	  }
+	}
+	setEditingTag(null);
+  } 
   return (
 	<div className={styles.tagSelector}>
 	  <h3>{translations.selectCategory}</h3>
@@ -134,20 +172,34 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 
 	  <div className={styles.tagsList}>
 		{tags.map((t) => (
-		  <button
-			key={t}
-			type="button"
-			className={[styles.tagBtn, t === tag ? styles.active : ''].join(' ')}
-			onClick={() => {
-			  console.log(`Vi alklakis butonon! (Tag: ${t})`);
-			  handleSelectTag(t);
-			}}
-			disabled={mode === 'break'}
-			aria-pressed={t === tag}
-		  >
-			{t}
-		  </button>
-		))}
+		  editingTag === t ? (
+			<input 
+			  key={t}
+			  ref={editInputRef}
+			  className={styles.editInput}
+			  value={editValue }
+			  onChange={(e) => setEditValue(e.target.value)}
+			  onBlur={handleRenameConfirm}
+			  onKeyDown={(e)=> {
+				if (e.key === 'Enter') handleRenameConfirm();
+				if (e.key === 'Escape') setEditingTag(null);
+			  }}
+			/>
+		  ) : ( 
+			<button
+			  key={t}
+			  type="button"
+			  className={[styles.tagBtn, t === tag ? styles.active : ''].join(' ')}
+			  onClick={() => {
+				handleSelectTag(t);
+			  }}
+			  onDoubleClick={() => handleDoubleClick(t)}
+			  disabled={mode === 'break'}
+			  aria-pressed={t === tag}
+			>
+			  {t}
+			</button>
+			  )))}
 	  </div>
 	  <ConfirmModal
 		isOpen={showDeleteConfirm}

@@ -15,6 +15,7 @@ interface PomodoroContextType extends PomodoroState {
   pauseTimer: () => void;
   resetTimer: () => void;
   saveSession: (session: PomodoroSession) => void;
+  renameTag: (oldName: string, newName: string) => void;
   showConfirmModal: boolean;
   setShowConfirmModal: (show: boolean) => void;
   wasRunningBeforeModal: boolean;
@@ -207,31 +208,42 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
 	setSessionNote('');
   }, [sessionNote]);
 
+  const renameTag = useCallback((oldName: string, newName: string)=>{
+	// Update all saved sessions that use the old tag name
+	setSessions((prev) => prev.map((s) =>(s.tag === oldName ? {...s, tag: newName} : s))
+			   );
+	// Update the active tag if it matches
+			   if (tag === oldName) {
+				 setTag(newName);
+			   }
+  }, [tag]);
+
   return (
 	<PomodoroContext.Provider
 	  value={{
-		tag,
-		mode,
-		timeLeft,
-		isRunning,
-		defaultWorkTime,
 		defaultBreakTime,
-		setTag,
-		setMode,
-		setTimeLeft,
-		setIsRunning,
-		sessions,
-		setSessions,
-		startTimer,
+		defaultWorkTime,
+		isRunning,
+		mode,
 		pauseTimer,
+		renameTag,
 		resetTimer,
 		saveSession,
-		showConfirmModal,
-		setShowConfirmModal,
-		wasRunningBeforeModal,
-		setWasRunningBeforeModal,
 		sessionNote,
-		setSessionNote
+		sessions,
+		setIsRunning,
+		setMode,
+		setSessionNote,
+		setSessions,
+		setShowConfirmModal,
+		setTag,
+		setTimeLeft,
+		setWasRunningBeforeModal,
+		showConfirmModal,
+		startTimer,
+		tag,
+		timeLeft,
+		wasRunningBeforeModal,
 	  }}
 	>
 	  {children}
