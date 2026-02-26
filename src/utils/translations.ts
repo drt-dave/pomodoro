@@ -74,6 +74,11 @@ export interface Translations {
   // Session history
   sessionHistory: string;
   allSessions: string;
+
+  // Error boundary
+  errorBoundaryTitle: string;
+  errorBoundaryMessage: string;
+  errorBoundaryReset: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -126,6 +131,9 @@ const translations: Record<Language, Translations> = {
 	sessionNotePlaceholder: 'Add a note about this pomodoro...',
 	sessionHistory: 'Session History',
 	allSessions: 'All',
+	errorBoundaryTitle: 'Something went wrong',
+	errorBoundaryMessage: 'This section encountered an error. You can try again or reload the page.',
+	errorBoundaryReset: 'Try Again',
   },
 
   es: {
@@ -177,6 +185,9 @@ const translations: Record<Language, Translations> = {
 	sessionNotePlaceholder: 'Agrega una nota sobre este pomodoro...',
 	sessionHistory: 'Historial de Sesiones',
 	allSessions: 'Todas',
+	errorBoundaryTitle: 'Algo salió mal',
+	errorBoundaryMessage: 'Esta sección encontró un error. Puedes intentar de nuevo o recargar la página.',
+	errorBoundaryReset: 'Intentar de nuevo',
   },
 
   fr: {
@@ -228,6 +239,9 @@ const translations: Record<Language, Translations> = {
 	sessionNotePlaceholder: 'Ajoutez une note sur ce pomodoro...',
 	sessionHistory: 'Historique des Sessions',
 	allSessions: 'Toutes',
+	errorBoundaryTitle: 'Quelque chose a mal tourné',
+	errorBoundaryMessage: 'Cette section a rencontré une erreur. Vous pouvez réessayer ou recharger la page.',
+	errorBoundaryReset: 'Réessayer',
   },
 
   eo: {
@@ -279,6 +293,9 @@ const translations: Record<Language, Translations> = {
 	sessionNotePlaceholder: 'Aldonu noton pri ĉi tiu pomodoro...',
 	sessionHistory: 'Seanca Historio',
 	allSessions: 'Ĉiuj',
+	errorBoundaryTitle: 'Io misfunkciis',
+	errorBoundaryMessage: 'Ĉi tiu sekcio renkontis eraron. Vi povas reprovi aŭ reŝargi la paĝon.',
+	errorBoundaryReset: 'Reprovi',
   },
 
   ru: {
@@ -330,6 +347,9 @@ const translations: Record<Language, Translations> = {
 	sessionNotePlaceholder: 'Добавьте заметку об этом помодоро...',
 	sessionHistory: 'История Сессий',
 	allSessions: 'Все',
+	errorBoundaryTitle: 'Что-то пошло не так',
+	errorBoundaryMessage: 'В этом разделе произошла ошибка. Вы можете попробовать снова или перезагрузить страницу.',
+	errorBoundaryReset: 'Попробовать снова',
   },
 };  
 

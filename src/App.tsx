@@ -10,6 +10,7 @@ import './App.css';
 import type {Language} from './utils/translations';
 import {SessionNote} from './components/SessionNote';
 import {Logo} from './components/Logo';
+import {ErrorBoundary} from './components/ErrorBoundary';
 
 type ViewType = 'timer' | 'stats';
 
@@ -49,7 +50,11 @@ function App() {
 
 	  <main className="main-content">
 		{activeView === 'timer' && (
-		  <>
+		  <ErrorBoundary
+			fallbackTitle={translations.errorBoundaryTitle}
+			fallbackMessage={translations.errorBoundaryMessage}
+			fallbackResetLabel={translations.errorBoundaryReset}
+		  >
 			<div className="card tagselector-card">
 			  <TagSelector tag={tag} setTag={setTag} mode={mode} />
 			</div>
@@ -58,13 +63,19 @@ function App() {
 			  <Timer />
 			</div>
 			<SessionNote />
-		  </>
+		  </ErrorBoundary>
 		)}
 
 		{activeView === 'stats' && (
-		  <div className="card stats-card">
-			<Stats />
-		  </div>
+		  <ErrorBoundary
+			fallbackTitle={translations.errorBoundaryTitle}
+			fallbackMessage={translations.errorBoundaryMessage}
+			fallbackResetLabel={translations.errorBoundaryReset}
+		  >
+			<div className="card stats-card">
+			  <Stats />
+			</div>
+		  </ErrorBoundary>
 		)}
 	  </main>
 
