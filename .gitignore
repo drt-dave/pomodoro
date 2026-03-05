@@ -23,9 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
+# Learning/documentation files
+*.explained.md
+
 # Claude Code configuration
 .claude/
 
 
 # Dev build output
 dev-dist/
+.vercel
