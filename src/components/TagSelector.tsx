@@ -15,26 +15,19 @@ interface TagSelectorProps {
 export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
   const { translations } = useLanguage();
   const {renameTag} =usePomodoro();
-  const [tags, setTags] = useState<string[]>([translations.defaultTagGeneral, translations.defaultTagWork, translations.defaultTagStudy]);
+  const [tags, setTags] = useState<string[]>(() => {  
+	const saved = localStorage.getItem('pomodoroTags');
+	if (saved) {
+	  try { return JSON.parse(saved);} catch (error) {/*ignore*/}
+	}
+	return [];
+  });
   const [showAddTag, setShowAddTag] = useState<boolean>(false);
   const [newTagName, setNewTagName] = useState<string>('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
-
   const [editingTag, setEditingTag] = useState<string | null>(null);
   const [editValue, setEditValue] = useState<string>('');
   const editInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-	const savedTags = localStorage.getItem('pomodoroTags');
-	if (savedTags) {
-	  try {
-		const parsed = JSON.parse(savedTags) as string[];
-		setTags(parsed);
-	  } catch {
-		// Ignore parse errors - will use default tags
-	  }
-	}
-  }, []);
 
   useEffect(() => {
 	localStorage.setItem('pomodoroTags', JSON.stringify(tags));
@@ -52,9 +45,7 @@ export function TagSelector({ tag, setTag, mode }: TagSelectorProps) {
 	  return;
 	}
 
-	if (!tags.includes(tag)) {
-	  setTags((prev) => [tag, ...prev]);
-	}
+	setTags((prev) => prev.includes(tag) ? prev : [tag, ...prev]);
   }, [tag]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleAddTag = () => {

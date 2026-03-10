@@ -51,11 +51,6 @@ export interface Translations {
   ofTotalSessions: string;
   noSessionsYet: string;
 
-  // Default tags
-  defaultTagGeneral: string;
-  defaultTagWork: string;
-  defaultTagStudy: string;
-
   // Settings panel
   settings: string;
   settingsTitle: string;
@@ -100,7 +95,7 @@ const translations: Record<Language, Translations> = {
 	confirmFinishMessage: 'Are you sure you want to end this Pomodoro session early?',
 	selectCategory: 'Select Label',
 	addTag: 'Add Tag',
-	tagPlaceholder: 'Tag name...',
+	tagPlaceholder: 'Add a tag (work, study, exercise...)',
 	add: 'Add',
 	cancel: 'Cancel',
 	deleteTagTitle: 'Delete Tag?',
@@ -115,9 +110,6 @@ const translations: Record<Language, Translations> = {
 	sessions: 'sessions',
 	ofTotalSessions: 'of total sessions',
 	noSessionsYet: 'No completed sessions yet. Start a timer to see stats!',
-	defaultTagGeneral: 'General',
-	defaultTagWork: 'Work',
-	defaultTagStudy: 'Study',
 	settings: 'Settings',
 	settingsTitle: 'Settings',
 	workDuration: 'Work Duration',
@@ -154,7 +146,7 @@ const translations: Record<Language, Translations> = {
 	confirmFinishMessage: '¿Estás seguro de que quieres terminar esta sesión Pomodoro antes de tiempo?',
 	selectCategory: 'Seleccionar Etiqueta',
 	addTag: 'Agregar Etiqueta',
-	tagPlaceholder: 'Nombre de etiqueta...',
+	tagPlaceholder: 'Agrega una etiqueta (trabajo, estudio, ejercicio...)',
 	add: 'Agregar',
 	cancel: 'Cancelar',
 	deleteTagTitle: '¿Eliminar Etiqueta?',
@@ -169,9 +161,6 @@ const translations: Record<Language, Translations> = {
 	sessions: 'sesiones',
 	ofTotalSessions: 'del total de sesiones',
 	noSessionsYet: '¡Aún no hay sesiones completadas. Inicia un temporizador para ver estadísticas!',
-	defaultTagGeneral: 'General',
-	defaultTagWork: 'Trabajo',
-	defaultTagStudy: 'Estudio',
 	settings: 'Ajustes',
 	settingsTitle: 'Ajustes',
 	workDuration: 'Duración de Trabajo',
@@ -208,7 +197,7 @@ const translations: Record<Language, Translations> = {
 	confirmFinishMessage: 'Êtes-vous sûr de vouloir terminer cette session Pomodoro plus tôt ?',
 	selectCategory: 'Sélectionner une Étiquette',
 	addTag: 'Ajouter une Étiquette',
-	tagPlaceholder: 'Nom de l\'étiquette...',
+	tagPlaceholder: 'Ajouter une étiquette (travail, étude, exercice...)',
 	add: 'Ajouter',
 	cancel: 'Annuler',
 	deleteTagTitle: 'Supprimer l\'Étiquette ?',
@@ -223,9 +212,6 @@ const translations: Record<Language, Translations> = {
 	sessions: 'sessions',
 	ofTotalSessions: 'du total des sessions',
 	noSessionsYet: 'Aucune session terminée pour le moment. Démarrez un minuteur pour voir les statistiques !',
-	defaultTagGeneral: 'Général',
-	defaultTagWork: 'Travail',
-	defaultTagStudy: 'Étude',
 	settings: 'Paramètres',
 	settingsTitle: 'Paramètres',
 	workDuration: 'Durée de Travail',
@@ -262,7 +248,7 @@ const translations: Record<Language, Translations> = {
 	confirmFinishMessage: 'Ĉu vi certas, ke vi volas fini ĉi tiun Pomodoro-seancon frutempe?',
 	selectCategory: 'Elektu Etikedon',
 	addTag: 'Aldoni Etikedon',
-	tagPlaceholder: 'Nomo de etikedo...',
+	tagPlaceholder: 'Aldonu etikedon (laboro, studo, ekzerco...)',
 	add: 'Aldoni',
 	cancel: 'Nuligi',
 	deleteTagTitle: 'Ĉu Forigi Etikedon?',
@@ -277,9 +263,6 @@ const translations: Record<Language, Translations> = {
 	sessions: 'seancoj',
 	ofTotalSessions: 'de tutaj seancoj',
 	noSessionsYet: 'Ankoraŭ neniuj finitaj seancoj. Komencu horloĝon por vidi statistikojn!',
-	defaultTagGeneral: 'Ĝenerala',
-	defaultTagWork: 'Laboro',
-	defaultTagStudy: 'Studo',
 	settings: 'Agordoj',
 	settingsTitle: 'Agordoj',
 	workDuration: 'Labordaŭro',
@@ -316,7 +299,7 @@ const translations: Record<Language, Translations> = {
 	confirmFinishMessage: 'Вы уверены, что хотите завершить эту сессию Помодоро досрочно?',
 	selectCategory: 'Выберите Метку',
 	addTag: 'Добавить Метку',
-	tagPlaceholder: 'Название метки...',
+	tagPlaceholder: 'Добавьте метку (работа, учёба, спорт...)',
 	add: 'Добавить',
 	cancel: 'Отмена',
 	deleteTagTitle: 'Удалить Метку?',
@@ -331,9 +314,6 @@ const translations: Record<Language, Translations> = {
 	sessions: 'сессий',
 	ofTotalSessions: 'от общего числа сессий',
 	noSessionsYet: 'Завершенных сессий пока нет. Запустите таймер, чтобы увидеть статистику!',
-	defaultTagGeneral: 'Общее',
-	defaultTagWork: 'Работа',
-	defaultTagStudy: 'Учеба',
 	settings: 'Настройки',
 	settingsTitle: 'Настройки',
 	workDuration: 'Продолжительность Работы',
