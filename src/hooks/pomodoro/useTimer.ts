@@ -75,7 +75,10 @@ export function useTimer({ defaultWorkTime, defaultBreakTime, mode, savedState }
     prevBreakDuration.current = defaultBreakTime;
   }, [defaultWorkTime, defaultBreakTime, mode, timeLeft, isRunning]);
 
+  const sessionDuration = useRef<number>(initialTimeState.timeLeft);
+
   const startTimer = useCallback(() => {
+    sessionDuration.current = timeLeft;
     setTargetEndTime(Date.now() + timeLeft * 1000);
     setIsRunning(true);
   }, [timeLeft]);
@@ -108,6 +111,7 @@ export function useTimer({ defaultWorkTime, defaultBreakTime, mode, savedState }
     isRunning,
     setIsRunning,
     targetEndTime,
+    sessionDuration,
     startTimer,
     pauseTimer,
     stopTimer,

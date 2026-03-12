@@ -1,6 +1,8 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
+import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
+import type { Language } from "../utils/translations";
 import styles from './SettingsPanel.module.css';
 
 interface SettingsPanelProps {
@@ -10,6 +12,8 @@ interface SettingsPanelProps {
 
 export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
   const { translations: t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
   const {
 	workDuration,
 	breakDuration,
@@ -20,7 +24,6 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 	clearAllData
   } = useSettings();
 
-  // Local state for form (in minutes for display)
   const [localWorkMinutes, setLocalWorkMinutes] = useState(workDuration / 60);
   const [localBreakMinutes, setLocalBreakMinutes] = useState(breakDuration / 60);
   const [localSoundEnabled, setLocalSoundEnabled] = useState(soundEnabled);
@@ -28,24 +31,24 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 
   if (!isOpen) return null;
 
-  const handleSave = () => { 
+  const handleSave = () => {
 	setWorkDuration(localWorkMinutes * 60);
 	setBreakDuration(localBreakMinutes * 60);
 	setSoundEnabled(localSoundEnabled);
 	onClose();
   };
 
-  const handleClearData = () => { 
+  const handleClearData = () => {
 	if ( showClearConfirm ) {
 	  clearAllData();
 	} else {
 	  setShowClearConfirm(true);
 	}
-  }; 
+  };
 
   return (
 	<div className={ styles.overlay } onClick={onClose}>
-	  <div 
+	  <div
 		className={ styles.panel }
 		onClick={(e) => e.stopPropagation()}
 		role="dialog"
@@ -55,12 +58,28 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 		<h2 id="settings-title" className={ styles.title }>
 		  {t.settingsTitle}
 		</h2>
+
+		<div className={ styles.settingGroup }>
+		  <label className={ styles.toggleLabel }>
+			<span>{t.darkMode || 'Dark Mode'}</span>
+			<button
+			  className={styles.toggleBtn}
+			  onClick={toggleTheme}
+			  aria-label="Toggle dark mode"
+			>
+			  <span className={`${styles.toggleTrack} ${theme === 'dark' ? styles.toggleActive : ''}`}>
+				<span className={styles.toggleThumb} />
+			  </span>
+			</button>
+		  </label>
+		</div>
+
 		<div className={ styles.settingGroup }>
 		  <label className={ styles.label }>
 			{t.workDuration} ({t.minutes})
 		  </label>
-		  <input 
-			type="number" 
+		  <input
+			type="number"
 			min="1"
 			max="60"
 			value={ localWorkMinutes }
@@ -73,8 +92,8 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 		  <label className={ styles.label } >
 			{t.breakDuration} ({t.minutes})
 		  </label>
-		  <input 
-			type="number" 
+		  <input
+			type="number"
 			min="1"
 			max="30"
 			value={localBreakMinutes}
@@ -84,10 +103,27 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 		</div>
 
 		<div className={ styles.settingGroup }>
+		  <label className={ styles.label }>
+			{t.language || 'Language'}
+		  </label>
+		  <select
+			className={styles.input}
+			value={language}
+			onChange={(e) => setLanguage(e.target.value as Language)}
+		  >
+			<option value="en">English</option>
+			<option value="es">Español</option>
+			<option value="fr">Français</option>
+			<option value="eo">Esperanto</option>
+			<option value="ru">Русский</option>
+		  </select>
+		</div>
+
+		<div className={ styles.settingGroup }>
 		  <label className={ styles.toggleLabel }>
 			<span>{t.soundEffects}</span>
-			<input 
-			  type="checkbox" 
+			<input
+			  type="checkbox"
 			  checked={localSoundEnabled}
 			  onChange={(e) => setLocalSoundEnabled(e.target.checked)}
 			  className={styles.checkbox}
@@ -98,23 +134,22 @@ export function SettingsPanel({isOpen, onClose}: SettingsPanelProps) {
 
 		<div className={ styles.divider }></div>
 		<div className={ styles.settingGroup }>
-		  <button 
+		  <button
 			className={ styles.dangerButton }
 			onClick={handleClearData}
 		  >
 			{showClearConfirm ? t.clearDataConfirm : t.clearData}
-
 		  </button>
 		</div>
 
 		<div className={ styles.actions }>
-		  <button 
+		  <button
 			className={ styles.cancelButton }
 			onClick={onClose}
 		  >
 			{t.close}
 		  </button>
-		  <button 
+		  <button
 		  className={ styles.saveButton }
 			onClick={handleSave}
 		  >

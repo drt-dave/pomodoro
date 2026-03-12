@@ -7,6 +7,7 @@ export interface PomodoroContextType extends PomodoroState {
   setIsRunning: (running: boolean) => void;
   sessions: PomodoroSession[];
   setSessions: (sessions: PomodoroSession[]) => void;
+  sessionDuration: React.RefObject<number>;
   startTimer: () => void;
   pauseTimer: () => void;
   stopTimer: () => void;

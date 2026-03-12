@@ -54,6 +54,8 @@ export interface Translations {
   // Settings panel
   settings: string;
   settingsTitle: string;
+  darkMode: string;
+  language: string;
   workDuration: string;
   breakDuration: string;
   minutes: string;
@@ -112,6 +114,8 @@ const translations: Record<Language, Translations> = {
 	noSessionsYet: 'No completed sessions yet. Start a timer to see stats!',
 	settings: 'Settings',
 	settingsTitle: 'Settings',
+	darkMode: 'Dark Mode',
+	language: 'Language',
 	workDuration: 'Work Duration',
 	breakDuration: 'Break Duration',
 	minutes: 'minutes',
@@ -163,6 +167,8 @@ const translations: Record<Language, Translations> = {
 	noSessionsYet: '¡Aún no hay sesiones completadas. Inicia un temporizador para ver estadísticas!',
 	settings: 'Ajustes',
 	settingsTitle: 'Ajustes',
+	darkMode: 'Modo Oscuro',
+	language: 'Idioma',
 	workDuration: 'Duración de Trabajo',
 	breakDuration: 'Duración de Descanso',
 	minutes: 'minutos',
@@ -214,6 +220,8 @@ const translations: Record<Language, Translations> = {
 	noSessionsYet: 'Aucune session terminée pour le moment. Démarrez un minuteur pour voir les statistiques !',
 	settings: 'Paramètres',
 	settingsTitle: 'Paramètres',
+	darkMode: 'Mode Sombre',
+	language: 'Langue',
 	workDuration: 'Durée de Travail',
 	breakDuration: 'Durée de Pause',
 	minutes: 'minutes',
@@ -265,6 +273,8 @@ const translations: Record<Language, Translations> = {
 	noSessionsYet: 'Ankoraŭ neniuj finitaj seancoj. Komencu horloĝon por vidi statistikojn!',
 	settings: 'Agordoj',
 	settingsTitle: 'Agordoj',
+	darkMode: 'Malhela Reĝimo',
+	language: 'Lingvo',
 	workDuration: 'Labordaŭro',
 	breakDuration: 'Paŭzodaŭro',
 	minutes: 'minutoj',
@@ -316,6 +326,8 @@ const translations: Record<Language, Translations> = {
 	noSessionsYet: 'Завершенных сессий пока нет. Запустите таймер, чтобы увидеть статистику!',
 	settings: 'Настройки',
 	settingsTitle: 'Настройки',
+	darkMode: 'Тёмный Режим',
+	language: 'Язык',
 	workDuration: 'Продолжительность Работы',
 	breakDuration: 'Продолжительность Перерыва',
 	minutes: 'минут',

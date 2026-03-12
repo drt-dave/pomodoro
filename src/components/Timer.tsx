@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Play, Pause, RotateCcw, Square } from "lucide-react";
 import { usePomodoro } from "../hooks/pomodoro/PomodoroContext";
 import { useTimerCompletion } from "../hooks/pomodoro/useTimerCompletion";
 import { useFinishSession } from "../hooks/pomodoro/useFinishSession";
+import { useTimerEdit } from "../hooks/pomodoro/useTimerEdit";
 import { useLanguage } from "../contexts/LanguageContext";
 import { ConfirmModal } from "./ConfirmModal";
 import { formatTimeMMSS } from "../utils/formatTime";
@@ -10,7 +10,6 @@ import { ModeIndicator } from "./ModeIndicator";
 import { Toast } from "./Toast";
 import styles from './Timer.module.css';
 import { requestNotificationPermission } from '../utils/notifications';
-import { SettingsPanel } from './SettingsPanel';
 
 export const Timer = () => {
   const {
@@ -28,6 +27,7 @@ export const Timer = () => {
 	defaultBreakTime,
 	showConfirmModal,
 	saveSession,
+	sessionDuration,
   } = usePomodoro();
 
   const { translations } = useLanguage();
@@ -39,6 +39,7 @@ export const Timer = () => {
 	defaultWorkTime,
 	defaultBreakTime,
 	showConfirmModal,
+	sessionDuration,
 	stopTimer,
 	setMode,
 	setTimeLeft,
@@ -47,19 +48,47 @@ export const Timer = () => {
 
   const { handleFinishSession, confirmFinishSession, cancelFinishSession } = useFinishSession();
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const {
+	isEditing,
+	editValue,
+	inputRef,
+	startEditing,
+	confirmEdit,
+	handleEditChange,
+	handleEditKeyDown,
+  } = useTimerEdit({
+	isRunning,
+	timeLeft,
+	setTimeLeft,
+  });
 
   return (
 	<div className={styles.timer}>
 	  <ModeIndicator />
 
 	  <div className={styles.timeWrapper}>
-		<div
-		  className={styles.timeDisplay}
-		  onClick={() => setSettingsOpen(true)}
-		>
-		  {formatTimeMMSS(timeLeft)}
-		</div>
+		{isEditing ? (
+		  <input
+			ref={inputRef}
+			className={styles.timeInput}
+			value={editValue}
+			onChange={(e) => handleEditChange(e.target.value)}
+			onBlur={confirmEdit}
+			onKeyDown={handleEditKeyDown}
+			aria-label="Edit timer duration"
+			maxLength={5}
+		  />
+		) : (
+		  <div
+			className={`${styles.timeDisplay} ${isRunning ? styles.timeDisplayDisabled : ''}`}
+			onClick={startEditing}
+			role="button"
+			tabIndex={0}
+			aria-label={isRunning ? 'Timer running' : 'Click to edit duration'}
+		  >
+			{formatTimeMMSS(timeLeft)}
+		  </div>
+		)}
 	  </div>
 
 	  <div className={styles.timerControls}>
@@ -108,11 +137,6 @@ export const Timer = () => {
 		duration={toastData.duration}
 		type={toastData.type}
 		onClose={closeToast}
-	  />
-
-	  <SettingsPanel
-		isOpen={settingsOpen}
-		onClose={() => setSettingsOpen(false)}
 	  />
 	</div>
   );

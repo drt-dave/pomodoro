@@ -17,6 +17,7 @@ interface UseTimerCompletionProps {
   defaultWorkTime: number;
   defaultBreakTime: number;
   showConfirmModal: boolean;
+  sessionDuration: React.RefObject<number>;
   stopTimer: () => void;
   setMode: (mode: PomodoroMode) => void;
   setTimeLeft: (time: number | ((prev: number) => number)) => void;
@@ -30,6 +31,7 @@ export function useTimerCompletion({
   defaultWorkTime,
   defaultBreakTime,
   showConfirmModal,
+  sessionDuration,
   stopTimer,
   setMode,
   setTimeLeft,
@@ -53,11 +55,11 @@ export function useTimerCompletion({
         playBreakComplete();
       }
 
-      const initialTime = mode === 'work' ? defaultWorkTime : defaultBreakTime;
+      const actualDuration = sessionDuration.current;
 
       const session: PomodoroSession = {
         tag,
-        duration: initialTime,
+        duration: actualDuration,
         timestamp: Date.now(),
         completed: true,
       };
@@ -69,7 +71,7 @@ export function useTimerCompletion({
 
       setToastData({
         message: completionMessage,
-        duration: initialTime,
+        duration: actualDuration,
         type: mode,
       });
       setShowToast(true);

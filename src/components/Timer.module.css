@@ -29,7 +29,7 @@ TIMER COMPONENT STYLES
  * Large, prominent display showing MM:SS format.
  */
 .timeDisplay {
-  font-size: 10rem;
+  font-size: clamp(4.5rem, 15vw, 10rem);
   font-weight: 700;
   color: var(--text-primary);
   text-align: center;
@@ -43,6 +43,32 @@ TIMER COMPONENT STYLES
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.timeDisplayDisabled {
+  cursor: default;
+}
+
+/**
+ * .timeInput - Editable Timer Input
+ * ----------------------------------
+ * Matches .timeDisplay styling but for an <input> element.
+ */
+.timeInput {
+  font-size: clamp(4.5rem, 15vw, 10rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  width: 100%;
+  border: none;
+  border-bottom: 3px solid var(--accent-primary);
+  background: transparent;
+  outline: none;
+  caret-color: var(--accent-primary);
 }
 
 /**
@@ -120,10 +146,6 @@ TIMER COMPONENT STYLES
  * Adjusts timer for smaller screens
  */
 @media (max-width: 600px) {
-  .timeDisplay {
-	font-size: 4.5rem;
-  }
-
   .timer {
 	margin: 0.5rem auto;
 	padding: 1.5rem 1rem;
