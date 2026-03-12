@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -61,5 +61,10 @@ export default defineConfig({
       '.ngrok.io',
       '.ngrok-free.app'
     ]
+  },
+  test: {
+	environment: 'jsdom',
+	globals: true,
+	css: true,
   }
 })
