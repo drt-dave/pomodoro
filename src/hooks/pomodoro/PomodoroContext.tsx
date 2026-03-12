@@ -31,7 +31,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
     timeLeft, setTimeLeft,
     isRunning, setIsRunning,
     targetEndTime,
-    startTimer, pauseTimer, resetTimer,
+    startTimer, pauseTimer, stopTimer, resetTimer,
   } = useTimer({ defaultWorkTime, defaultBreakTime, mode, savedState });
 
   const {
@@ -76,6 +76,7 @@ export function PomodoroProvider({ children }: PomodoroProviderProps) {
         setWasRunningBeforeModal,
         showConfirmModal,
         startTimer,
+        stopTimer,
         tag,
         timeLeft,
         wasRunningBeforeModal,

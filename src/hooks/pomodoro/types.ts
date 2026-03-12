@@ -9,6 +9,7 @@ export interface PomodoroContextType extends PomodoroState {
   setSessions: (sessions: PomodoroSession[]) => void;
   startTimer: () => void;
   pauseTimer: () => void;
+  stopTimer: () => void;
   resetTimer: () => void;
   saveSession: (session: PomodoroSession) => void;
   renameTag: (oldName: string, newName: string) => void;

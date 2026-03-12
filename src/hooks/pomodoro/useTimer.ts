@@ -91,6 +91,11 @@ export function useTimer({ defaultWorkTime, defaultBreakTime, mode, savedState }
     setIsRunning(false);
   }, []);
 
+  const stopTimer = useCallback(() => {
+    setTargetEndTime(null);
+    setIsRunning(false);
+  }, []);
+
   const resetTimer = useCallback(() => {
     setTargetEndTime(null);
     setIsRunning(false);
@@ -105,6 +110,7 @@ export function useTimer({ defaultWorkTime, defaultBreakTime, mode, savedState }
     targetEndTime,
     startTimer,
     pauseTimer,
+    stopTimer,
     resetTimer,
   };
 }
